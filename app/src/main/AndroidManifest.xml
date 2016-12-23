@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.takescoop.americanwhitewaterandroid"
           xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".AWApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-    </application>
 
+        <!--Crashlytics-->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b67e4513fcf72d81b5607976a8613ad0240f3105"
+            />
+    </application>
 </manifest>
