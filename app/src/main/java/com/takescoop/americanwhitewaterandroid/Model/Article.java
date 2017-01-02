@@ -18,12 +18,6 @@ public class Article {
     private String abstractphoto = "";
     @Expose @SerializedName("abstract_photo")
     private String abstractPhoto = "";
-    @Expose @SerializedName("contentsphoto")
-    private Integer contentsphoto;
-    @Expose @SerializedName("contents_photo")
-    private Integer contentsPhoto;
-    @Expose @SerializedName("icon")
-    private Object icon;
     @Expose @SerializedName("hascontents")
     private String hasContents = "";
     @Expose @SerializedName("contact")
@@ -33,19 +27,26 @@ public class Article {
     @Expose @SerializedName("posted")
     private String posted = "";
     @Expose @SerializedName("postedepoch")
-    private String postedEpoch = "";
+    private String postedEpoch;
     @Expose @SerializedName("shortname")
     private String shortName = "";
     @Expose @SerializedName("articleid")
     private String articleId = "";
     @Expose @SerializedName("uid")
     private String uid = "";
-    @Expose @SerializedName("releasedate")
-    private String releaseDate = "";
-    @Expose @SerializedName("releaseepoch")
-    private String releaseEpoch = "";
     @Expose @SerializedName("deleted")
     private String deleted = "";
+
+//    @Expose @SerializedName("contentsphoto")
+//    private Integer contentsphoto;
+//    @Expose @SerializedName("contents_photo")
+//    private Integer contentsPhoto;
+//    @Expose @SerializedName("icon")
+//    private Object icon;
+//    @Expose @SerializedName("releasedate")
+//    private String releaseDate = "";
+//    @Expose @SerializedName("releaseepoch")
+//    private String releaseEpoch = "";
 
     public String getTitle() {
         return title;
@@ -71,18 +72,6 @@ public class Article {
         return abstractPhoto;
     }
 
-    public Integer getContentsphoto() {
-        return contentsphoto;
-    }
-
-    public Integer getContentsPhoto() {
-        return contentsPhoto;
-    }
-
-    public Object getIcon() {
-        return icon;
-    }
-
     public String getHasContents() {
         return hasContents;
     }
@@ -91,16 +80,12 @@ public class Article {
         return contact;
     }
 
-    public Instant getIsoPosted() {
-        return isoPosted;
-    }
-
-    public Instant getPosted() {
+    public String getPostedDisplay() {
         return posted;
     }
 
-    public Instant getPostedEpoch() {
-        return postedEpoch;
+    public Instant getPostedInstant() {
+        return Instant.ofEpochSecond(Integer.parseInt(postedEpoch));
     }
 
     public String getShortName() {
@@ -113,14 +98,6 @@ public class Article {
 
     public String getUid() {
         return uid;
-    }
-
-    public Instant getReleaseDate() {
-        return releaseDate;
-    }
-
-    public Instant getReleaseEpoch() {
-        return releaseEpoch;
     }
 
     public String getDeleted() {
