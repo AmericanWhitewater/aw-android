@@ -1,13 +1,15 @@
 package com.takescoop.americanwhitewaterandroid.model.api;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
+import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
 public class ReachSearchResponse {
     @Expose @SerializedName("id")
     private Integer id;
-//    @Expose @SerializedName("name")
-//    private String name = "";
     @Expose @SerializedName("state")
     private String state = "";
     @Expose @SerializedName("river")
@@ -20,8 +22,6 @@ public class ReachSearchResponse {
     private String county;
     @Expose @SerializedName("zipcode")
     private String zipcode;
-//    @Expose @SerializedName("huc") //USGS hydrologic unit code
-//    private String huc;
     @Expose @SerializedName("plat")
     private String plat;
     @Expose @SerializedName("plon")
@@ -30,12 +30,8 @@ public class ReachSearchResponse {
     private String tlat;
     @Expose @SerializedName("tlon")
     private String tlon;
-//    @Expose @SerializedName("skid") // Last person who edited
-//    private Integer skid;
     @Expose @SerializedName("class") // Difficulty
     private String _class;
-//    @Expose @SerializedName("abstract") // Abstract of description
-//    private String _abstract;
     @Expose @SerializedName("updated") // Seconds since last update
     private String updated;
     @Expose @SerializedName("reading")
@@ -54,6 +50,33 @@ public class ReachSearchResponse {
     private String lastGaugeReading;
     @Expose @SerializedName("last_gauge_updated") // In seconds since last reading
     private String lastGaugeUpdated;
+    @Expose @SerializedName("gauge_estimated")
+    private Boolean gaugeEstimated;
+    @Expose @SerializedName("gauge_perfect")
+    private Boolean gaugePerfect;
+    @Expose @SerializedName("range_comment")
+    private String rangeComment;
+    @Expose @SerializedName("reading_formatted")
+    private String readingFormatted;
+    @Expose @SerializedName("reading_delta")
+    private String readingDelta;
+    @Expose @SerializedName("rc")
+    private String rc;
+    @Expose @SerializedName("color")
+    private String color;
+    @Expose @SerializedName("cond") // Low medium high
+    private String cond;
+    @Expose @SerializedName("unit")
+    private String unit;
+
+//    @Expose @SerializedName("name")
+//    private String name = "";
+//    @Expose @SerializedName("huc") //USGS hydrologic unit code
+//    private String huc;
+//    @Expose @SerializedName("skid") // Last person who edited
+//    private Integer skid;
+//    @Expose @SerializedName("abstract") // Abstract of description
+//    private String _abstract;
 //    @Expose @SerializedName("gauge_comment")
 //    private String gaugeComment;
 //    @Expose @SerializedName("last_journal_update") // Last gauge comment
@@ -68,120 +91,26 @@ public class ReachSearchResponse {
 //    private Object adjustedReachClass;
 //    @Expose @SerializedName("gauge_important") // How gages compete to be the primary
 //    private Boolean gaugeImportant;
-    @Expose @SerializedName("gauge_estimated")
-    private Boolean gaugeEstimated;
-    @Expose @SerializedName("gauge_perfect")
-    private Boolean gaugePerfect;
-    @Expose @SerializedName("range_comment")
-    private String rangeComment;
-    @Expose @SerializedName("reading_formatted")
-    private String readingFormatted;
-    @Expose @SerializedName("reading_delta")
-    private String readingDelta;
 //    @Expose @SerializedName("units") // User reported
 //    private String units;
-    @Expose @SerializedName("rc")
-    private String rc;
-    @Expose @SerializedName("color")
-    private String color;
-    @Expose @SerializedName("cond") // Low medium high
-    private String cond;
-    @Expose @SerializedName("unit")
-    private String unit;
 
-    public Integer getId() {
-        return id;
-    }
+    public ReachSearchResult toModel() {
+        ReachSearchResult.Builder builder = new ReachSearchResult.Builder();
 
-    public String getState() {
-        return state;
-    }
+        String name;
+        if (!TextUtils.isEmpty(altname)) {
+            name = altname;
+        } else {
+            name = section;
+        }
 
-    public String getRiver() {
-        return river;
-    }
+        builder.setId(id)
+                .setName(name)
+                .setRiver(river)
+                .setDifficulty(_class)
+                .setLastGaugeReading(readingFormatted)
+                .setFlowLevel(FlowLevel.fromAWApi(cond));
 
-    public String getSection() {
-        return section;
-    }
-
-    public String getAltname() {
-        return altname;
-    }
-
-    public String get_class() {
-        return _class;
-    }
-
-    public String getUpdated() {
-        return updated;
-    }
-
-    public String getReading() {
-        return reading;
-    }
-
-    public String getGaugeMin() {
-        return gaugeMin;
-    }
-
-    public String getGaugeMax() {
-        return gaugeMax;
-    }
-
-    public Integer getGaugeMetric() {
-        return gaugeMetric;
-    }
-
-    public Integer getGaugeId() {
-        return gaugeId;
-    }
-
-    public String getGaugeReading() {
-        return gaugeReading;
-    }
-
-    public String getLastGaugeReading() {
-        return lastGaugeReading;
-    }
-
-    public String getLastGaugeUpdated() {
-        return lastGaugeUpdated;
-    }
-
-    public Boolean getGaugeEstimated() {
-        return gaugeEstimated;
-    }
-
-    public Boolean getGaugePerfect() {
-        return gaugePerfect;
-    }
-
-    public String getRangeComment() {
-        return rangeComment;
-    }
-
-    public String getReadingFormatted() {
-        return readingFormatted;
-    }
-
-    public String getReadingDelta() {
-        return readingDelta;
-    }
-
-    public String getRc() {
-        return rc;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public String getCond() {
-        return cond;
-    }
-
-    public String getUnit() {
-        return unit;
+        return builder.build();
     }
 }

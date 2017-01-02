@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.model.api;
 
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -48,7 +49,7 @@ public class ReachDetailResponse {
     @Expose @SerializedName("tloc")
     private String tloc;
     @Expose @SerializedName("shuttledetails")
-    private Object shuttledetails = ""; // Text directions
+    private String shuttledetails = ""; // Text directions
     @Expose @SerializedName("abstract")
     private Object _abstract = "";
     @Expose @SerializedName("custom_destination")
@@ -91,44 +92,39 @@ public class ReachDetailResponse {
 //    @Expose @SerializedName("permitinfo")
 //    public Object permitinfo;
 
+
     public Integer getId() {
         return id;
     }
 
-    public String getRiverName() {
+    public String getRiver() {
         return river;
     }
 
-    public String getReachName() {
+    public String getSection() {
         return section;
     }
 
-    public String getCommonName() {
+    public String getAltname() {
         return altname;
     }
 
-    public String get_class() {
-        return _class;
+    public String getCounty() {
+        return county;
     }
 
-    public Object get_abstract() {
-        return _abstract;
-    }
-
-    public Integer getGaugeid() {
-        return gaugeid;
+    public String getZipcode() {
+        return zipcode;
     }
 
     public String getLength() {
         return length;
     }
 
-    @Nullable
     public Integer getAvggradient() {
         return avggradient;
     }
 
-    @Nullable
     public Integer getMaxgradient() {
         return maxgradient;
     }
@@ -141,52 +137,51 @@ public class ReachDetailResponse {
         return description;
     }
 
-    @Nullable
     public Integer getPhotoid() {
         return photoid;
     }
 
-    public String getPlat() {
-        return plat;
+    public LatLng getPutinLatLng() {
+        try {
+            double lat = Double.parseDouble(plat);
+            double lng = Double.parseDouble(plon);
+            return new LatLng(lat, lng);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
-    public String getPlon() {
-        return plon;
+    public LatLng getTakeoutLatLng() {
+        try {
+            double lat = Double.parseDouble(tlat);
+            double lng = Double.parseDouble(tlon);
+            return new LatLng(lat, lng);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
-    public String getTlat() {
-        return tlat;
+    public String get_class() {
+        return _class;
     }
 
-    public String getTlon() {
-        return tlon;
+    public String getShuttledetails() {
+        return shuttledetails;
     }
 
-    public String getPloc() {
-        return ploc;
-    }
-
-    public String getTloc() {
-        return tloc;
+    public Object get_abstract() {
+        return _abstract;
     }
 
     public Object getCustomDestination() {
         return customDestination;
     }
 
-    public String getCounty() {
-        return county;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
     public List<String> getStates() {
         return states;
     }
 
-    public Object getShuttledetails() {
-        return shuttledetails;
+    public Integer getGaugeid() {
+        return gaugeid;
     }
 }

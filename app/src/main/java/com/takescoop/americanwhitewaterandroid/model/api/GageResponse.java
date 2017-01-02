@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.model.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.takescoop.americanwhitewaterandroid.model.Gage;
 
 public class GageResponse {
 
@@ -16,9 +17,9 @@ public class GageResponse {
     @Expose @SerializedName("last_gauge_updated")
     private String lastGaugeUpdated;
     @Expose @SerializedName("gauge_comment")
-    private Object gaugeComment;
-    @Expose @SerializedName("gauge_data")
-    private Object gaugeData;
+    private String gaugeComment;
+//    @Expose @SerializedName("gauge_data")
+//    private Object gaugeData;
     @Expose @SerializedName("range_comment")
     private String rangeComment;
     @Expose @SerializedName("gauge_estimated")
@@ -70,63 +71,39 @@ public class GageResponse {
 //    @Expose @SerializedName("time_adjustment")
 //    public Object timeAdjustment;
 
-    public String getGaugeName() {
-        return gaugeName;
-    }
+    public Gage toModel() {
+        Gage.Builder builder = new Gage.Builder();
 
-    public Integer getGaugeId() {
-        return gaugeId;
-    }
+        Double delta = null;
+        try {
+            double currentReading = Double.parseDouble(gaugeReading);
+            double lastReading = Double.parseDouble(lastGaugeReading);
 
-    public String getGaugeReading() {
-        return gaugeReading;
-    }
+            delta = currentReading - lastReading;
+        } catch (NumberFormatException e) {
 
-    public String getLastGaugeReading() {
-        return lastGaugeReading;
-    }
+        }
 
-    public String getLastGaugeUpdated() {
-        return lastGaugeUpdated;
-    }
+        Integer lastUpdate = null;
+        try {
+            lastUpdate = Integer.parseInt(lastGaugeUpdated);
+        } catch (NumberFormatException e) {
 
-    public Object getGaugeComment() {
-        return gaugeComment;
-    }
+        }
 
-    public Object getGaugeData() {
-        return gaugeData;
-    }
+        builder.setId(gaugeId)
+                .setName(gaugeName)
+                .setCurrentLevel(gaugeReading)
+// TODO                .setLastUpdated()
+                .setUnit(GageUnit.findById(metricid).getUnit())
+                .setDelta(delta)
+                .setDeltaTimeInterval(lastUpdate)
+                .setGageComment(gaugeComment)
+                .setMin(min)
+                .setMax(max)
+                .setSource(source)
+                .setSourceId(sourceId);
 
-    public String getRangeComment() {
-        return rangeComment;
-    }
-
-    public Boolean getGaugeEstimated() {
-        return gaugeEstimated;
-    }
-
-    public Boolean getGaugeImportant() {
-        return gaugeImportant;
-    }
-
-    public Integer getMetricid() {
-        return metricid;
-    }
-
-    public String getMin() {
-        return min;
-    }
-
-    public String getMax() {
-        return max;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public String getSourceId() {
-        return sourceId;
+        return builder.build();
     }
 }
