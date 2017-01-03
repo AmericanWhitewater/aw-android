@@ -10,11 +10,14 @@ import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 
-public class AWApi {
+public enum AWApi {
+    Instance;
+
     private AWApiService webService;
 
     private interface AWApiService {
@@ -27,14 +30,14 @@ public class AWApi {
 //        @GET("River/state-summary/state/:stateabbreviation/.json")
 //        Observable<ReachSearchResponse> getReachesByState();
 
-        @GET("River/detail/id/:reachid/.json")
-        Observable<ReachResponse> getReachDetail();
+        @GET("River/detail/id/{reachId}/.json")
+        Observable<ReachResponse> getReachDetail(@Path("reachId") Integer reachId);
 
-        @GET("Article/view/articleid/:articleid/.json")
-        Observable<Article> getArticle();
+        @GET("Article/view/articleid/{articleid}/.json")
+        Observable<Article> getArticle(@Path("articleId") Integer articleId);
     }
 
-    protected AWApi() {
+    AWApi() {
         setupRestAdapters();
     }
 
@@ -71,7 +74,7 @@ public class AWApi {
             return Observable.empty();
         }
 
-        return webService.getReachDetail().map(new Func1<ReachResponse, Reach>() {
+        return webService.getReachDetail(reachId).map(new Func1<ReachResponse, Reach>() {
             @Override public Reach call(ReachResponse reachResponse) {
                 return reachResponse.toModel();
             }

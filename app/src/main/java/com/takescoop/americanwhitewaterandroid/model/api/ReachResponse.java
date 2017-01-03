@@ -3,7 +3,6 @@ package com.takescoop.americanwhitewaterandroid.model.api;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -15,50 +14,58 @@ import java.util.List;
 
 public class ReachResponse {
     @Expose @SerializedName("CContainerViewJSON_view")
-    public ReachContainerResponse reachResponse;
-
-    @Expose @SerializedName("CRiverRapidsGadgetJSON_view-rapids")
-    public RapidsResponse rapidsResponse;
+    public ReachContainerResponse reachContainerResponse;
 
     @Nullable
     public Reach toModel() {
-        if (reachResponse == null || reachResponse.info == null) {
+        if (reachContainerResponse == null || reachContainerResponse.reachMainResponse == null 
+                || reachContainerResponse.reachMainResponse.info == null) {
             return null;
         }
+        
+        ReachDetailResponse reachDetailResponse = reachContainerResponse.reachMainResponse.info;
 
         String name;
-        if (!TextUtils.isEmpty(reachResponse.info.getAltname())) {
-            name = reachResponse.info.getAltname();
+        if (!TextUtils.isEmpty(reachDetailResponse.getAltname())) {
+            name = reachDetailResponse.getAltname();
         } else {
-            name = reachResponse.info.getSection();
+            name = reachDetailResponse.getSection();
         }
 
         List<Gage> gages = Lists.newArrayList();
-        for (GageResponse response : reachResponse.gages) {
+        for (GageResponse response : reachContainerResponse.reachMainResponse.gages) {
             gages.add(response.toModel());
         }
 
         Reach.Builder builder = new Reach.Builder();
-        builder.setId(reachResponse.info.getId())
+        builder.setId(reachDetailResponse.getId())
                 .setName(name)
-                .setSectionName(reachResponse.info.getSection())
-                .setRiver(reachResponse.info.getRiver())
-                .setPhotoId(reachResponse.info.getPhotoid())
-                .setLength(reachResponse.info.getLength())
-                .setDifficulty(reachResponse.info.get_class())
-                .setAvgGradient(reachResponse.info.getAvggradient())
-                .setMaxGradient(reachResponse.info.getMaxgradient())
-                .setPutinLatLng(reachResponse.info.getPutinLatLng())
-                .setTakeoutLatLng(reachResponse.info.getTakeoutLatLng())
-                .setDescription(reachResponse.info.getDescription())
-                .setShuttleDetails(reachResponse.info.getShuttledetails())
+                .setSectionName(reachDetailResponse.getSection())
+                .setRiver(reachDetailResponse.getRiver())
+                .setPhotoId(reachDetailResponse.getPhotoid())
+                .setLength(reachDetailResponse.getLength())
+                .setDifficulty(reachDetailResponse.get_class())
+                .setAvgGradient(reachDetailResponse.getAvggradient())
+                .setMaxGradient(reachDetailResponse.getMaxgradient())
+                .setPutinLatLng(reachDetailResponse.getPutinLatLng())
+                .setTakeoutLatLng(reachDetailResponse.getTakeoutLatLng())
+                .setDescription(reachDetailResponse.getDescription())
+                .setShuttleDetails(reachDetailResponse.getShuttledetails())
                 .setGages(gages)
-                .setRapids(rapidsResponse.rapids);
+                .setRapids(reachContainerResponse.rapidsResponse.rapids);
 
         return builder.build();
     }
 
     private static class ReachContainerResponse {
+        @Expose @SerializedName("CRiverMainGadgetJSON_main")
+        public ReachMainResponse reachMainResponse;
+
+        @Expose @SerializedName("CRiverRapidsGadgetJSON_view-rapids")
+        public RapidsResponse rapidsResponse;
+    }
+
+    private static class ReachMainResponse {
         @Expose @SerializedName("info")
         private ReachDetailResponse info;
         @Expose @SerializedName("gages")
