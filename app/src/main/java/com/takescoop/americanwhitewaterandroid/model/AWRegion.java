@@ -86,4 +86,16 @@ public enum AWRegion {
         this.title = title;
         this.country = country;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 }

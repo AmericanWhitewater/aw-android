@@ -1,7 +1,13 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
 public enum FlowLevel {
-    Low, Runnable, High, Frozen, NoInfo;
+    Low("low"), Runnable("run"), High("hig"), Frozen(null), NoInfo(null);
+
+    private String apiQueryCode;
+
+    FlowLevel(String apiQueryCode) {
+        this.apiQueryCode = apiQueryCode;
+    }
 
     // Map values from AW api
     public static FlowLevel fromAWApi(String flowLevel) {
@@ -15,5 +21,9 @@ public enum FlowLevel {
             default:
                 return NoInfo;
         }
+    }
+
+    public String getApiQueryCode() {
+        return apiQueryCode;
     }
 }
