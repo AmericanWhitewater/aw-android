@@ -68,7 +68,7 @@ public class ReachResponse {
     private static class ReachMainResponse {
         @Expose @SerializedName("info")
         private ReachDetailResponse info;
-        @Expose @SerializedName("gages")
+        @Expose @SerializedName("gauges")
         private List<GageResponse> gages = Lists.newArrayList();
     }
 
