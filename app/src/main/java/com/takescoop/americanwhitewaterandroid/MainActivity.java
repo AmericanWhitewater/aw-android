@@ -2,19 +2,18 @@ package com.takescoop.americanwhitewaterandroid;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.crashlytics.android.answers.LoginEvent;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
@@ -22,7 +21,8 @@ import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 
 import java.util.List;
 
-import rx.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableSingleObserver;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,31 +53,23 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        AWApi.Instance.getReaches(new Filter()).subscribe(new Observer<List<ReachSearchResult>>() {
-            @Override public void onCompleted() {
-
-            }
-
-            @Override public void onError(Throwable e) {
-
-            }
-
-            @Override public void onNext(List<ReachSearchResult> reachSearchResults) {
+        AWApi.Instance.getReaches(new Filter()).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
+            @Override public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
                 Log.w("test", reachSearchResults.toString());
+            }
+
+            @Override public void onError(@NonNull Throwable e) {
+
             }
         });
 
-        AWApi.Instance.getReach(10386).subscribe(new Observer<Reach>() {
-            @Override public void onCompleted() {
-
-            }
-
-            @Override public void onError(Throwable e) {
-                Log.e("test", e.getMessage());
-            }
-
-            @Override public void onNext(Reach reach) {
+        AWApi.Instance.getReach(10386).subscribe(new DisposableSingleObserver<Reach>() {
+            @Override public void onSuccess(@NonNull Reach reach) {
                 Log.w("test", reach.toString());
+            }
+
+            @Override public void onError(@NonNull Throwable e) {
+                Log.e("test", e.getMessage());
             }
         });
     }

@@ -9,9 +9,35 @@
 
 # Add any project specific keep options here:
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# The simpliest strategy is to not run proguard against your project's own code.
+# This doesn't provide the benefits of optimization & obfuscation against your
+# project, but will still strip the libraries. The advantage is that your app will
+# work without any subsequent effort. If you choose this strategy, the proguard
+# configuration for the project is simply the line below.
+
+-keep class com.takescoop.android.scoopandroid.** { *; }
+
+# The more involved strategy is to specifically provide rules to keep portions of your
+# app's codebase unmodified while allowing proguard to optimize the rest.
+
+# The first decision is whether or not you want to obfuscate your code. This provides no
+# performance benefit but makes it harder for other people to read your source code.
+# Unfortunately obfuscation can cause issues for code that uses reflection or a few other
+# techniques. The default is to obfuscate.
+
+-dontobfuscate
+
+# Additionally you will need to keep specific classes. A common use case is keeping all
+# of the models that are JSON parsed using something like Jackson.
+
+#-keep class com.yourpackage.app.model.User { *; }
+
+# For tests, necessary to use Dagger + Espresso + Proguard
+-keep class javax.inject.* { *; }
+-dontwarn com.google.common.**
+
+#http://stackoverflow.com/questions/21342700/proguard-causing-runtimeexception-unmarshalling-unknown-type-code-in-parcelabl
+# Fixes a rare exception in the Background Location Receiver https://fabric.io/takescoop/android/apps/com.takescoop.android.scoopandroid/issues/5887a4d60aeb16625b7b0791
+-keepclassmembers class * implements android.os.Parcelable {
+    static ** CREATOR;
+}
