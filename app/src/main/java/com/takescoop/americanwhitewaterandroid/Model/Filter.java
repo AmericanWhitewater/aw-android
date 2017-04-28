@@ -3,11 +3,12 @@ package com.takescoop.americanwhitewaterandroid.model;
 import android.support.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
 public class Filter {
-    private List<AWRegion> regions;
+    private List<AWRegion> regions = Lists.newArrayList();
 //    private LatLngBounds bounds;
     private FlowLevel flowLevel;
     private Difficulty difficultyLowerBound;

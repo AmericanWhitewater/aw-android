@@ -14,6 +14,30 @@ public class ReachSearchResult {
 
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRiver() {
+        return river;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public String getLastGaugeReading() {
+        return lastGaugeReading;
+    }
+
+    public FlowLevel getFlowLevel() {
+        return flowLevel;
+    }
+
     public static class Builder {
         private Integer id;
         private String name = "";

@@ -7,4 +7,8 @@
     <string name="runs">Runs</string>
     <string name="favorites">Favorites</string>
     <string name="map">Map</string>
+    <string name="last_update">Last Update Yesterday at 2:13pm PST</string>
+    <string name="show_runnable">Only show runnable results</string>
+    <string name="level_class">Level: %1$s, Class: %2$s</string>
+
 </resources>

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
@@ -41,15 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -60,13 +52,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        AWApi.Instance.getReaches(new Filter()).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
+        Filter filter = new Filter();
+        filter.addRegion(AWRegion.Kansas);
+        AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
                 Log.w("test", reachSearchResults.toString());
             }
 
             @Override public void onError(@NonNull Throwable e) {
-
+                Log.e(TAG, "onError " + e);
             }
         });
 
