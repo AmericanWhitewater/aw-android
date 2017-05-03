@@ -10,5 +10,7 @@
     <string name="last_update">Last Update Yesterday at 2:13pm PST</string>
     <string name="show_runnable">Only show runnable results</string>
     <string name="level_class">Level: %1$s, Class: %2$s</string>
+    <string name="region_tab_title">By Region</string>
+    <string name="fr_current_location">(current location)</string>
 
 </resources>

@@ -16,10 +16,10 @@ import static com.takescoop.americanwhitewaterandroid.view.TabViewState.Favorite
 import static com.takescoop.americanwhitewaterandroid.view.TabViewState.Map;
 import static com.takescoop.americanwhitewaterandroid.view.TabViewState.News;
 import static com.takescoop.americanwhitewaterandroid.view.TabViewState.Runs;
+import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.DISABLED_ALPHA;
+import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED_ALPHA;
 
 public class MainTabView extends LinearLayout {
-    public static final float DISABLED_ALPHA = .66f;
-    public static final float ENABLED_ALPHA = 1.0f;
 
     // Initialized empty
     private TabListener tabListener = emptyListener();
