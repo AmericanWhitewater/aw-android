@@ -1,9 +1,7 @@
 package com.takescoop.americanwhitewaterandroid;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,15 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RelativeLayout;
 
+import com.takescoop.americanwhitewaterandroid.controller.BackEventResult;
+import com.takescoop.americanwhitewaterandroid.controller.MainContainer;
+import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
+import com.takescoop.americanwhitewaterandroid.controller.MainParentListener;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
-import com.takescoop.americanwhitewaterandroid.view.MainTabView;
+import com.takescoop.americanwhitewaterandroid.view.MainView;
 
 import java.util.List;
 
@@ -29,10 +29,12 @@ import butterknife.ButterKnife;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    @BindView(R.id.container) RelativeLayout container;
+    private MainNavigator mainNavigator;
+
+    @BindView(R.id.main_view) MainView mainView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +44,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        initNavDrawer(toolbar);
+        MainContainer mainContainer = new MainContainer(this, getSupportActionBar(), mainView);
+        mainNavigator = new MainNavigator(mainContainer);
+        mainView.setTabListener(mainNavigator);
+        mainNavigator.goToViewState(MainNavigator.ViewState.Runs);
 
         Filter filter = new Filter();
         filter.addRegion(AWRegion.Kansas);
@@ -81,7 +79,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            BackEventResult result = mainNavigator.onBack();
+            if (result == BackEventResult.NotHandled) {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -100,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
+            return true;
+        } else if (id == R.id.action_filter) {
             return true;
         }
 
@@ -130,5 +133,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void initNavDrawer(Toolbar toolbar) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 }
