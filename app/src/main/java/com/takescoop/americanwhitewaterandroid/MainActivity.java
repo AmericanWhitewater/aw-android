@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import com.takescoop.americanwhitewaterandroid.controller.BackEventResult;
 import com.takescoop.americanwhitewaterandroid.controller.MainContainer;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
-import com.takescoop.americanwhitewaterandroid.controller.MainParentListener;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
@@ -29,7 +28,7 @@ import butterknife.ButterKnife;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MainNavigator mainNavigator;
@@ -102,8 +101,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
+            mainNavigator.goToViewState(MainNavigator.ViewState.Search);
             return true;
         } else if (id == R.id.action_filter) {
+            mainNavigator.goToViewState(MainNavigator.ViewState.Filter);
             return true;
         }
 

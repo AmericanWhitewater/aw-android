@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.view.FilterDifficultyView;
+import com.takescoop.americanwhitewaterandroid.view.FilterDistanceView;
+import com.takescoop.americanwhitewaterandroid.view.FilterRegionView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +21,8 @@ import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.DISABLE
 import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED_ALPHA;
 
 public class FilterVC extends LinearLayout {
+    private FilterListener filterListener;
+
     @BindView(R.id.region_tab) TextView regionTab;
     @BindView(R.id.distance_tab) TextView distanceTab;
     @BindView(R.id.difficulty_tab) TextView difficultyTab;
@@ -31,6 +36,10 @@ public class FilterVC extends LinearLayout {
         Region, Distance, Difficulty;
     }
 
+    public interface FilterListener {
+        void onClose();
+    }
+
     public FilterVC(Context context) {
         super(context);
 
@@ -42,6 +51,10 @@ public class FilterVC extends LinearLayout {
         super(context, attrs);
 
         LayoutInflater.from(context).inflate(R.layout.view_filter, this);
+    }
+
+    public void setFilterListener(FilterListener filterListener) {
+        this.filterListener = filterListener;
     }
 
     @OnClick(R.id.region_tab)
@@ -59,15 +72,39 @@ public class FilterVC extends LinearLayout {
         showViewState(FilterViewState.Difficulty);
     }
 
+    @OnClick(R.id.close)
+    protected void onClose() {
+        if (filterListener != null) {
+            filterListener.onClose();
+        }
+    }
+
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+
+        showViewState(FilterViewState.Region);
     }
 
     private void showViewState(FilterViewState viewState) {
         updateTabUI(viewState);
+
+        switch (viewState) {
+            case Region:
+                container.removeAllViews();
+                container.addView(new FilterRegionView(getContext()));
+                break;
+            case Distance:
+                container.removeAllViews();
+                container.addView(new FilterDistanceView(getContext()));
+                break;
+            case Difficulty:
+                container.removeAllViews();
+                container.addView(new FilterDifficultyView(getContext()));
+                break;
+        }
     }
 
     private void updateTabUI(FilterViewState viewState) {
