@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginBottom="28dp">
+        android:layout_height="56dp">
+
         <TextView
             android:id="@+id/fr_current_location"
             style="@style/Headline1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"/>
+            android:layout_height="match_parent"
+            android:layout_marginLeft="74dp"
+            android:gravity="center_vertical"
+            android:text="Washington"
+            android:textColor="#314a5f"
+            android:textSize="16sp"/>
 
         <TextView
             style="@style/Label1"
-            android:text="@string/fr_current_location"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="bottom"/>
+            android:layout_marginLeft="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/fr_current_location"
+            android:textColor="#314a5f"
+            android:textSize="14sp"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_width="20dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="4dp"
             app:srcCompat="@drawable/ic_check"/>
     </LinearLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/fr_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -16,6 +16,8 @@
 
     <color name="font_black">#273B4C</color>
     <color name="font_grey">#455A64</color>
+    <color name="font_grey2">#4d4d4d</color>
     <color name="font_green">#00C6A9</color>
     <color name="font_clickable">#007CB3</color>
+    <color name="font_blue">#2C7DC2</color>
 </resources>

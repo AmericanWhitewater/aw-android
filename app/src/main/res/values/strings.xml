@@ -11,7 +11,7 @@
     <string name="show_runnable">Only show runnable results</string>
     <string name="level_class">Level: %1$s, Class: %2$s</string>
     <string name="region_tab_title">By Region</string>
-    <string name="fr_current_location">(current location)</string>
+    <string name="fr_current_location"> (current location)</string>
     <string name="difficulty_tab_title">By Class</string>
     <string name="distance_tab_title">By Distance</string>
     <string name="filters_title">Filters</string>

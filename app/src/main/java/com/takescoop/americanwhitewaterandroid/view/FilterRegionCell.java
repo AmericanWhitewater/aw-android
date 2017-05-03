@@ -1,0 +1,51 @@
+package com.takescoop.americanwhitewaterandroid.view;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.model.AWRegion;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class FilterRegionCell extends LinearLayout {
+    @BindView(R.id.letter) TextView letterText;
+    @BindView(R.id.title) TextView titleText;
+
+    public FilterRegionCell(Context context) {
+        super(context);
+
+        LayoutInflater.from(context).inflate(R.layout.cell_filter_region, this);
+        onFinishInflate();
+    }
+
+    public FilterRegionCell(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        LayoutInflater.from(context).inflate(R.layout.cell_filter_region, this);
+    }
+
+    @Override
+    public void onFinishInflate() {
+        super.onFinishInflate();
+
+        ButterKnife.bind(this);
+    }
+
+    public void showLetter(String letter) {
+        letterText.setText(letter);
+        letterText.setVisibility(VISIBLE);
+    }
+
+    public void showRegion(AWRegion region) {
+        titleText.setText(region.getTitle());
+    }
+
+    public void hideLetter() {
+        letterText.setVisibility(INVISIBLE);
+    }
+}
