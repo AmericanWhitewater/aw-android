@@ -17,7 +17,7 @@
             android:layout_marginLeft="74dp"
             android:gravity="center_vertical"
             android:text="Washington"
-            android:textColor="#314a5f"
+            android:textColor="@color/font_black"
             android:textSize="16sp"/>
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_marginLeft="4dp"
             android:gravity="center_vertical"
             android:text="@string/fr_current_location"
-            android:textColor="#314a5f"
+            android:textColor="@color/font_black"
             android:textSize="14sp"/>
 
         <ImageView

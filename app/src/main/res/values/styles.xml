@@ -5,7 +5,8 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/accent</item>
+        <!--Changing the accent color will change the checked color of checkboxes!-->
+        <item name="colorAccent">@color/primary</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

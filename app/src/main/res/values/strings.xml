@@ -15,5 +15,11 @@
     <string name="difficulty_tab_title">By Class</string>
     <string name="distance_tab_title">By Distance</string>
     <string name="filters_title">Filters</string>
-
+    <string name="filter_difficulty_title">What difficulties do you want to try?</string>
+    <string name="class1">Class I</string>
+    <string name="class2">Class II</string>
+    <string name="class3">Class III</string>
+    <string name="class4">Class IV</string>
+    <string name="class5">Class V</string>
+    <string name="class5_plus">Class V+</string>
 </resources>

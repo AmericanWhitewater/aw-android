@@ -3,6 +3,7 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import butterknife.ButterKnife;
 public class FilterRegionCell extends LinearLayout {
     @BindView(R.id.letter) TextView letterText;
     @BindView(R.id.title) TextView titleText;
+    @BindView(R.id.checkbox) ImageView checkbox;
 
     public FilterRegionCell(Context context) {
         super(context);
@@ -47,5 +49,14 @@ public class FilterRegionCell extends LinearLayout {
 
     public void hideLetter() {
         letterText.setVisibility(INVISIBLE);
+    }
+
+    public void setCheckboxVisible(boolean isVisible) {
+        if (isVisible) {
+            checkbox.setVisibility(VISIBLE);
+        } else {
+            checkbox.setVisibility(GONE);
+        }
+
     }
 }

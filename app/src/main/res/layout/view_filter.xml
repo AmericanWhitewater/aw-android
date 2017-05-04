@@ -114,8 +114,22 @@
             android:elevation="2dp"/>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <com.takescoop.americanwhitewaterandroid.view.FilterRegionView
+            android:id="@+id/filter_region"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.takescoop.americanwhitewaterandroid.view.FilterDistanceView
+            android:id="@+id/filter_distance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.takescoop.americanwhitewaterandroid.view.FilterDifficultyView
+            android:id="@+id/filter_difficulty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
 </LinearLayout>

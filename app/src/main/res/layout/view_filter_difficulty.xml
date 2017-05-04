@@ -1,7 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
+    <TextView
+        style="@style/Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/filter_difficulty_title"
+        android:textColor="@color/font_black"/>
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/class_1"
+        style="@style/Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/class1"/>
+
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/class_2"
+        style="@style/Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/class2"/>
+
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/class_3"
+        style="@style/Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/class3"/>
+
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/class_4"
+        style="@style/Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/class4"/>
+
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/class_5"
+        style="@style/Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/class5"/>
+
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/class_5_plus"
+        style="@style/Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/class5_plus"/>
 </LinearLayout>

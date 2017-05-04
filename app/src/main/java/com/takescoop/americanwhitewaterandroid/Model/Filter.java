@@ -18,6 +18,10 @@ public class Filter {
         return regions;
     }
 
+    public void setRegions(List<AWRegion> regions) {
+        this.regions = regions;
+    }
+
     public void addRegion(AWRegion region) {
         regions.add(region);
     }
@@ -48,7 +52,7 @@ public class Filter {
         return difficultyLowerBound;
     }
 
-    public void setDifficultyLowerBound(Difficulty difficultyLowerBound) {
+    public void setDifficultyLowerBound(@Nullable Difficulty difficultyLowerBound) {
         this.difficultyLowerBound = difficultyLowerBound;
     }
 
@@ -57,7 +61,7 @@ public class Filter {
         return difficultyUpperBound;
     }
 
-    public void setDifficultyUpperBound(Difficulty difficultyUpperBound) {
+    public void setDifficultyUpperBound(@Nullable Difficulty difficultyUpperBound) {
         this.difficultyUpperBound = difficultyUpperBound;
     }
 }

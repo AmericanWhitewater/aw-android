@@ -21,10 +21,11 @@
         android:layout_marginLeft="36dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:textColor="@color/font_grey2"
+        android:textColor="@color/font_black"
         android:textSize="16sp"/>
 
     <ImageView
+        android:id="@+id/checkbox"
         android:layout_width="20dp"
         android:layout_height="16dp"
         android:layout_gravity="center_vertical"

@@ -4,14 +4,18 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.model.AWRegion;
+import com.takescoop.americanwhitewaterandroid.model.Difficulty;
+import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.view.FilterDifficultyView;
 import com.takescoop.americanwhitewaterandroid.view.FilterDistanceView;
 import com.takescoop.americanwhitewaterandroid.view.FilterRegionView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,14 +34,17 @@ public class FilterVC extends LinearLayout {
     @BindView(R.id.region_tab_highlight) View regionTabHighlight;
     @BindView(R.id.distance_tab_highlight) View distanceTabHighlight;
     @BindView(R.id.difficulty_tab_highlight) View difficultyTabHighlight;
-    @BindView(R.id.container) FrameLayout container;
+
+    @BindView(R.id.filter_region) FilterRegionView filterRegion;
+    @BindView(R.id.filter_distance) FilterDistanceView filterDistance;
+    @BindView(R.id.filter_difficulty) FilterDifficultyView filterDifficulty;
 
     public enum FilterViewState {
         Region, Distance, Difficulty;
     }
 
     public interface FilterListener {
-        void onClose();
+        void onClose(Filter filter);
     }
 
     public FilterVC(Context context) {
@@ -53,8 +60,13 @@ public class FilterVC extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.view_filter, this);
     }
 
-    public void setFilterListener(FilterListener filterListener) {
-        this.filterListener = filterListener;
+    @Override
+    public void onFinishInflate() {
+        super.onFinishInflate();
+
+        ButterKnife.bind(this);
+
+        showViewState(FilterViewState.Region);
     }
 
     @OnClick(R.id.region_tab)
@@ -68,24 +80,28 @@ public class FilterVC extends LinearLayout {
     }
 
     @OnClick(R.id.difficulty_tab)
-    protected void onDifficultylicked(){
+    protected void onDifficultylicked() {
         showViewState(FilterViewState.Difficulty);
     }
 
     @OnClick(R.id.close)
     protected void onClose() {
         if (filterListener != null) {
-            filterListener.onClose();
+            filterListener.onClose(getFilter());
         }
     }
 
-    @Override
-    public void onFinishInflate() {
-        super.onFinishInflate();
+    public void setFilterListener(FilterListener filterListener) {
+        this.filterListener = filterListener;
+    }
+    public Filter getFilter() {
+        Filter filter = new Filter();
+        filter.setRegions(filterRegion.getSelectedRegions());
 
-        ButterKnife.bind(this);
+        filter.setDifficultyLowerBound(filterDifficulty.getLowerBound());
+        filter.setDifficultyUpperBound(filterDifficulty.getUpperBound());
 
-        showViewState(FilterViewState.Region);
+        return filter;
     }
 
     private void showViewState(FilterViewState viewState) {
@@ -93,16 +109,19 @@ public class FilterVC extends LinearLayout {
 
         switch (viewState) {
             case Region:
-                container.removeAllViews();
-                container.addView(new FilterRegionView(getContext()));
+                filterRegion.setVisibility(VISIBLE);
+                filterDistance.setVisibility(INVISIBLE);
+                filterDifficulty.setVisibility(INVISIBLE);
                 break;
             case Distance:
-                container.removeAllViews();
-                container.addView(new FilterDistanceView(getContext()));
+                filterRegion.setVisibility(INVISIBLE);
+                filterDistance.setVisibility(VISIBLE);
+                filterDifficulty.setVisibility(INVISIBLE);
                 break;
             case Difficulty:
-                container.removeAllViews();
-                container.addView(new FilterDifficultyView(getContext()));
+                filterRegion.setVisibility(INVISIBLE);
+                filterDistance.setVisibility(INVISIBLE);
+                filterDifficulty.setVisibility(VISIBLE);
                 break;
         }
     }

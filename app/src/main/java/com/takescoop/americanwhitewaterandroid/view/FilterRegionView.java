@@ -5,16 +5,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,9 +51,15 @@ public class FilterRegionView extends LinearLayout {
         list.setAdapter(new FilterRegionAdapter(getContext()));
     }
 
+    public List<AWRegion> getSelectedRegions() {
+        FilterRegionAdapter adapter = (FilterRegionAdapter) list.getAdapter();
+        return Lists.newArrayList(adapter.getSelections());
+    }
+
     public class FilterRegionAdapter extends RecyclerView.Adapter<FilterRegionAdapter.FilterRegionCellViewHolder> {
         private Context context;
         private List<AWRegion> regions = Lists.newArrayList(AWRegion.values());
+        private Set<AWRegion> selections = Sets.newHashSet();
 
         public FilterRegionAdapter(Context context) {
             this.context = context;
@@ -74,6 +85,17 @@ public class FilterRegionView extends LinearLayout {
             } else {
                 holder.getFilterCell().hideLetter();
             }
+
+            holder.getFilterCell().setCheckboxVisible(isSelected(region));
+            holder.getFilterCell().setOnClickListener(v -> {
+                if (isSelected(region)) {
+                    selections.remove(region);
+                } else {
+                    selections.add(region);
+                }
+
+                holder.getFilterCell().setCheckboxVisible(isSelected(region));
+            });
         }
 
         @Override
@@ -81,8 +103,16 @@ public class FilterRegionView extends LinearLayout {
             return regions.size();
         }
 
+        public Set<AWRegion> getSelections() {
+            return selections;
+        }
+
         private boolean hasDifferentFirstLetter(AWRegion region1, AWRegion region2) {
             return region1.getTitle().charAt(0) != region2.getTitle().charAt(0);
+        }
+
+        private boolean isSelected(AWRegion region) {
+            return selections.contains(region);
         }
 
         class FilterRegionCellViewHolder extends RecyclerView.ViewHolder {
