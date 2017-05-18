@@ -22,4 +22,9 @@
     <string name="class4">Class IV</string>
     <string name="class5">Class V</string>
     <string name="class5_plus">Class V+</string>
+    <string name="details">Details</string>
+    <string name="read_more">...READ MORE</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="length">Length</string>
+    <string name="gradient">Gradient</string>
 </resources>

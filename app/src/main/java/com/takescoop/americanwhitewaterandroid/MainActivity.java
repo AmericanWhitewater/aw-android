@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mainNavigator.goToViewState(MainNavigator.ViewState.Runs);
 
         Filter filter = new Filter();
-        filter.addRegion(AWRegion.Kansas);
+        filter.addRegion(AWRegion.NewHampshire);
         AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
                 Log.w("test", reachSearchResults.toString());

@@ -8,14 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.R;
-import com.takescoop.americanwhitewaterandroid.model.AWRegion;
-import com.takescoop.americanwhitewaterandroid.model.Difficulty;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.view.FilterDifficultyView;
 import com.takescoop.americanwhitewaterandroid.view.FilterDistanceView;
 import com.takescoop.americanwhitewaterandroid.view.FilterRegionView;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,6 +90,7 @@ public class FilterVC extends LinearLayout {
     public void setFilterListener(FilterListener filterListener) {
         this.filterListener = filterListener;
     }
+
     public Filter getFilter() {
         Filter filter = new Filter();
         filter.setRegions(filterRegion.getSelectedRegions());

@@ -32,12 +32,7 @@ public class MainContainer {
                 break;
 
             case Runs:
-                mainView.getTabContainer().removeAllViews();
-                mainView.getTabContainer().addView(new RunsView(context));
-
-                mainView.hideModal();
-                actionBar.show();
-                break;
+                throw new IllegalArgumentException("Use the method with dependencies");
 
             case Favorites:
                 break;
@@ -82,5 +77,16 @@ public class MainContainer {
                 actionBar.show();
                 break;
         }
+    }
+
+    public void showRunsView(RunsView.RunsListener runsListener) {
+        RunsView runsView = new RunsView(context);
+        runsView.setRunsListener(runsListener);
+
+        mainView.getTabContainer().removeAllViews();
+        mainView.getTabContainer().addView(runsView);
+
+        mainView.hideModal();
+        actionBar.show();
     }
 }

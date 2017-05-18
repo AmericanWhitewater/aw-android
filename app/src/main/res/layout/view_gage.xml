@@ -4,4 +4,20 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <com.takescoop.americanwhitewaterandroid.view.GageCell
+        android:id="@+id/gage_cell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/reach_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -1,6 +1,9 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
+import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.LatLng;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
@@ -19,9 +22,79 @@ public class Reach {
     private String description = "";
     private String shuttleDetails = "";
 
-    private List<Gage> gages;
-    private List<Rapid> rapids;
-    
+    private List<Gage> gages = Lists.newArrayList();
+    private List<Rapid> rapids = Lists.newArrayList();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public String getRiver() {
+        return river;
+    }
+
+    public Integer getPhotoId() {
+        return photoId;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public Integer getAvgGradient() {
+        return avgGradient;
+    }
+
+    public Integer getMaxGradient() {
+        return maxGradient;
+    }
+
+    public LatLng getPutinLatLng() {
+        return putinLatLng;
+    }
+
+    public LatLng getTakeoutLatLng() {
+        return takeoutLatLng;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getShuttleDetails() {
+        return shuttleDetails;
+    }
+
+    // Returns the first gage or null
+    @Nullable
+    public Gage getGage() {
+        if (gages.size() == 0) {
+            return null;
+        }
+
+        return gages.get(0);
+    }
+
+    public List<Gage> getGages() {
+        return gages;
+    }
+
+    public List<Rapid> getRapids() {
+        return rapids;
+    }
+
     public static class Builder {
         private Integer id;
         private String name = "";

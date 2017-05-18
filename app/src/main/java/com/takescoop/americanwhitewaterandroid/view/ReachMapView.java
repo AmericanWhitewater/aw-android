@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.model.Reach;
 
 import butterknife.ButterKnife;
 
@@ -29,5 +30,9 @@ public class ReachMapView extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+    }
+
+    public void showReach(Reach reach) {
+
     }
 }

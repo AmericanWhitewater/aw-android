@@ -1,5 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.model.api;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -26,8 +27,11 @@ public enum AWApi {
     private interface AWApiService {
         @GET("River/search/.json")
         Single<List<ReachSearchResponse>> getReaches(
-                @Query("state") String state, @Query("level") String level,
-                @Query("atleast") String difficultyLowerBound, @Query("atmost") String difficultyUpperBound);
+                @Query("river") String searchText,
+                @Query("state") String state,
+                @Query("level") String level,
+                @Query("atleast") String difficultyLowerBound,
+                @Query("atmost") String difficultyUpperBound);
 
         @GET("River/geo-summary/.json")
         Single<List<ReachSearchResponse>> getReachesByGeo(@Query("BBOX") String bounds);
@@ -50,35 +54,23 @@ public enum AWApi {
         webService = ApiUtils.getRestAdapter().create(AWApiService.class);
     }
 
-    public Single<List<ReachSearchResult>> getReaches(Filter filter) {
-        //TODO add multiple region support
-        String regionCode = null;
-        if (filter.getRegions() != null && filter.getRegions().size() > 0) {
-            regionCode = filter.getRegions().get(0).getCode();
-        }
+    public Single<List<ReachSearchResult>> getReaches(@Nullable String searchText) {
+        return getReaches(searchText, null);
+    }
 
-        String level = null;
-        if (filter.getFlowLevel() != null) {
-            level = filter.getFlowLevel().getApiQueryCode();
-        }
+    public Single<List<ReachSearchResult>> getReaches(@Nullable Filter filter) {
+        return getReaches(null, filter);
+    }
 
-        String lowerDifficulty = null;
-        if (filter.getDifficultyLowerBound() != null) {
-            lowerDifficulty = filter.getDifficultyLowerBound().getTitle();
-        }
-
-        String upperDifficulty = null;
-        if (filter.getDifficultyUpperBound() != null) {
-            upperDifficulty = filter.getDifficultyUpperBound().getTitle();
-        }
-
-        return webService.getReaches(regionCode, level, lowerDifficulty, upperDifficulty).map(reachSearchResponses -> {
-            List<ReachSearchResult> results = Lists.newArrayList();
-            for (ReachSearchResponse response : reachSearchResponses) {
-                results.add(response.toModel());
-            }
-            return results;
-        }).observeOn(AndroidSchedulers.mainThread());
+    private Single<List<ReachSearchResult>> getReaches(@Nullable String searchText, @Nullable Filter filter) {
+        return webService.getReaches(searchText, getRegions(filter), getFlowLevelApiCode(filter), getLowerDifficulty(filter), getUpperDifficulty(filter))
+                .map(reachSearchResponses -> {
+                    List<ReachSearchResult> results = Lists.newArrayList();
+                    for (ReachSearchResponse response : reachSearchResponses) {
+                        results.add(response.toModel());
+                    }
+                    return results;
+                }).observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<List<ReachSearchResult>> getReaches(LatLngBounds bounds) {
@@ -97,10 +89,47 @@ public enum AWApi {
     }
 
     public Single<Reach> getReach(Integer reachId) {
-        if (reachId == 0) {
+        if (reachId == null || reachId == 0) {
             return Single.error(new Exception("No reach id"));
         }
 
         return webService.getReachDetail(reachId).map(ReachResponse::toModel).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private String getRegions(@Nullable Filter filter) {
+        //TODO add multiple region support
+        String regionCode = null;
+        if (filter != null && filter.getRegions() != null && filter.getRegions().size() > 0) {
+            regionCode = filter.getRegions().get(0).getCode();
+        }
+
+        return regionCode;
+    }
+
+    private String getFlowLevelApiCode(@Nullable Filter filter) {
+        String level = null;
+        if (filter != null && filter.getFlowLevel() != null) {
+            level = filter.getFlowLevel().getApiQueryCode();
+        }
+
+        return level;
+    }
+
+    private String getLowerDifficulty(@Nullable Filter filter) {
+        String lowerDifficulty = null;
+        if (filter != null && filter.getDifficultyLowerBound() != null) {
+            lowerDifficulty = filter.getDifficultyLowerBound().getTitle();
+        }
+
+        return lowerDifficulty;
+    }
+
+    private String getUpperDifficulty(@Nullable Filter filter) {
+        String upperDifficulty = null;
+        if (filter != null && filter.getDifficultyUpperBound() != null) {
+            upperDifficulty = filter.getDifficultyUpperBound().getTitle();
+        }
+
+        return upperDifficulty;
     }
 }

@@ -18,7 +18,51 @@ public class Gage {
     private String max = "";
     private String source = "";
     private String sourceId = "";
-    
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public Instant getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public Double getDelta() {
+        return delta;
+    }
+
+    public int getDeltaTimeInterval() {
+        return deltaTimeInterval;
+    }
+
+    public String getGageComment() {
+        return gageComment;
+    }
+
+    public String getMin() {
+        return min;
+    }
+
+    public String getMax() {
+        return max;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
     public static class Builder {
         private Integer id;
         private String name = "";

@@ -28,10 +28,15 @@ import io.reactivex.observers.DisposableSingleObserver;
 
 public class RunsView extends RelativeLayout {
     private static final String TAG = RunsView.class.getSimpleName();
+    private RunsListener runsListener;
 
     @BindView(R.id.view_run_last_updated_text) TextView lastUpdatedText;
     @BindView(R.id.view_run_list) RecyclerView runList;
     @BindView(R.id.view_run_show_runnable) Switch showRunnableSwitch;
+
+    public interface RunsListener {
+        void onReachClick(int reachId);
+    }
 
     public RunsView(Context context) {
         super(context);
@@ -69,7 +74,10 @@ public class RunsView extends RelativeLayout {
                 Log.e(TAG, "onError " + e);
             }
         });
+    }
 
+    public void setRunsListener(RunsListener runsListener) {
+        this.runsListener = runsListener;
     }
 
     public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHolder> {
@@ -95,6 +103,12 @@ public class RunsView extends RelativeLayout {
         public void onBindViewHolder(RunCellViewHolder holder, int position) {
             ReachSearchResult result = searchResults.get(position);
             holder.getRunCell().showResult(result);
+
+            holder.getRunCell().setOnClickListener(v -> {
+                if (runsListener != null) {
+                    runsListener.onReachClick(result.getId());
+                }
+            });
         }
 
         @Override
@@ -115,6 +129,5 @@ public class RunsView extends RelativeLayout {
                 return runCell;
             }
         }
-
     }
 }

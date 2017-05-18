@@ -49,10 +49,33 @@ public class RunCell extends LinearLayout {
 
         //TODO favorite
         favorite.setColorFilter(ContextCompat.getColor(getContext(), R.color.font_grey));
+
+        showActive();
     }
 
     public void showReach(Reach reach) {
 
+        showActive();
+    }
+
+    public void showInactive() {
+        highlight.setVisibility(GONE);
+        level.setVisibility(GONE);
+        favorite.setVisibility(GONE);
+
+        title.setTextColor(ContextCompat.getColor(getContext(), R.color.font_grey));
+
+        this.setAlpha(.38f);
+    }
+
+    private void showActive() {
+        highlight.setVisibility(VISIBLE);
+        level.setVisibility(VISIBLE);
+        favorite.setVisibility(VISIBLE);
+
+        title.setTextColor(ContextCompat.getColor(getContext(), R.color.font_black));
+
+        this.setAlpha(1.0f);
     }
 
     private void showFlowLevel(FlowLevel flowLevel) {
