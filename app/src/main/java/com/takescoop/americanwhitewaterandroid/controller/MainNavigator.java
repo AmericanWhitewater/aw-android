@@ -1,57 +1,59 @@
 package com.takescoop.americanwhitewaterandroid.controller;
 
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
+import com.takescoop.americanwhitewaterandroid.view.RunsView;
 
 import java.util.Stack;
 
-public class MainNavigator implements MainTabView.TabListener {
+public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener, RunsView.RunsListener {
     private Stack<ViewState> backstack = new Stack<>();
     private MainContainer mainContainer;
+
+    @Override public void onReachClick(int reachId) {
+
+    }
+
     public enum ViewState {
-        News, Runs, Favorites, Map, Filter, Search, Gage, RunDetails;
+        News,
+        Runs,
+        Favorites,
+        Map,
+        Filter,
+        Search,
+        Gage,
+        RunDetails;
     }
 
     public MainNavigator(MainContainer mainContainer) {
         this.mainContainer = mainContainer;
     }
 
+
     ///////////////////////////////////////////////////////////////////////////
     // Navigator
     ///////////////////////////////////////////////////////////////////////////
-    public ViewState getCurrentViewState() {
-        if (backstack.empty()) {
-            return ViewState.Runs;
-        } else {
-            return backstack.peek();
-        }
+
+    @Override
+    public ViewState getDefaultViewState() {
+        return ViewState.Runs;
     }
 
+    @Override
     public ViewState goToViewState(ViewState viewState) {
-        backstack.push(viewState);
-        mainContainer.show(viewState);
+        super.goToViewState(viewState);
+
+        if(viewState == ViewState.Runs) {
+            mainContainer.showRunsView(this);
+        } else {
+            mainContainer.show(viewState);
+        }
 
         return viewState;
-    }
-
-    // Returns the state to go back to, or null if there isn't one.
-    public ViewState goToLastViewState() {
-        backstack.pop();
-
-        if (backstack.empty()) {
-            return null;
-        } else {
-            ViewState viewState = getCurrentViewState();
-            mainContainer.show(viewState);
-            return viewState;
-        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
     // Events
     ///////////////////////////////////////////////////////////////////////////
-    public BackEventResult onBack() {
-        return goToLastViewState() != null ? BackEventResult.Handled : BackEventResult.NotHandled;
-    }
 
     @Override public void onNewsClicked() {
         goToViewState(ViewState.News);
