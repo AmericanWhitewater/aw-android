@@ -1,11 +1,18 @@
 package com.takescoop.americanwhitewaterandroid.controller;
 
+import android.view.ViewGroup;
+
 import java.util.Stack;
 
 public abstract class Navigator<T extends Enum<?>> {
     private Stack<T> backstack = new Stack<T>();
+    private ViewGroup container;
 
     private Navigator childNavigator;
+
+    public Navigator(ViewGroup container) {
+        this.container = container;
+    }
 
     public abstract T getDefaultViewState();
 

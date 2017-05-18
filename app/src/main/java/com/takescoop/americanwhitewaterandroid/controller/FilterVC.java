@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.controller.FilterNavigator.FilterViewState;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.view.FilterDifficultyView;
 import com.takescoop.americanwhitewaterandroid.view.FilterDistanceView;
@@ -35,25 +36,20 @@ public class FilterVC extends LinearLayout {
     @BindView(R.id.filter_distance) FilterDistanceView filterDistance;
     @BindView(R.id.filter_difficulty) FilterDifficultyView filterDifficulty;
 
-    public enum FilterViewState {
-        Region, Distance, Difficulty;
-    }
-
     public interface FilterListener {
+        void onRegionSelected();
+        void onDistanceSelected();
+        void onDifficultySelected();
         void onClose(Filter filter);
     }
 
-    public FilterVC(Context context) {
+    public FilterVC(Context context, FilterListener listener) {
         super(context);
+
+        this.filterListener = listener;
 
         LayoutInflater.from(context).inflate(R.layout.view_filter, this);
         onFinishInflate();
-    }
-
-    public FilterVC(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-        LayoutInflater.from(context).inflate(R.layout.view_filter, this);
     }
 
     @Override
@@ -62,22 +58,22 @@ public class FilterVC extends LinearLayout {
 
         ButterKnife.bind(this);
 
-        showViewState(FilterViewState.Region);
+
     }
 
     @OnClick(R.id.region_tab)
     protected void onRegionClicked() {
-        showViewState(FilterViewState.Region);
+        filterListener.onRegionSelected();
     }
 
     @OnClick(R.id.distance_tab)
     protected void onDistanceClicked() {
-        showViewState(FilterViewState.Distance);
+        filterListener.onDistanceSelected();
     }
 
     @OnClick(R.id.difficulty_tab)
     protected void onDifficultylicked() {
-        showViewState(FilterViewState.Difficulty);
+        filterListener.onDifficultySelected();
     }
 
     @OnClick(R.id.close)
@@ -101,7 +97,7 @@ public class FilterVC extends LinearLayout {
         return filter;
     }
 
-    private void showViewState(FilterViewState viewState) {
+    public void showViewState(FilterViewState viewState) {
         updateTabUI(viewState);
 
         switch (viewState) {

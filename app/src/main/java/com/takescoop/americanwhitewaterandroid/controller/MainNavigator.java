@@ -1,16 +1,22 @@
 package com.takescoop.americanwhitewaterandroid.controller;
 
+import android.support.v7.app.ActionBar;
+import android.view.ViewGroup;
+
+import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
 import com.takescoop.americanwhitewaterandroid.view.RunsView;
 
 import java.util.Stack;
 
-public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener, RunsView.RunsListener {
+public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener {
     private Stack<ViewState> backstack = new Stack<>();
-    private MainContainer mainContainer;
+    private final MainContainer mainContainer;
 
-    @Override public void onReachClick(int reachId) {
+    public MainNavigator(ViewGroup container, ActionBar actionBar) {
+        super(container);
 
+        mainContainer = new MainContainer(container.getContext(), actionBar, this);
     }
 
     public enum ViewState {
@@ -23,11 +29,6 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         Gage,
         RunDetails;
     }
-
-    public MainNavigator(MainContainer mainContainer) {
-        this.mainContainer = mainContainer;
-    }
-
 
     ///////////////////////////////////////////////////////////////////////////
     // Navigator

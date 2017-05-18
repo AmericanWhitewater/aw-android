@@ -28,8 +28,8 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <com.takescoop.americanwhitewaterandroid.view.MainView
-            android:id="@+id/main_view"
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_bar"/>

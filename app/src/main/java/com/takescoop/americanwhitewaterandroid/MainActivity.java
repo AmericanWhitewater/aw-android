@@ -10,16 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.takescoop.americanwhitewaterandroid.controller.BackEventResult;
-import com.takescoop.americanwhitewaterandroid.controller.MainContainer;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
-import com.takescoop.americanwhitewaterandroid.view.MainView;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private MainNavigator mainNavigator;
 
-    @BindView(R.id.main_view) MainView mainView;
+    @BindView(R.id.container) FrameLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
 
         initNavDrawer(toolbar);
-        MainContainer mainContainer = new MainContainer(this, getSupportActionBar(), mainView);
-        mainNavigator = new MainNavigator(mainContainer);
-        mainView.setTabListener(mainNavigator);
+        mainNavigator = new MainNavigator(container, getSupportActionBar());
         mainNavigator.goToViewState(MainNavigator.ViewState.Runs);
 
         Filter filter = new Filter();
