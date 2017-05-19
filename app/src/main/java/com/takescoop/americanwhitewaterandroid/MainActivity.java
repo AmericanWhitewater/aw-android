@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initNavDrawer(toolbar);
         mainNavigator = new MainNavigator(container, getSupportActionBar());
-        mainNavigator.goToViewState(MainNavigator.ViewState.Runs);
+        mainNavigator.pushViewState(MainNavigator.ViewState.Runs);
 
         Filter filter = new Filter();
         filter.addRegion(AWRegion.NewHampshire);
@@ -98,10 +98,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
-            mainNavigator.goToViewState(MainNavigator.ViewState.Search);
+            mainNavigator.pushAndShowViewState(MainNavigator.ViewState.Search);
             return true;
         } else if (id == R.id.action_filter) {
-            mainNavigator.goToViewState(MainNavigator.ViewState.Filter);
+            mainNavigator.pushAndShowViewState(MainNavigator.ViewState.Filter);
             return true;
         }
 

@@ -1,37 +1,45 @@
 package com.takescoop.americanwhitewaterandroid.controller;
 
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 import java.util.Stack;
 
 public abstract class Navigator<T extends Enum<?>> {
     private Stack<T> backstack = new Stack<T>();
-    private ViewGroup container;
+    ViewGroup container;
 
     private Navigator childNavigator;
+
+    public abstract void showViewState(T viewState);
+    public abstract void goBackToViewState(T viewState);
 
     public Navigator(ViewGroup container) {
         this.container = container;
     }
 
-    public abstract T getDefaultViewState();
-
+    @Nullable
     public T getCurrentViewState() {
         if (backstack.empty()) {
-            return getDefaultViewState();
+            return null;
         } else {
             return backstack.peek();
         }
     }
 
-    public T goToViewState(T viewState) {
+    public T pushViewState(T viewState) {
         backstack.push(viewState);
 
         return viewState;
     }
 
+    public void pushAndShowViewState(T viewState) {
+        pushViewState(viewState);
+        showViewState(viewState);
+    }
+
     // Returns the state to go back to, or null if there isn't one.
-    public T goToLastViewState() {
+    public T popViewState() {
         backstack.pop();
 
         if (backstack.empty()) {
@@ -58,7 +66,13 @@ public abstract class Navigator<T extends Enum<?>> {
 
         // If child hasn't handled the back event, handle it in this navigator.
         } else {
-            return goToLastViewState() != null ? BackEventResult.Handled : BackEventResult.NotHandled;
+            T viewState = popViewState();
+            if (viewState != null) {
+                goBackToViewState(viewState);
+                return BackEventResult.Handled;
+            } else {
+                return BackEventResult.NotHandled;
+            }
         }
     }
 }

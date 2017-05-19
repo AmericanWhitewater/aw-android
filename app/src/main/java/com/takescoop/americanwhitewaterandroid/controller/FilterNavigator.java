@@ -24,22 +24,34 @@ public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> 
 
         container.removeAllViews();
         container.addView(filterVC);
+
+        pushAndShowViewState(FilterViewState.Region);
     }
 
     @Override public void onRegionSelected() {
-        filterVC.showViewState(FilterViewState.Region);
+        pushAndShowViewState(FilterViewState.Region);
     }
 
     @Override public void onDistanceSelected() {
-        filterVC.showViewState(FilterViewState.Distance);
+        pushAndShowViewState(FilterViewState.Distance);
     }
 
     @Override public void onDifficultySelected() {
-        filterVC.showViewState(FilterViewState.Difficulty);
+        pushAndShowViewState(FilterViewState.Difficulty);
     }
 
     @Override public void onClose(Filter filter) {
         parentListener.onClose(filter);
+    }
+
+    @Override
+    public void showViewState(FilterViewState viewState) {
+        filterVC.showViewState(viewState);
+    }
+
+    @Override
+    public void goBackToViewState(FilterViewState viewState) {
+        showViewState(viewState);
     }
 
     @Override
@@ -50,9 +62,5 @@ public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> 
         }
 
         return BackEventResult.Handled;
-    }
-
-    @Override public FilterViewState getDefaultViewState() {
-        return FilterViewState.Region;
     }
 }

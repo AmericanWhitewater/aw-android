@@ -12,10 +12,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.takescoop.americanwhitewaterandroid.view.TabViewState.Favorites;
-import static com.takescoop.americanwhitewaterandroid.view.TabViewState.Map;
-import static com.takescoop.americanwhitewaterandroid.view.TabViewState.News;
-import static com.takescoop.americanwhitewaterandroid.view.TabViewState.Runs;
+import static com.takescoop.americanwhitewaterandroid.view.MainTabView.TabViewState.Favorites;
+import static com.takescoop.americanwhitewaterandroid.view.MainTabView.TabViewState.Map;
+import static com.takescoop.americanwhitewaterandroid.view.MainTabView.TabViewState.News;
+import static com.takescoop.americanwhitewaterandroid.view.MainTabView.TabViewState.Runs;
 import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.DISABLED_ALPHA;
 import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED_ALPHA;
 
@@ -28,7 +28,11 @@ public class MainTabView extends LinearLayout {
     @BindView(R.id.runs_tab) LinearLayout runsTab;
     @BindView(R.id.favorites_tab) LinearLayout favoritesTab;
     @BindView(R.id.map_tab) LinearLayout mapTab;
-    
+
+    public enum  TabViewState {
+        News, Runs, Favorites, Map;
+    }
+
     public interface TabListener {
         void onNewsClicked();
         void onRunsClicked();

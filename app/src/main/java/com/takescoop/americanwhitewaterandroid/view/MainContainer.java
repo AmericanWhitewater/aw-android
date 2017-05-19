@@ -7,8 +7,10 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.controller.FilterNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.FilterVC;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
+import com.takescoop.americanwhitewaterandroid.controller.RunsNavigator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,10 +26,11 @@ public class MainContainer extends RelativeLayout {
         super(context);
 
         this.actionBar = actionBar;
-        mainTabView.setTabListener(tabListener);
 
         LayoutInflater.from(context).inflate(R.layout.view_main, this);
         onFinishInflate();
+
+        mainTabView.setTabListener(tabListener);
     }
 
     @Override
@@ -66,12 +69,7 @@ public class MainContainer extends RelativeLayout {
                 break;
 
             case Filter:
-                getModalContainer().removeAllViews();
-                getModalContainer().addView(new FilterVC(getContext()));
-
-                showModal();
-                actionBar.hide();
-                break;
+                throw new IllegalArgumentException("Use the method with dependencies");
 
             case Search:
                 getModalContainer().removeAllViews();
@@ -80,34 +78,26 @@ public class MainContainer extends RelativeLayout {
                 showModal();
                 actionBar.hide();
                 break;
-
-            case Gage:
-                getTabContainer().removeAllViews();
-                getTabContainer().addView(new SearchView(getContext()));
-
-                hideModal();
-                actionBar.show();
-                break;
-
-            case RunDetails:
-                getTabContainer().removeAllViews();
-                getTabContainer().addView(new ReachView(getContext()));
-
-                hideModal();
-                actionBar.show();
-                break;
         }
     }
 
-    public void showRunsView(RunsView.RunsListener runsListener) {
-        RunsView runsView = new RunsView(getContext());
-        runsView.setRunsListener(runsListener);
+    public FilterNavigator showFilterView(FilterNavigator.FilterNavigatorParentListener parentListener) {
+        FilterNavigator filterNavigator = new FilterNavigator(modalContainer, parentListener);
 
-        getTabContainer().removeAllViews();
-        getTabContainer().addView(runsView);
+        showModal();
+        actionBar.hide();
+
+        return filterNavigator;
+    }
+
+    public RunsNavigator showRunsView() {
+        RunsNavigator runsNavigator = new RunsNavigator(tabContainer);
+        // TODO action bar.
 
         hideModal();
         actionBar.show();
+
+        return runsNavigator;
     }
 
     public FrameLayout getTabContainer() {

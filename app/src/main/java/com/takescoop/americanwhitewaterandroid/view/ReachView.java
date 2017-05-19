@@ -24,6 +24,7 @@ import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED
 
 public class ReachView extends LinearLayout {
     private AWApi awApi = AWProvider.Instance.awApi();
+    private int reachId;
 
     @BindView(R.id.back) ImageView back;
     @BindView(R.id.title) TextView title;
@@ -40,17 +41,13 @@ public class ReachView extends LinearLayout {
         Details, Map;
     }
 
-    public ReachView(Context context) {
+    public ReachView(Context context, int reachId) {
         super(context);
+
+        this.reachId = 3069;//reachId;
 
         LayoutInflater.from(context).inflate(R.layout.view_reach, this);
         onFinishInflate();
-    }
-
-    public ReachView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-        LayoutInflater.from(context).inflate(R.layout.view_reach, this);
     }
 
     @Override
@@ -60,10 +57,10 @@ public class ReachView extends LinearLayout {
         ButterKnife.bind(this);
 
         showViewState(ReachViewState.Details);
-        fetchReach(3609);
+        fetchReach(reachId);
     }
 
-    private void fetchReach(int reachId) {
+    public void fetchReach(int reachId) {
         awApi.getReach(reachId).subscribe(new DisposableSingleObserver<Reach>() {
             @Override public void onSuccess(@NonNull Reach reach) {
                 updateReach(reach);
