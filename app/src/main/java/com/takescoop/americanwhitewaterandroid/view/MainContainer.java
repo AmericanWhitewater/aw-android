@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.FilterNavigator;
-import com.takescoop.americanwhitewaterandroid.controller.FilterVC;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.RunsNavigator;
 
@@ -62,7 +61,7 @@ public class MainContainer extends RelativeLayout {
 
             case Map:
                 getTabContainer().removeAllViews();
-                getTabContainer().addView(new MapView(getContext()));
+                getTabContainer().addView(new BrowseMapView(getContext()));
 
                 hideModal();
                 actionBar.show();

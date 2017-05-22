@@ -10,10 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.takescoop.americanwhitewaterandroid.controller.BackEventResult;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
+import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
@@ -27,7 +31,7 @@ import butterknife.ButterKnife;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MapViewActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MainNavigator mainNavigator;
@@ -142,5 +146,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override public SupportMapFragment putMapFragmentInContainer(FrameLayout frameLayout) {
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        View view = mapFragment.getView();
+        ViewGroup parent = (ViewGroup) view.getParent();
+        parent.removeView(view);
+        frameLayout.addView(view, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        return mapFragment;
     }
 }

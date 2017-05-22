@@ -9,15 +9,15 @@ import com.takescoop.americanwhitewaterandroid.R;
 
 import butterknife.ButterKnife;
 
-public class MapView extends LinearLayout {
-    public MapView(Context context) {
+public class BrowseMapView extends LinearLayout {
+    public BrowseMapView(Context context) {
         super(context);
 
         LayoutInflater.from(context).inflate(R.layout.view_map, this);
         onFinishInflate();
     }
 
-    public MapView(Context context, AttributeSet attrs) {
+    public BrowseMapView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         LayoutInflater.from(context).inflate(R.layout.view_map, this);

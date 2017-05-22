@@ -30,4 +30,8 @@
     <string name="reach_detail_difficulty">Class %s</string>
     <string name="reach_detail_length">%s miles</string>
     <string name="reach_detail_gradient">%s fpm</string>
+
+
+
+    <string name="api_map_key">AIzaSyApgQvIbIQzqFp8a7185lz-MMUpKR9wKgo</string>
 </resources>
