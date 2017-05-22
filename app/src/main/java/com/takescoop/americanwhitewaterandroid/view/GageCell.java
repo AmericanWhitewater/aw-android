@@ -1,12 +1,15 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
+import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.utility.DisplayStringUtils;
 
 import butterknife.BindView;
@@ -28,6 +31,12 @@ public class GageCell extends LinearLayout {
         onFinishInflate();
     }
 
+    public GageCell(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        LayoutInflater.from(context).inflate(R.layout.cell_gage, this);
+    }
+
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
@@ -35,7 +44,29 @@ public class GageCell extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void showGage(Gage gage) {
+    public void showReach(@Nullable Reach reach) {
+        if (reach == null || reach.getGage() == null) {
+            this.setVisibility(GONE);
+            return;
+        }
+
+        Gage gage = reach.getGage();
+
+        title.setText(reach.getRiver());
+        detail.setText(reach.getName());
+        updateTime.setText(DisplayStringUtils.getGageDisplay(gage.getLastUpdated()));
+        levelNumber.setText(gage.getCurrentLevel());
+        unit.setText(gage.getUnit());
+        levelDescription.setText(gage.getGageComment());
+
+        this.setVisibility(VISIBLE);
+    }
+
+    public void showGage(@Nullable Gage gage) {
+        if (gage == null) {
+            return;
+        }
+
         title.setText(gage.getName());
         detail.setText(gage.getGageComment());
         updateTime.setText(DisplayStringUtils.getGageDisplay(gage.getLastUpdated()));

@@ -40,6 +40,10 @@ public abstract class Navigator<T extends Enum<?>> {
 
     // Returns the state to go back to, or null if there isn't one.
     public T popViewState() {
+        if (backstack.empty()) {
+            return null;
+        }
+
         backstack.pop();
 
         if (backstack.empty()) {

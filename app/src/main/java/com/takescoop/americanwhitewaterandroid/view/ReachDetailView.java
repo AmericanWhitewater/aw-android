@@ -48,19 +48,21 @@ public class ReachDetailView extends LinearLayout {
     }
 
     public void showReach(Reach reach) {
-        gageCell.showGage(reach.getGage());
+        gageCell.showReach(reach);
         description.setText(reach.getDescription());
-        difficulty.setText(reach.getDifficulty());
-        length.setText(reach.getLength());
-        gradient.setText(reach.getAvgGradient());
+        difficulty.setText(String.format(getContext().getString(R.string.reach_detail_difficulty), reach.getDifficulty()));
+        length.setText(String.format(getContext().getString(R.string.reach_detail_length), reach.getLength()));
+        gradient.setText(String.format(getContext().getString(R.string.reach_detail_gradient), reach.getAvgGradient().toString()));
     }
 
     @OnClick(R.id.description_layout)
     protected void onDescriptionLayoutClick() {
         if (description.getMaxLines() == DESCRIPTION_MAX_LINES) {
             description.setMaxLines(Integer.MAX_VALUE);
+            readMore.setVisibility(GONE);
         } else {
             description.setMaxLines(DESCRIPTION_MAX_LINES);
+            readMore.setVisibility(VISIBLE);
         }
     }
 

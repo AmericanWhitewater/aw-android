@@ -21,7 +21,6 @@ public class Reach {
     private LatLng takeoutLatLng;
     private String description = "";
     private String shuttleDetails = "";
-
     private List<Gage> gages = Lists.newArrayList();
     private List<Rapid> rapids = Lists.newArrayList();
 
@@ -110,6 +109,7 @@ public class Reach {
         private String description = "";
         private String shuttleDetails = "";
 
+        private List<AWRegion> states;
         private List<Gage> gages;
         private List<Rapid> rapids;
         
@@ -128,6 +128,8 @@ public class Reach {
             reach.takeoutLatLng = this.takeoutLatLng;
             reach.description = this.description;
             reach.shuttleDetails = this.shuttleDetails;
+            reach.gages = gages;
+            reach.rapids = rapids;
 
             return reach;
         }
@@ -194,6 +196,11 @@ public class Reach {
 
         public Builder setShuttleDetails(String shuttleDetails) {
             this.shuttleDetails = shuttleDetails;
+            return this;
+        }
+
+        public Builder setStates(List<AWRegion> states) {
+            this.states = states;
             return this;
         }
 

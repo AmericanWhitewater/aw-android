@@ -1,97 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-    <com.takescoop.americanwhitewaterandroid.view.GageCell
-        android:id="@+id/gage_cell"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:visibility="gone"/>
+        <com.takescoop.americanwhitewaterandroid.view.GageCell
+            android:id="@+id/gage_cell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <RelativeLayout
-        android:id="@+id/description_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/description"
-            style="@style/Text1"
+        <RelativeLayout
+            android:id="@+id/description_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="4"/>
+            android:layout_margin="16dp">
 
-        <TextView
-            android:id="@+id/read_more"
-            style="@style/Text1"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/description"
+                style="@style/Text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="4"/>
+
+            <TextView
+                android:id="@+id/read_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/description"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/white"
+                android:text="@string/read_more"
+                android:textSize="13sp"
+                android:textColor="@color/font_blue"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_divider"/>
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="@string/read_more"
-            android:textColor="@color/font_blue"/>
-    </RelativeLayout>
+            android:layout_margin="16dp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/grey_divider"/>
+            <TextView
+                android:id="@+id/difficulty"
+                style="@style/Number1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/length"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/length"
+                style="@style/Number1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/difficulty"
+                app:layout_constraintRight_toLeftOf="@+id/gradient"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/difficulty"
-            style="@style/Number1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/gradient"
+                style="@style/Number1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/length"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/length"
-            style="@style/Number1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                style="@style/Label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/difficulty"
+                android:textColor="@color/font_grey"
+                app:layout_constraintLeft_toLeftOf="@id/difficulty"
+                app:layout_constraintTop_toBottomOf="@id/difficulty"/>
 
-        <TextView
-            android:id="@+id/gradient"
-            style="@style/Number1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                style="@style/Label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/length"
+                android:textColor="@color/font_grey"
+                app:layout_constraintLeft_toLeftOf="@id/length"
+                app:layout_constraintTop_toBottomOf="@id/length"/>
+
+            <TextView
+                style="@style/Label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/gradient"
+                android:textColor="@color/font_grey"
+                app:layout_constraintLeft_toLeftOf="@id/gradient"
+                app:layout_constraintTop_toBottomOf="@id/gradient"/>
+        </android.support.constraint.ConstraintLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            style="@style/Label1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/difficulty"
-            android:textColor="@color/font_grey"/>
-
-        <TextView
-            style="@style/Label1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/length"
-            android:textColor="@color/font_grey"/>
-
-        <TextView
-            style="@style/Label1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gradient"
-            android:textColor="@color/font_grey"/>
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>

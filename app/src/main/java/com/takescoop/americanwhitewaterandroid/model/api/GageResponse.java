@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 
+import org.threeten.bp.Instant;
+import org.threeten.bp.temporal.ChronoUnit;
+
 public class GageResponse {
 
     @Expose @SerializedName("gauge_id")
@@ -94,7 +97,7 @@ public class GageResponse {
         builder.setId(gaugeId)
                 .setName(gaugeName)
                 .setCurrentLevel(gaugeReading)
-// TODO                .setLastUpdated()
+                .setLastUpdated(Instant.now().minus(lastUpdate, ChronoUnit.SECONDS))
                 .setUnit(GageUnit.findById(metricid).getUnit())
                 .setDelta(delta)
                 .setDeltaTimeInterval(lastUpdate)

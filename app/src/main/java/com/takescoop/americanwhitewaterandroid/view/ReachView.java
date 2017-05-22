@@ -1,7 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,20 +9,24 @@ import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
-import com.takescoop.americanwhitewaterandroid.controller.FilterVC;
+import com.takescoop.americanwhitewaterandroid.controller.RunDetailsNavigator;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 
+import static com.takescoop.americanwhitewaterandroid.controller.RunDetailsNavigator.ReachViewState.Details;
+import static com.takescoop.americanwhitewaterandroid.controller.RunDetailsNavigator.ReachViewState.Map;
 import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.DISABLED_ALPHA;
 import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED_ALPHA;
 
 public class ReachView extends LinearLayout {
     private AWApi awApi = AWProvider.Instance.awApi();
+    private RunDetailsListener listener;
     private int reachId;
 
     @BindView(R.id.back) ImageView back;
@@ -37,14 +40,17 @@ public class ReachView extends LinearLayout {
     @BindView(R.id.detail) ReachDetailView detail;
     @BindView(R.id.map) ReachMapView map;
 
-    private enum ReachViewState {
-        Details, Map;
+    public interface RunDetailsListener {
+        void onDetailsClicked();
+
+        void onMapClicked();
     }
 
-    public ReachView(Context context, int reachId) {
+    public ReachView(Context context, RunDetailsListener runDetailsListener, int reachId) {
         super(context);
 
-        this.reachId = 3069;//reachId;
+        this.listener = runDetailsListener;
+        this.reachId = reachId;
 
         LayoutInflater.from(context).inflate(R.layout.view_reach, this);
         onFinishInflate();
@@ -56,7 +62,6 @@ public class ReachView extends LinearLayout {
 
         ButterKnife.bind(this);
 
-        showViewState(ReachViewState.Details);
         fetchReach(reachId);
     }
 
@@ -73,11 +78,23 @@ public class ReachView extends LinearLayout {
     }
 
     private void updateReach(Reach reach) {
+        title.setText(reach.getName());
+
         detail.showReach(reach);
         map.showReach(reach);
     }
 
-    private void showViewState(ReachViewState viewState) {
+    @OnClick(R.id.details_tab)
+    protected void onDetailsClicked() {
+        listener.onDetailsClicked();
+    }
+
+    @OnClick(R.id.map_tab)
+    protected void onMapClicked() {
+        listener.onMapClicked();
+    }
+
+    public void showViewState(RunDetailsNavigator.ReachViewState viewState) {
         updateTabUI(viewState);
 
         switch (viewState) {
@@ -92,9 +109,9 @@ public class ReachView extends LinearLayout {
         }
     }
 
-    private void updateTabUI(ReachViewState viewState) {
-        setHighlighted(viewState == ReachViewState.Details, detailsTab, detailsTabHighlight);
-        setHighlighted(viewState == ReachViewState.Map, mapTab, mapTabHighlight);
+    private void updateTabUI(RunDetailsNavigator.ReachViewState viewState) {
+        setHighlighted(viewState == Details, detailsTab, detailsTabHighlight);
+        setHighlighted(viewState == Map, mapTab, mapTabHighlight);
     }
 
     private void setHighlighted(boolean isHighlighted, TextView tabText, View tabHighlight) {

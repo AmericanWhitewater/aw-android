@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.Rapid;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
