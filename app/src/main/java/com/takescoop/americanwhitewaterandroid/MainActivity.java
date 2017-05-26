@@ -7,7 +7,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,18 +17,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.takescoop.americanwhitewaterandroid.controller.BackEventResult;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
-import com.takescoop.americanwhitewaterandroid.model.AWRegion;
-import com.takescoop.americanwhitewaterandroid.model.Filter;
-import com.takescoop.americanwhitewaterandroid.model.Reach;
-import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
-import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.DisposableSingleObserver;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MapViewActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -49,28 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initNavDrawer(toolbar);
         mainNavigator = new MainNavigator(container, getSupportActionBar());
         mainNavigator.pushViewState(MainNavigator.ViewState.Runs);
-
-        Filter filter = new Filter();
-        filter.addRegion(AWRegion.NewHampshire);
-        AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
-            @Override public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
-                Log.w("test", reachSearchResults.toString());
-            }
-
-            @Override public void onError(@NonNull Throwable e) {
-                Log.e(TAG, "onError " + e);
-            }
-        });
-
-        AWApi.Instance.getReach(10386).subscribe(new DisposableSingleObserver<Reach>() {
-            @Override public void onSuccess(@NonNull Reach reach) {
-                Log.w("test", reach.toString());
-            }
-
-            @Override public void onError(@NonNull Throwable e) {
-                Log.e("test", e.getMessage());
-            }
-        });
     }
 
     @Override
