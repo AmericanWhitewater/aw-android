@@ -1,5 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -61,6 +62,11 @@ public class Gage {
 
     public String getSourceId() {
         return sourceId;
+    }
+
+    //TODO
+    public LatLng getLocation() {
+        return null;
     }
 
     public static class Builder {

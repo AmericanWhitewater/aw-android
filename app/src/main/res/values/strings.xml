@@ -34,4 +34,8 @@
 
 
     <string name="api_map_key">AIzaSyApgQvIbIQzqFp8a7185lz-MMUpKR9wKgo</string>
+    <string name="rapid">Rapid</string>
+    <string name="gauge">Gauge</string>
+    <string name="take_out">Take-out</string>
+    <string name="put_in">Put-in</string>
 </resources>
