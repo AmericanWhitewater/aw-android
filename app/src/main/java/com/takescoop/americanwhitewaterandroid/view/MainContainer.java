@@ -9,7 +9,8 @@ import android.widget.RelativeLayout;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.FilterNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
-import com.takescoop.americanwhitewaterandroid.controller.RunsNavigator;
+import com.takescoop.americanwhitewaterandroid.controller.RunDetailsNavigator;
+import com.takescoop.americanwhitewaterandroid.model.Gage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +54,13 @@ public class MainContainer extends RelativeLayout {
                 actionBar.show();
                 break;
 
-            case Runs:
+            case RunsList:
+                throw new IllegalArgumentException("Use the method with dependencies");
+
+            case GageDetails:
+                throw new IllegalArgumentException("Use the method with dependencies");
+
+            case RunDetails:
                 throw new IllegalArgumentException("Use the method with dependencies");
 
             case Favorites:
@@ -94,15 +101,30 @@ public class MainContainer extends RelativeLayout {
         return filterNavigator;
     }
 
-    public RunsNavigator showRunsView() {
-        RunsNavigator runsNavigator = new RunsNavigator(tabContainer);
-        // TODO action bar.
+    public void showRunsList(RunsView.RunsListener runsListener) {
+        RunsView runsView = new RunsView(tabContainer.getContext());
+        runsView.setRunsListener(runsListener);
 
-        hideModal();
-        actionBar.show();
-
-        return runsNavigator;
+        tabContainer.removeAllViews();
+        tabContainer.addView(runsView);
     }
+
+    public RunDetailsNavigator showRunDetails(int reachId, RunDetailsNavigator.RunDetailsParentListener listener) {
+        RunDetailsNavigator runDetailsNavigator = new RunDetailsNavigator(tabContainer, reachId, listener);
+
+        actionBar.hide();
+
+        return runDetailsNavigator;
+    }
+
+    public void showGageDetails(Gage gage) {
+        tabContainer.removeAllViews();
+        tabContainer.addView(new GageView(tabContainer.getContext(), gage));
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // View
+    ///////////////////////////////////////////////////////////////////////////
 
     public FrameLayout getTabContainer() {
         return tabContainer;

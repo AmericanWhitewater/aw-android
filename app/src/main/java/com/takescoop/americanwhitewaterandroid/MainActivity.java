@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initNavDrawer(toolbar);
         mainNavigator = new MainNavigator(container, getSupportActionBar());
-        mainNavigator.pushViewState(MainNavigator.ViewState.Runs);
     }
 
     @Override

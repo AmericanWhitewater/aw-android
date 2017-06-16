@@ -4,13 +4,16 @@ import android.support.v7.app.ActionBar;
 import android.view.ViewGroup;
 
 import com.takescoop.americanwhitewaterandroid.model.Filter;
+import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
+import com.takescoop.americanwhitewaterandroid.view.RunsView;
 import com.takescoop.americanwhitewaterandroid.view.SearchView;
 
 import java.util.Stack;
 
-public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener, FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener {
+public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener,
+        FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener, RunDetailsNavigator.RunDetailsParentListener {
     private Stack<ViewState> backstack = new Stack<>();
     private final MainContainer mainContainer;
 
@@ -21,12 +24,14 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         container.removeAllViews();
         container.addView(mainContainer);
 
-        pushAndShowViewState(ViewState.Runs);
+        pushAndShowViewState(ViewState.RunsList);
     }
 
     public enum ViewState {
         News,
-        Runs,
+        RunsList,
+        GageDetails,
+        RunDetails,
         Favorites,
         Map,
         Filter,
@@ -38,9 +43,8 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     ///////////////////////////////////////////////////////////////////////////
     @Override
     public void showViewState(ViewState viewState) {
-        if (viewState == ViewState.Runs) {
-            RunsNavigator runsNavigator = mainContainer.showRunsView();
-            setChildNavigator(runsNavigator);
+        if (viewState == ViewState.RunsList) {
+            mainContainer.showRunsList(this);
         } else if (viewState == ViewState.Filter) {
             FilterNavigator filterNavigator = mainContainer.showFilterView(this);
             setChildNavigator(filterNavigator);
@@ -48,7 +52,6 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
             mainContainer.showSearchView(this);
         } else {
             mainContainer.show(viewState);
-
         }
     }
 
@@ -72,7 +75,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     }
 
     @Override public void onRunsClicked() {
-        pushAndShowViewState(ViewState.Runs);
+        pushAndShowViewState(ViewState.RunsList);
     }
 
     @Override public void onFavoritesClicked() {
@@ -84,7 +87,14 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     }
 
     @Override public void onReachSelected(int reachId) {
-        pushAndShowViewState(ViewState.Runs); // TODO this isn't right, should flatten navigator hierarchy
+        pushViewState(ViewState.RunDetails);
+        RunDetailsNavigator runDetailsNavigator = mainContainer.showRunDetails(reachId, this);
+        setChildNavigator(runDetailsNavigator);
+    }
+
+    @Override public void onGageSelected(Gage gage) {
+        pushViewState(ViewState.GageDetails);
+        mainContainer.showGageDetails(gage);
     }
 
     @Override public void onClose() {
