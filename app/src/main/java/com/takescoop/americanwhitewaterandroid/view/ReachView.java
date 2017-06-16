@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.RunDetailsNavigator;
+import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 
@@ -44,6 +45,8 @@ public class ReachView extends LinearLayout {
         void onDetailsClicked();
 
         void onMapClicked();
+
+        void onGageSelected(Gage gage);
     }
 
     public ReachView(Context context, RunDetailsListener runDetailsListener, int reachId) {
@@ -81,6 +84,11 @@ public class ReachView extends LinearLayout {
         title.setText(reach.getName());
 
         detail.showReach(reach);
+        detail.setListener(gage -> {
+            if (listener != null) {
+                listener.onGageSelected(gage);
+            }
+        });
         map.showReach(reach);
     }
 

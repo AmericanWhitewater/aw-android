@@ -9,11 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <!--TODO delete placeholder-->
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/flow_graph"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        android:src="@drawable/flow_placeholder"
         android:visibility="gone"/>
 
     <android.support.v7.widget.RecyclerView

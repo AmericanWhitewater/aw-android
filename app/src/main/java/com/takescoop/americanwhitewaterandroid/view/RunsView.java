@@ -1,15 +1,11 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -26,8 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class RunsView extends RelativeLayout {
+public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickListener {
     private static final String TAG = RunsView.class.getSimpleName();
+
     private RunsListener runsListener;
 
     @BindView(R.id.view_run_last_updated_text) TextView lastUpdatedText;
@@ -35,7 +32,7 @@ public class RunsView extends RelativeLayout {
     @BindView(R.id.view_run_show_runnable) Switch showRunnableSwitch;
 
     public interface RunsListener {
-        void onReachClick(int reachId);
+        void onReachSelected(int reachId);
     }
 
     public RunsView(Context context) {
@@ -66,8 +63,9 @@ public class RunsView extends RelativeLayout {
         Filter filter = new Filter();
         filter.addRegion(AWRegion.Kansas);
         AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
-            @Override public void onSuccess(@io.reactivex.annotations.NonNull List<ReachSearchResult> reachSearchResults) {
-                runList.setAdapter(new RunsAdapter(getContext(), reachSearchResults));
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull List<ReachSearchResult> reachSearchResults) {
+                runList.setAdapter(new RunsAdapter(getContext(), reachSearchResults, RunsView.this));
             }
 
             @Override public void onError(@io.reactivex.annotations.NonNull Throwable e) {
@@ -76,58 +74,14 @@ public class RunsView extends RelativeLayout {
         });
     }
 
-    public void setRunsListener(RunsListener runsListener) {
-        this.runsListener = runsListener;
+    @Override
+    public void onReachItemClick(int reachId) {
+        if (runsListener != null) {
+            runsListener.onReachSelected(reachId);
+        }
     }
 
-    public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHolder> {
-        private Context context;
-        private List<ReachSearchResult> searchResults;
-
-
-        public RunsAdapter(Context context, @NonNull List<ReachSearchResult> searchResults) {
-            this.context = context;
-            this.searchResults = searchResults;
-        }
-
-        @Override
-        public RunCellViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            RunCell runCell = new RunCell(context);
-            RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            runCell.setLayoutParams(lp);
-
-            return new RunCellViewHolder(runCell);
-        }
-
-        @Override
-        public void onBindViewHolder(RunCellViewHolder holder, int position) {
-            ReachSearchResult result = searchResults.get(position);
-            holder.getRunCell().showResult(result);
-
-            holder.getRunCell().setOnClickListener(v -> {
-                if (runsListener != null) {
-                    runsListener.onReachClick(result.getId());
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return searchResults.size();
-        }
-
-        class RunCellViewHolder extends RecyclerView.ViewHolder {
-            private RunCell runCell;
-
-            public RunCellViewHolder(RunCell runCell) {
-                super(runCell);
-
-                this.runCell = runCell;
-            }
-
-            public RunCell getRunCell() {
-                return runCell;
-            }
-        }
+    public void setRunsListener(RunsListener runsListener) {
+        this.runsListener = runsListener;
     }
 }

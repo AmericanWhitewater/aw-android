@@ -2,10 +2,11 @@ package com.takescoop.americanwhitewaterandroid.controller;
 
 import android.view.ViewGroup;
 
+import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.view.GageView;
 import com.takescoop.americanwhitewaterandroid.view.RunsView;
 
-public class RunsNavigator extends Navigator<RunsNavigator.RunsViewState> implements RunsView.RunsListener {
+public class RunsNavigator extends Navigator<RunsNavigator.RunsViewState> implements RunsView.RunsListener, RunDetailsNavigator.RunDetailsParentListener {
 
     public enum RunsViewState {
         RunsList, GageDetails, RunDetails;
@@ -30,10 +31,7 @@ public class RunsNavigator extends Navigator<RunsNavigator.RunsViewState> implem
                 break;
 
             case GageDetails:
-                container.removeAllViews();
-                container.addView(new GageView(container.getContext()));
-
-                break;
+                throw new IllegalArgumentException("Use the method with dependencies");
 
             case RunDetails:
                 throw new IllegalArgumentException("Use the method with dependencies");
@@ -45,13 +43,21 @@ public class RunsNavigator extends Navigator<RunsNavigator.RunsViewState> implem
         showViewState(viewState);
     }
 
-    @Override public void onReachClick(int reachId) {
+    @Override
+    public void onReachSelected(int reachId) {
         pushViewState(RunsViewState.RunDetails);
         showRunDetails(reachId);
     }
 
+    @Override
+    public void onGageSelected(Gage gage) {
+        pushViewState(RunsViewState.GageDetails);
+        container.removeAllViews();
+        container.addView(new GageView(container.getContext(), gage));
+    }
+
     private void showRunDetails(int reachId) {
-        RunDetailsNavigator runDetailsNavigator = new RunDetailsNavigator(container, reachId);
+        RunDetailsNavigator runDetailsNavigator = new RunDetailsNavigator(container, reachId, this);
         setChildNavigator(runDetailsNavigator);
     }
 }
