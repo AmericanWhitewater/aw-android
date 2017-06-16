@@ -24,6 +24,10 @@ public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHol
         this.itemClickListener = itemClickListener;
     }
 
+    public void setSearchResults(List<ReachSearchResult> searchResults) {
+        this.searchResults = searchResults;
+    }
+
     @Override
     public RunsAdapter.RunCellViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RunCell runCell = new RunCell(context);

@@ -71,13 +71,18 @@ public class MainContainer extends RelativeLayout {
                 throw new IllegalArgumentException("Use the method with dependencies");
 
             case Search:
-                getModalContainer().removeAllViews();
-                getModalContainer().addView(new SearchView(getContext()));
-
-                showModal();
-                actionBar.hide();
-                break;
+                throw new IllegalArgumentException("Use the method with dependencies");
         }
+    }
+
+    public void showSearchView(SearchView.SearchListener listener) {
+        SearchView searchView = new SearchView(getContext());
+        searchView.setListener(listener);
+        getModalContainer().removeAllViews();
+        getModalContainer().addView(searchView);
+
+        showModal();
+        actionBar.hide();
     }
 
     public FilterNavigator showFilterView(FilterNavigator.FilterNavigatorParentListener parentListener) {

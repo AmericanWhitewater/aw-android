@@ -18,6 +18,12 @@ public class RunsNavigator extends Navigator<RunsNavigator.RunsViewState> implem
         pushAndShowViewState(RunsViewState.RunsList);
     }
 
+    public RunsNavigator(ViewGroup container, int reachId) {
+        super(container);
+
+        pushAndShowViewState(RunsViewState.RunsList);
+    }
+
     @Override
     public void showViewState(RunsViewState viewState) {
         switch (viewState) {

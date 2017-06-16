@@ -6,10 +6,11 @@ import android.view.ViewGroup;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
+import com.takescoop.americanwhitewaterandroid.view.SearchView;
 
 import java.util.Stack;
 
-public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener, FilterNavigator.FilterNavigatorParentListener {
+public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener, FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener {
     private Stack<ViewState> backstack = new Stack<>();
     private final MainContainer mainContainer;
 
@@ -43,8 +44,11 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         } else if (viewState == ViewState.Filter) {
             FilterNavigator filterNavigator = mainContainer.showFilterView(this);
             setChildNavigator(filterNavigator);
+        } else if (viewState == ViewState.Search) {
+            mainContainer.showSearchView(this);
         } else {
             mainContainer.show(viewState);
+
         }
     }
 
@@ -77,5 +81,13 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
 
     @Override public void onMapClicked() {
         pushAndShowViewState(ViewState.Map);
+    }
+
+    @Override public void onReachSelected(int reachId) {
+        pushAndShowViewState(ViewState.Runs); // TODO this isn't right, should flatten navigator hierarchy
+    }
+
+    @Override public void onClose() {
+        onBack();
     }
 }

@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
         gageCell.showGage(gage);
         // TODO flowGraph
 
+        reachList.setLayoutManager(new LinearLayoutManager(getContext()));
         List<ReachSearchResult> reaches = Lists.newArrayList();
         reachList.setAdapter(new RunsAdapter(getContext(), reaches, this));
     }
