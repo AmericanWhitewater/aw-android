@@ -10,6 +10,7 @@ import com.takescoop.americanwhitewaterandroid.R;
 import butterknife.ButterKnife;
 
 public class FilterDistanceView extends LinearLayout {
+
     public FilterDistanceView(Context context) {
         super(context);
         
