@@ -2,8 +2,8 @@ package com.takescoop.americanwhitewaterandroid.controller;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import io.reactivex.Single;
+import io.reactivex.subjects.SingleSubject;
 
 public interface LocationProviderActivity {
-    Single<LatLng> getCurrentLocation();
+    void getCurrentLocation(SingleSubject<LatLng> observable);
 }

@@ -8,31 +8,77 @@
         style="@style/Headline1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/filter_distance_title"/>
 
     <SeekBar
         android:id="@+id/filter_distance_slider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/slider_value"
+        style="@style/Text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/font_blue"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/status_grey"/>
-
+        android:layout_marginTop="16dp"
+        android:background="@color/grey_divider"/>
 
     <TextView
         style="@style/Headline1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp"
         android:text="@string/filter_distance_current_location"/>
 
-    <TextView
-        android:id="@+id/filter_distance_address"
-        style="@style/Headline1"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/filter_distance_current_location"/>
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/map_marker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/map_marker_dark_blue"/>
+
+        <TextView
+            android:id="@+id/filter_distance_address1"
+            style="@style/Headline1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/map_marker"/>
+
+        <TextView
+            android:id="@+id/filter_distance_address2"
+            style="@style/Text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/filter_distance_address1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/map_marker"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,20 +87,21 @@
 
         <TextView
             android:id="@+id/filter_distance_new_address"
-            style="@style/Headline1"
+            style="@style/Label1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="16dp"
             android:text="@string/filter_distance_new_address"
             android:textColor="@color/font_blue"/>
 
-
         <TextView
             android:id="@+id/filter_distance_update_location"
-            style="@style/Headline1"
+            style="@style/Label1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="16dp"
             android:text="@string/filter_distance_update_location"
             android:textColor="@color/font_blue"/>
     </LinearLayout>

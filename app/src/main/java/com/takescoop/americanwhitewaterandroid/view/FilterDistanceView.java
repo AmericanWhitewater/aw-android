@@ -3,6 +3,7 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -26,12 +27,18 @@ import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.subjects.SingleSubject;
 
 public class FilterDistanceView extends LinearLayout {
+    private static final String TAG = FilterDistanceView.class.getSimpleName();
+    private static final int SLIDER_MAX = 100;
+
     private LatLng currentLocation;
 
     @BindView(R.id.filter_distance_slider) SeekBar slider;
-    @BindView(R.id.filter_distance_address) TextView addressText;
+    @BindView(R.id.slider_value) TextView sliderValue;
+    @BindView(R.id.filter_distance_address1) TextView address1;
+    @BindView(R.id.filter_distance_address2) TextView address2;
     @BindView(R.id.filter_distance_new_address) TextView newAddressButton;
     @BindView(R.id.filter_distance_update_location) TextView updateLocationButton;
 
@@ -53,11 +60,34 @@ public class FilterDistanceView extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+
+        init();
+    }
+
+    private void init() {
+        slider.setMax(SLIDER_MAX);
+        updateSliderValue(0);
+        slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                updateSliderValue(progress);
+            }
+
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        updateLocation();
     }
 
     @Nullable
     public LatLngBounds getBounds() {
-        if (currentLocation == null) {
+        if (currentLocation == null || getSliderValue() <= 0) {
             return null;
         }
 
@@ -68,7 +98,8 @@ public class FilterDistanceView extends LinearLayout {
     protected void updateLocation() {
         if (getContext() instanceof LocationProviderActivity) {
             LocationProviderActivity locationActivity = (LocationProviderActivity) getContext();
-            locationActivity.getCurrentLocation().subscribe(new DisposableSingleObserver<LatLng>() {
+            SingleSubject<LatLng> locationObservable = SingleSubject.create();
+            locationObservable.subscribe(new DisposableSingleObserver<LatLng>() {
                 @Override public void onSuccess(@NonNull LatLng latLng) {
                     currentLocation = latLng;
 
@@ -79,7 +110,13 @@ public class FilterDistanceView extends LinearLayout {
                     Dialogs.toast(e.getMessage());
                 }
             });
+
+            locationActivity.getCurrentLocation(locationObservable);
         }
+    }
+
+    private void updateSliderValue(int progress) {
+        sliderValue.setText(getSliderValue(progress) + " mi");
     }
 
     private void updateAddress(LatLng latLng) {
@@ -89,8 +126,11 @@ public class FilterDistanceView extends LinearLayout {
             List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // 1 is the max addresses returned
 
             if (addresses != null && addresses.size() > 0) {
-                String addressString = addresses.get(0).getAddressLine(0) + "\n" + addresses.get(0).getAdminArea() + ", " + addresses.get(0).getCountryName();
-                addressText.setText(addressString);
+                Address address = addresses.get(0);
+                String locality = !TextUtils.isEmpty(address.getLocality()) ? address.getLocality() : address.getSubLocality();
+                String longAddressString = address.getAddressLine(0) + ", " + address.getAdminArea() + ", " + address.getPostalCode();
+                address1.setText(locality + ", " + address.getAdminArea());
+                address2.setText(longAddressString);
             }
 
         } catch (IOException e) {
@@ -100,6 +140,10 @@ public class FilterDistanceView extends LinearLayout {
 
     // In miles
     private int getSliderValue() {
-        return 100;
+        return getSliderValue(slider.getProgress());
+    }
+
+    private int getSliderValue(int progress) {
+        return 2 * progress;
     }
 }
