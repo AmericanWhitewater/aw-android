@@ -91,6 +91,8 @@ public class FilterVC extends LinearLayout {
         Filter filter = new Filter();
         filter.setRegions(filterRegion.getSelectedRegions());
 
+        filter.setBounds(filterDistance.getBounds());
+
         filter.setDifficultyLowerBound(filterDifficulty.getLowerBound());
         filter.setDifficultyUpperBound(filterDifficulty.getUpperBound());
 

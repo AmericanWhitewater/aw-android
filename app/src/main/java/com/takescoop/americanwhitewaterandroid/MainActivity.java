@@ -1,7 +1,14 @@
 package com.takescoop.americanwhitewaterandroid;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,17 +21,25 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.takescoop.americanwhitewaterandroid.controller.BackEventResult;
+import com.takescoop.americanwhitewaterandroid.controller.LocationProviderActivity;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
+import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Single;
+import io.reactivex.subjects.SingleSubject;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MapViewActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        MapViewActivity, LocationProviderActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int REQUEST_LOCATION_CODE = 111; // Number to tag the request with.  Complete Android BS.
 
     private MainNavigator mainNavigator;
+    private SingleSubject<LatLng> getLocationObservable;
 
     @BindView(R.id.container) FrameLayout container;
 
@@ -123,5 +138,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         frameLayout.addView(view, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         return mapFragment;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Location
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Override public Single<LatLng> getCurrentLocation() {
+        if (getLocationObservable != null) {
+            getLocationObservable.onError(new IllegalStateException("New request taking precedence"));
+            getLocationObservable = null;
+        }
+        getLocationObservable = SingleSubject.create();
+
+        if (!areLocationPermissionsGranted(this)) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_CODE);
+        } else {
+            getAndReturnLocation();
+        }
+
+        return getLocationObservable;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        boolean isPermissionGranted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        if (requestCode == REQUEST_LOCATION_CODE && isPermissionGranted) {
+            getAndReturnLocation();
+        } else {
+            Dialogs.toast("Please enable location to continue.");
+        }
+    }
+
+    @SuppressWarnings({"MissingPermission"})
+    private void getAndReturnLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        String provider = locationManager.getBestProvider(new Criteria(), false);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        getLocationObservable.onSuccess(latLng);
+        getLocationObservable = null;
+    }
+
+    private boolean areLocationPermissionsGranted(Context context) {
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean isLocationManagerEnabled = manager.isProviderEnabled(LocationManager.GPS_PROVIDER) || manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        boolean areFinePermissionsGranted = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        return isLocationManagerEnabled && areFinePermissionsGranted;
     }
 }

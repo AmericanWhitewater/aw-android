@@ -38,4 +38,8 @@
     <string name="gauge">Gauge</string>
     <string name="take_out">Take-out</string>
     <string name="put_in">Put-in</string>
+    <string name="filter_distance_title">How far from your current location</string>
+    <string name="filter_distance_current_location">Your current location</string>
+    <string name="filter_distance_new_address">Type a new address</string>
+    <string name="filter_distance_update_location">Update current location</string>
 </resources>

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Filter {
     private List<AWRegion> regions = Lists.newArrayList();
-//    private LatLngBounds bounds;
+    private LatLngBounds bounds;
     private FlowLevel flowLevel;
     private Difficulty difficultyLowerBound;
     private Difficulty difficultyUpperBound;
@@ -30,13 +30,13 @@ public class Filter {
         regions.clear();
     }
 
-//    public LatLngBounds getBounds() {
-//        return bounds;
-//    }
-//
-//    public void setBounds(LatLngBounds bounds) {
-//        this.bounds = bounds;
-//    }
+    public LatLngBounds getBounds() {
+        return bounds;
+    }
+
+    public void setBounds(LatLngBounds bounds) {
+        this.bounds = bounds;
+    }
 
     @Nullable
     public FlowLevel getFlowLevel() {
