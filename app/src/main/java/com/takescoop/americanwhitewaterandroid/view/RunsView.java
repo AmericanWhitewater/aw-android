@@ -60,6 +60,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
             }
         });
 
+        // TODO
         Filter filter = new Filter();
         filter.addRegion(AWRegion.Kansas);
         AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {

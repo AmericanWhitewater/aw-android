@@ -1,15 +1,80 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
+import com.takescoop.americanwhitewaterandroid.model.AWRegion;
+import com.takescoop.americanwhitewaterandroid.model.Filter;
+import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
+import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
+import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
+import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.observers.DisposableSingleObserver;
 
-public class BrowseMapView extends LinearLayout {
+public class BrowseMapView extends LinearLayout implements OnMapReadyCallback {
+    private static final int MIN_ZOOM = 15; // Google zoom level
+    private static final int MAP_PADDING_dp = 60;
+
+    private List<ReachSearchResult> reachSearchResults;
+    private GoogleMap map;
+
+    @BindView(R.id.map_container) FrameLayout mapContainer;
+
+    private enum MarkerType {
+        Runnable(R.drawable.map_marker_green),
+        Low(R.drawable.map_marker_yellow),
+        High(R.drawable.map_marker_red),
+        Frozen(R.drawable.map_marker_blue),
+        NoInfo(R.drawable.map_marker_grey);
+
+        private int drawableId;
+
+        MarkerType(int drawableId) {
+            this.drawableId = drawableId;
+        }
+
+        public int getDrawableId() {
+            return drawableId;
+        }
+
+        public static MarkerType markerTypeForFlow(FlowLevel flowLevel) {
+            switch (flowLevel) {
+                case Low:
+                    return Low;
+                case Runnable:
+                    return Runnable;
+                case High:
+                    return High;
+                case Frozen:
+                    return Frozen;
+                case NoInfo:
+                    return NoInfo;
+            }
+            return null;
+        }
+    }
+
     public BrowseMapView(Context context) {
         super(context);
 
@@ -28,5 +93,69 @@ public class BrowseMapView extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+
+        if (getContext() instanceof MapViewActivity) {
+            SupportMapFragment mapFragment = ((MapViewActivity) getContext()).putMapFragmentInContainer(mapContainer);
+            mapFragment.getMapAsync(this);
+        }
+
+        // TODO
+        Filter filter = new Filter();
+        filter.addRegion(AWRegion.Kansas);
+        AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull List<ReachSearchResult> reachSearchResults) {
+                setReachSearchResults(reachSearchResults);
+            }
+
+            @Override public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+            }
+        });
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.map = googleMap;
+
+        display(reachSearchResults, map);
+    }
+
+    public void setReachSearchResults(List<ReachSearchResult> reachSearchResults) {
+        this.reachSearchResults = reachSearchResults;
+
+        display(reachSearchResults, map);
+    }
+
+    private void display(@Nullable List<ReachSearchResult> results, @Nullable GoogleMap map) {
+        if (results == null || map == null) {
+            return;
+        }
+
+        List<MarkerOptions> markers = Lists.newArrayList();
+
+        for (ReachSearchResult result : results) {
+            if (result.getPutInLatLng() != null) {
+                MarkerType markerType = MarkerType.markerTypeForFlow(result.getFlowLevel());
+                MarkerOptions marker = getMarker(markerType, result.getPutInLatLng());
+                markers.add(marker);
+            }
+        }
+
+        for (MarkerOptions markerOptions : markers) {
+            map.addMarker(markerOptions);
+        }
+
+        MapUtils.zoomToMarkers(getContext(), map, markers, MAP_PADDING_dp, MIN_ZOOM);
+    }
+
+    private MarkerOptions getMarker(MarkerType markerType, @Nullable LatLng latLng) {
+        if (latLng == null) {
+            return null;
+        }
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) ContextCompat.getDrawable(getContext(), markerType.getDrawableId()).getCurrent();
+        Bitmap bitmap = Bitmap.createBitmap(bitmapDrawable.getBitmap());
+        return new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                .position(latLng);
     }
 }

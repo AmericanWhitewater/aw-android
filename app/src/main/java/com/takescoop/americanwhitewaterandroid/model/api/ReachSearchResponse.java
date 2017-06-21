@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.model.api;
 
 import android.text.TextUtils;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
@@ -104,12 +105,20 @@ public class ReachSearchResponse {
             name = section;
         }
 
+        LatLng putInLatLng = null;
+        try {
+            putInLatLng = new LatLng(Double.parseDouble(plat), Double.parseDouble(plon));
+        } catch (NumberFormatException e) {
+
+        }
+
         builder.setId(id)
                 .setName(name)
                 .setRiver(river)
                 .setDifficulty(_class)
                 .setLastGaugeReading(readingFormatted)
-                .setFlowLevel(FlowLevel.fromAWApi(cond));
+                .setFlowLevel(FlowLevel.fromAWApi(cond))
+                .setPutInLatLng(putInLatLng);
 
         return builder.build();
     }

@@ -42,4 +42,9 @@
     <string name="filter_distance_current_location">Your current location</string>
     <string name="filter_distance_new_address">Type a new address</string>
     <string name="filter_distance_update_location">Update current location</string>
+    <string name="runnable">Runnable</string>
+    <string name="frozen">Frozen</string>
+    <string name="low">Low</string>
+    <string name="high">High</string>
+    <string name="no_info">No info</string>
 </resources>

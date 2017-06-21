@@ -1,5 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 // A view of a Reach and a corresponding gauge, to be shown on a search results page.
 public class ReachSearchResult {
     private Integer id;
@@ -9,6 +11,7 @@ public class ReachSearchResult {
     private String lastGaugeReading ="";
 //    private Boolean isRising;
     private FlowLevel flowLevel;
+    private LatLng putInLatLngh;
 
     private ReachSearchResult() {
 
@@ -38,6 +41,10 @@ public class ReachSearchResult {
         return flowLevel;
     }
 
+    public LatLng getPutInLatLng() {
+        return putInLatLngh;
+    }
+
     public static class Builder {
         private Integer id;
         private String name = "";
@@ -46,6 +53,7 @@ public class ReachSearchResult {
         private String lastGaugeReading ="";
 //        private Boolean isRising;
         private FlowLevel flowLevel;
+        private LatLng putInLatLng;
 
         public ReachSearchResult build() {
             ReachSearchResult reachSearch = new ReachSearchResult();
@@ -55,6 +63,7 @@ public class ReachSearchResult {
             reachSearch.difficulty = this.difficulty;
             reachSearch.lastGaugeReading = this.lastGaugeReading;
             reachSearch.flowLevel = this.flowLevel;
+            reachSearch.putInLatLngh = this.putInLatLng;
 
             return reachSearch;
         }
@@ -91,6 +100,11 @@ public class ReachSearchResult {
 
         public Builder setFlowLevel(FlowLevel flowLevel) {
             this.flowLevel = flowLevel;
+            return this;
+        }
+
+        public Builder setPutInLatLng(LatLng putInLatLng) {
+            this.putInLatLng = putInLatLng;
             return this;
         }
     }
