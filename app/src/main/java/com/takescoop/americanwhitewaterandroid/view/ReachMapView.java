@@ -5,8 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -14,12 +16,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
 import com.takescoop.americanwhitewaterandroid.model.Rapid;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
+import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
+import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
 import java.util.List;
@@ -27,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReachMapView extends FrameLayout implements OnMapReadyCallback {
+public class ReachMapView extends FrameLayout implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private static final String TAG = ReachMapView.class.getSimpleName();
     private static final int MIN_ZOOM = 15; // Google zoom level
     private static final int MAP_PADDING_dp = 60;
@@ -89,7 +94,14 @@ public class ReachMapView extends FrameLayout implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
+        this.map.setInfoWindowAdapter(new ReachInfoWindowAdapter());
+        this.map.setOnInfoWindowClickListener(this);
+
         display(reach, map);
+    }
+
+    @Override public void onInfoWindowClick(Marker marker) {
+        AWIntent.goToDirections(getContext(), marker.getPosition());
     }
 
     private void display(@Nullable Reach reach, @Nullable GoogleMap map) {
@@ -97,32 +109,43 @@ public class ReachMapView extends FrameLayout implements OnMapReadyCallback {
             return;
         }
 
-        List<MarkerOptions> markers = Lists.newArrayList();
+        List<Marker> markers = Lists.newArrayList();
 
         MarkerOptions putin = getMarker(MarkerType.PutIn, reach.getPutinLatLng());
         if (putin != null) {
-            markers.add(putin);
+            Marker marker = map.addMarker(putin);
+            marker.setSnippet("River Put-in");
+            markers.add(marker);
         }
+
         MarkerOptions takeout = getMarker(MarkerType.TakeOut, reach.getTakeoutLatLng());
         if (takeout != null) {
-            markers.add(takeout);
+            Marker marker = map.addMarker(putin);
+            marker.setSnippet("River Take-out");
+            markers.add(marker);
         }
+
         if (reach.getGage() != null) {
             MarkerOptions gage = getMarker(MarkerType.Gauge, reach.getGage().getLocation());
             if (gage != null) {
-                markers.add(gage);
+                Marker marker = map.addMarker(putin);
+                marker.setSnippet("Gauge");
+                markers.add(marker);
             }
         }
 
         for (Rapid rapid : reach.getRapids()) {
             MarkerOptions rapidMarker = getMarker(MarkerType.Rapid, rapid.getLocation());
             if (rapidMarker != null) {
-                markers.add(rapidMarker);
-            }
-        }
+                Marker marker = map.addMarker(rapidMarker);
 
-        for (MarkerOptions markerOptions : markers) {
-            map.addMarker(markerOptions);
+                if (TextUtils.isEmpty(rapid.getName())) {
+                    marker.setSnippet(rapid.getName());
+                } else {
+                    marker.setSnippet("Rapid");
+                }
+                markers.add(marker);
+            }
         }
 
         MapUtils.zoomToMarkers(getContext(), map, markers, MAP_PADDING_dp, MIN_ZOOM);
@@ -137,5 +160,20 @@ public class ReachMapView extends FrameLayout implements OnMapReadyCallback {
         return new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
                 .position(latLng);
+    }
+
+    private class ReachInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+        @Override public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
+        @Override public View getInfoContents(Marker marker) {
+            MapInfoWindowView view = new MapInfoWindowView(getContext());
+
+            String title = marker.getSnippet();
+            view.display(title, reach.getName());
+
+            return view;
+        }
     }
 }

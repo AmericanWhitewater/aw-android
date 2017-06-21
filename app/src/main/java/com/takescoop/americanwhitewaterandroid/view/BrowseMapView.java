@@ -6,7 +6,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -15,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.R;
@@ -24,15 +27,18 @@ import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
+import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.fabric.sdk.android.services.common.Crash;
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class BrowseMapView extends LinearLayout implements OnMapReadyCallback {
+public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+    private static final String TAG = BrowseMapView.class.getSimpleName();
     private static final int MIN_ZOOM = 15; // Google zoom level
     private static final int MAP_PADDING_dp = 60;
 
@@ -117,7 +123,14 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
+        this.map.setInfoWindowAdapter(new BrowseInfoWindowAdapter());
+        this.map.setOnInfoWindowClickListener(this);
+
         display(reachSearchResults, map);
+    }
+
+    @Override public void onInfoWindowClick(Marker marker) {
+        AWIntent.goToDirections(getContext(), marker.getPosition());
     }
 
     public void setReachSearchResults(List<ReachSearchResult> reachSearchResults) {
@@ -131,18 +144,17 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback {
             return;
         }
 
-        List<MarkerOptions> markers = Lists.newArrayList();
+        List<Marker> markers = Lists.newArrayList();
 
         for (ReachSearchResult result : results) {
             if (result.getPutInLatLng() != null) {
                 MarkerType markerType = MarkerType.markerTypeForFlow(result.getFlowLevel());
-                MarkerOptions marker = getMarker(markerType, result.getPutInLatLng());
+                MarkerOptions markerOptions = getMarker(markerType, result.getPutInLatLng());
+                Marker marker = map.addMarker(markerOptions);
+                marker.setTag(result);
+
                 markers.add(marker);
             }
-        }
-
-        for (MarkerOptions markerOptions : markers) {
-            map.addMarker(markerOptions);
         }
 
         MapUtils.zoomToMarkers(getContext(), map, markers, MAP_PADDING_dp, MIN_ZOOM);
@@ -157,5 +169,20 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback {
         return new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
                 .position(latLng);
+    }
+
+    private class BrowseInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+        @Override public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
+        @Override public View getInfoContents(Marker marker) {
+            MapInfoWindowView view = new MapInfoWindowView(getContext());
+
+            ReachSearchResult result = (ReachSearchResult) marker.getTag();
+            view.display(result);
+
+            return view;
+        }
     }
 }

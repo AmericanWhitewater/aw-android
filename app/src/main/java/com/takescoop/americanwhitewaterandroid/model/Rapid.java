@@ -68,6 +68,10 @@ public class Rapid {
     @Expose
     private Object rloc;
 
+    public String getName() {
+        return name;
+    }
+
     public LatLng getLocation() {
         if (TextUtils.isEmpty(rlat) || TextUtils.isEmpty(rlon)) {
             return null;

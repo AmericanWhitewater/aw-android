@@ -9,6 +9,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class MapUtils {
         return new LatLng(geoLocation.getLatitudeInDegrees(), geoLocation.getLongitudeInDegrees());
     }
 
-    public static void zoomToMarkers(Context context, GoogleMap map, List<MarkerOptions> markers, int padding_dp, int minZoom) {
+    public static void zoomToMarkers(Context context, GoogleMap map, List<Marker> markers, int padding_dp, int minZoom) {
         if (markers.size() > 0) {
             final LatLngBounds bounds = getBounds(markers);
             try {
@@ -46,9 +47,9 @@ public class MapUtils {
         }
     }
 
-    private static LatLngBounds getBounds(List<MarkerOptions> markers) {
+    private static LatLngBounds getBounds(List<Marker> markers) {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (MarkerOptions marker : markers) {
+        for (Marker marker : markers) {
             builder.include(marker.getPosition());
         }
         return builder.build();

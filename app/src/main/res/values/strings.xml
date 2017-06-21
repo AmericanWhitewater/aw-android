@@ -47,4 +47,6 @@
     <string name="low">Low</string>
     <string name="high">High</string>
     <string name="no_info">No info</string>
+    <string name="directions">Directions</string>
+    <string name="flow_and_difficulty">Level:%1$s, Class:%2$s</string>
 </resources>
