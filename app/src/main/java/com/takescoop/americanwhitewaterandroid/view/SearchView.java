@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -113,6 +114,9 @@ public class SearchView extends LinearLayout implements RunsAdapter.ItemClickLis
 
     @OnClick(R.id.back)
     protected void onBackClick() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchEdit.getWindowToken(), 0);
+
         if (listener != null) {
             listener.onClose();
         }

@@ -107,11 +107,15 @@ public class MainContainer extends RelativeLayout {
 
         tabContainer.removeAllViews();
         tabContainer.addView(runsView);
+
+        hideModal();
+        actionBar.show();
     }
 
     public RunDetailsNavigator showRunDetails(int reachId, RunDetailsNavigator.RunDetailsParentListener listener) {
         RunDetailsNavigator runDetailsNavigator = new RunDetailsNavigator(tabContainer, reachId, listener);
 
+        hideModal();
         actionBar.hide();
 
         return runDetailsNavigator;
@@ -120,6 +124,9 @@ public class MainContainer extends RelativeLayout {
     public void showGageDetails(Gage gage) {
         tabContainer.removeAllViews();
         tabContainer.addView(new GageView(tabContainer.getContext(), gage));
+
+        hideModal();
+        actionBar.hide();
     }
 
     ///////////////////////////////////////////////////////////////////////////

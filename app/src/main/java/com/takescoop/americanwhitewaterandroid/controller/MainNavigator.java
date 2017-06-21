@@ -14,7 +14,7 @@ import java.util.Stack;
 
 public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener,
         FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener, RunDetailsNavigator.RunDetailsParentListener {
-    private Stack<ViewState> backstack = new Stack<>();
+    private Stack<Integer> reachIds = new Stack<>(); // A bit of a hack to save for the backstack
     private final MainContainer mainContainer;
 
     public MainNavigator(ViewGroup container, ActionBar actionBar) {
@@ -57,8 +57,12 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
 
     @Override
     public void goBackToViewState(ViewState viewState) {
-        //TODO
-        showViewState(viewState);
+        if (viewState == ViewState.RunDetails) {
+            Integer reachId = reachIds.pop();
+            mainContainer.showRunDetails(reachId, this);
+        } else {
+            showViewState(viewState);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -66,8 +70,12 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     ///////////////////////////////////////////////////////////////////////////
 
     @Override public void onClose(Filter filter) {
-        showViewState(popViewState());
-        // TODO
+        setChildNavigator(null);
+
+        ViewState viewState = popViewState();
+        if (viewState != null) {
+            goBackToViewState(viewState);
+        }
     }
 
     @Override public void onNewsClicked() {
@@ -87,6 +95,8 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     }
 
     @Override public void onReachSelected(int reachId) {
+        reachIds.push(reachId);
+
         pushViewState(ViewState.RunDetails);
         RunDetailsNavigator runDetailsNavigator = mainContainer.showRunDetails(reachId, this);
         setChildNavigator(runDetailsNavigator);
@@ -98,6 +108,8 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     }
 
     @Override public void onClose() {
+        setChildNavigator(null);
+
         onBack();
     }
 }
