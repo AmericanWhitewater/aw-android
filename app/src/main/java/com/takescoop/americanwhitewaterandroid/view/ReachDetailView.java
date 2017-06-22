@@ -7,16 +7,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
+import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ReachDetailView extends LinearLayout {
+    private static final String TAG = ReachDetailView.class.getSimpleName();
+
     private static final int DESCRIPTION_MAX_LINES = 4;
+    private static final AWApi awApi = AWProvider.Instance.awApi();
+
     private Reach reach;
     private ReachDetailListener listener;
 
@@ -60,6 +67,12 @@ public class ReachDetailView extends LinearLayout {
 
     public void showReach(Reach reach) {
         this.reach = reach;
+
+        if (reach.getPhotoId() != null && reach.getPhotoId() != 0) {
+            String photoUrl = awApi.getPhotoUrl(reach.getPhotoId());
+            Picasso.with(getContext()).load(photoUrl).into(image);
+            image.setVisibility(VISIBLE);
+        }
 
         gageCell.showReach(reach);
         description.setText(reach.getDescription());

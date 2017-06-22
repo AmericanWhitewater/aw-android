@@ -22,6 +22,8 @@ import retrofit2.http.Query;
 public enum AWApi {
     Instance;
 
+    private static final String PHOTO_BASE_URL = "https://www.americanwhitewater.org/photos/archive/";
+
     private AWApiService webService;
 
     private interface AWApiService {
@@ -94,6 +96,10 @@ public enum AWApi {
         }
 
         return webService.getReachDetail(reachId).map(ReachResponse::toModel).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public String getPhotoUrl(int photoId) {
+        return PHOTO_BASE_URL + photoId + ".jpeg";
     }
 
     private String getRegions(@Nullable Filter filter) {
