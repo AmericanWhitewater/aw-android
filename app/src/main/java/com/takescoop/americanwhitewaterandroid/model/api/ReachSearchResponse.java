@@ -105,12 +105,7 @@ public class ReachSearchResponse {
             name = section;
         }
 
-        LatLng putInLatLng = null;
-        try {
-            putInLatLng = new LatLng(Double.parseDouble(plat), Double.parseDouble(plon));
-        } catch (NumberFormatException e) {
-
-        }
+        LatLng putInLatLng = ApiUtils.parseLatLng(plat, plon);
 
         builder.setId(id)
                 .setName(name)

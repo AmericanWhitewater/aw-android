@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.model.api;
 
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.common.api.Api;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
@@ -142,23 +143,11 @@ public class ReachDetailResponse {
     }
 
     public LatLng getPutinLatLng() {
-        try {
-            double lat = Double.parseDouble(plat);
-            double lng = Double.parseDouble(plon);
-            return new LatLng(lat, lng);
-        } catch (NumberFormatException e) {
-            return null;
-        }
+        return ApiUtils.parseLatLng(plat, plon);
     }
 
     public LatLng getTakeoutLatLng() {
-        try {
-            double lat = Double.parseDouble(tlat);
-            double lng = Double.parseDouble(tlon);
-            return new LatLng(lat, lng);
-        } catch (NumberFormatException e) {
-            return null;
-        }
+        return ApiUtils.parseLatLng(tlat, tlon);
     }
 
     public String get_class() {

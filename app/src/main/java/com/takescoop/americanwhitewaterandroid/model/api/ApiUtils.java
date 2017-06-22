@@ -1,5 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.model.api;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.takescoop.americanwhitewaterandroid.BuildConfig;
@@ -51,5 +52,21 @@ public class ApiUtils {
 //        }
 
         return builder.build();
+    }
+
+    public static LatLng parseLatLng(String rawLat, String rawlng) {
+        try {
+            double lat = Double.parseDouble(rawLat);
+            double lng = Double.parseDouble(rawlng);
+
+            // Hackery from the api
+            if (lat == 0 && lng == 0) {
+                return null;
+            }
+
+            return new LatLng(lat, lng);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }
