@@ -8,15 +8,22 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.google.common.collect.Lists;
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Article;
+import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableSingleObserver;
 
 public class NewsFeedView extends RelativeLayout {
+    private static final AWApi awApi = AWProvider.Instance.awApi();
+
     @BindView(R.id.articles_list) RecyclerView articlesList;
 
     public interface ArticleItemClickListener {
@@ -43,6 +50,17 @@ public class NewsFeedView extends RelativeLayout {
         ButterKnife.bind(this);
 
         articlesList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // TODO get all
+        awApi.getArticle(33829).subscribe(new DisposableSingleObserver<Article>() {
+            @Override public void onSuccess(@NonNull Article article) {
+                displayArticles(Lists.newArrayList(article));
+            }
+
+            @Override public void onError(@NonNull Throwable e) {
+
+            }
+        });
     }
 
     private void displayArticles(List<Article> articles) {

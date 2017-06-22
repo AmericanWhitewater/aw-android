@@ -14,8 +14,8 @@ public class Article {
     private String author = "";
     @Expose @SerializedName("abstract")
     private String _abstract = "";
-    @Expose @SerializedName("abstractphoto")
-    private String abstractphoto = "";
+//    @Expose @SerializedName("abstractphoto")
+//    private String abstractphoto = "";
     @Expose @SerializedName("abstract_photo")
     private String abstractPhoto = "";
     @Expose @SerializedName("hascontents")
@@ -62,10 +62,6 @@ public class Article {
 
     public String get_abstract() {
         return _abstract;
-    }
-
-    public String getAbstractphoto() {
-        return abstractphoto;
     }
 
     public String getAbstractPhoto() {

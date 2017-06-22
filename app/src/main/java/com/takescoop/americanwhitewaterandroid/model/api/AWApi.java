@@ -23,6 +23,7 @@ public enum AWApi {
     Instance;
 
     private static final String PHOTO_BASE_URL = "https://www.americanwhitewater.org/photos/archive/";
+    private static final String ARTICLE_PHOTO_BASE_URL = "https://www.americanwhitewater.org/resources/images/abstract/";
 
     private AWApiService webService;
 
@@ -44,7 +45,7 @@ public enum AWApi {
         @GET("River/detail/id/{reachId}/.json")
         Single<ReachResponse> getReachDetail(@Path("reachId") Integer reachId);
 
-        @GET("Article/view/articleid/{articleid}/.json")
+        @GET("Article/view/articleid/{articleId}/.json")
         Single<Article> getArticle(@Path("articleId") Integer articleId);
     }
 
@@ -98,8 +99,16 @@ public enum AWApi {
         return webService.getReachDetail(reachId).map(ReachResponse::toModel).observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Single<Article> getArticle(Integer articleId) {
+        return webService.getArticle(articleId).observeOn(AndroidSchedulers.mainThread());
+    }
+
     public String getPhotoUrl(int photoId) {
         return PHOTO_BASE_URL + photoId + ".jpeg";
+    }
+
+    public String getArticlePhotoUrl(String articleId, String abstractPhotoNumber) {
+        return ARTICLE_PHOTO_BASE_URL + articleId + "-" + abstractPhotoNumber + ".jpg";
     }
 
     private String getRegions(@Nullable Filter filter) {
