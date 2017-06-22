@@ -7,6 +7,7 @@ import com.crashlytics.android.Crashlytics;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import io.fabric.sdk.android.Fabric;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class AWApplication extends Application {
     private static Context applicationContext;
@@ -18,6 +19,11 @@ public class AWApplication extends Application {
 
         Fabric.with(this, new Crashlytics());
         AndroidThreeTen.init(this);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/OpenSans-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
     }
 
     public static Context getContext() {

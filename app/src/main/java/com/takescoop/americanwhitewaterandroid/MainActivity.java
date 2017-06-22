@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Single;
 import io.reactivex.subjects.SingleSubject;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         MapViewActivity, LocationProviderActivity {
@@ -54,6 +55,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initNavDrawer(toolbar);
         mainNavigator = new MainNavigator(container, getSupportActionBar());
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
