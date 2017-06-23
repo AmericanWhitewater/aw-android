@@ -49,4 +49,7 @@
     <string name="no_info">No info</string>
     <string name="directions">Directions</string>
     <string name="flow_and_difficulty">Level:%1$s, Class:%2$s</string>
+    <string name="donate_title">Let’s Support AW together!</string>
+    <string name="donate_detail">American Whitewater is a national non-profit organization with a mission to conserve and restore America\'s whitewater resources and to enhance opportunities to enjoy them safely.</string>
+    <string name="donate_button_title">Donate now</string>
 </resources>
