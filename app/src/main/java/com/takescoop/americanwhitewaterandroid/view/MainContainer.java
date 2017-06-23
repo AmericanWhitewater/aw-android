@@ -121,9 +121,9 @@ public class MainContainer extends RelativeLayout {
         return runDetailsNavigator;
     }
 
-    public void showGageDetails(Gage gage) {
+    public void showGageDetails(Gage gage, GageView.GageViewListener listener) {
         tabContainer.removeAllViews();
-        tabContainer.addView(new GageView(tabContainer.getContext(), gage));
+        tabContainer.addView(new GageView(tabContainer.getContext(), gage, listener));
 
         hideModal();
         actionBar.hide();

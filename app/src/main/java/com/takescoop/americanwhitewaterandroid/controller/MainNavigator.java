@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
+import com.takescoop.americanwhitewaterandroid.view.GageView;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
 import com.takescoop.americanwhitewaterandroid.view.RunsView;
@@ -13,7 +14,8 @@ import com.takescoop.americanwhitewaterandroid.view.SearchView;
 import java.util.Stack;
 
 public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener,
-        FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener, RunDetailsNavigator.RunDetailsParentListener {
+        FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener,
+        RunDetailsNavigator.RunDetailsParentListener, GageView.GageViewListener {
     private Stack<Integer> reachIds = new Stack<>(); // A bit of a hack to save for the backstack
     private final MainContainer mainContainer;
 
@@ -58,7 +60,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     @Override
     public void goBackToViewState(ViewState viewState) {
         if (viewState == ViewState.RunDetails) {
-            Integer reachId = reachIds.pop();
+            Integer reachId = reachIds.pop(); // TODO
             mainContainer.showRunDetails(reachId, this);
         } else {
             showViewState(viewState);
@@ -72,10 +74,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     @Override public void onClose(Filter filter) {
         setChildNavigator(null);
 
-        ViewState viewState = popViewState();
-        if (viewState != null) {
-            goBackToViewState(viewState);
-        }
+        onBack();
     }
 
     @Override public void onNewsClicked() {
@@ -104,7 +103,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
 
     @Override public void onGageSelected(Gage gage) {
         pushViewState(ViewState.GageDetails);
-        mainContainer.showGageDetails(gage);
+        mainContainer.showGageDetails(gage, this);
     }
 
     @Override public void onClose() {

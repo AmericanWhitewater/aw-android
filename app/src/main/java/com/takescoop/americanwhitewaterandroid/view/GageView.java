@@ -1,16 +1,14 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.common.collect.Lists;
 import com.squareup.picasso.Picasso;
@@ -24,21 +22,31 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class GageView extends LinearLayout implements RunsAdapter.ItemClickListener {
     private static final String TAG = GageView.class.getSimpleName();
+    private GageViewListener listener;
 
     private final AWApi awApi = AWProvider.Instance.awApi();
     private final Gage gage;
 
+    @BindView(R.id.back) ImageView back;
+    @BindView(R.id.title) TextView title;
     @BindView(R.id.gage_cell) GageCell gageCell;
     @BindView(R.id.flow_graph) ImageView flowGraph;
     @BindView(R.id.reach_list) RecyclerView reachList;
 
-    public GageView(Context context, Gage gage) {
+    public interface GageViewListener{
+        void onReachSelected(int reachId);
+        void onClose();
+    }
+
+    public GageView(Context context, Gage gage, GageViewListener listener) {
         super(context);
 
         this.gage = gage;
+        this.listener = listener;
 
         LayoutInflater.from(context).inflate(R.layout.view_gage, this);
         onFinishInflate();
@@ -54,6 +62,7 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
     }
 
     public void displayGage(Gage gage) {
+        title.setText(gage.getName());
         gageCell.showGage(gage);
 
         String flowGraphUrl = awApi.getFlowGraphUrl(gage);
@@ -65,6 +74,7 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
             flowGraph.setVisibility(GONE);
         }
 
+        // TODO add reaches
         reachList.setLayoutManager(new LinearLayoutManager(getContext()));
         List<ReachSearchResult> reaches = Lists.newArrayList();
         reachList.setAdapter(new RunsAdapter(getContext(), reaches, this));
@@ -72,6 +82,11 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
 
     @Override
     public void onReachItemClick(int reachId) {
+        listener.onReachSelected(reachId);
+    }
 
+    @OnClick(R.id.back)
+    protected void onBackClick() {
+        listener.onClose();
     }
 }

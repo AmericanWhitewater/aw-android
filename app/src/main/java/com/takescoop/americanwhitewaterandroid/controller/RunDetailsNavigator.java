@@ -15,6 +15,8 @@ public class RunDetailsNavigator extends Navigator<RunDetailsNavigator.ReachView
 
     public interface RunDetailsParentListener {
         void onGageSelected(Gage gage);
+
+        void onClose();
     }
 
     public RunDetailsNavigator(ViewGroup container, int reachId, RunDetailsParentListener listener) {
@@ -48,5 +50,9 @@ public class RunDetailsNavigator extends Navigator<RunDetailsNavigator.ReachView
 
     @Override public void onGageSelected(Gage gage) {
         listener.onGageSelected(gage);
+    }
+
+    @Override public void onClose() {
+        listener.onClose();
     }
 }

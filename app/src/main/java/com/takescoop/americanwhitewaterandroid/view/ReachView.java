@@ -47,6 +47,8 @@ public class ReachView extends LinearLayout {
         void onMapClicked();
 
         void onGageSelected(Gage gage);
+
+        void onClose();
     }
 
     public ReachView(Context context, RunDetailsListener runDetailsListener, int reachId) {
@@ -100,6 +102,11 @@ public class ReachView extends LinearLayout {
     @OnClick(R.id.map_tab)
     protected void onMapClicked() {
         listener.onMapClicked();
+    }
+
+    @OnClick(R.id.back)
+    protected void onBackClick() {
+        listener.onClose();
     }
 
     public void showViewState(RunDetailsNavigator.ReachViewState viewState) {

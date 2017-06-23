@@ -32,7 +32,6 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="@string/filters_title"
             android:textColor="@color/white"/>
 
         <ImageView

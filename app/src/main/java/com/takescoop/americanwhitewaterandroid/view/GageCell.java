@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -68,7 +69,12 @@ public class GageCell extends LinearLayout {
         }
 
         title.setText(gage.getName());
-        detail.setText(gage.getGageComment());
+        if (TextUtils.isEmpty(gage.getGageComment())) {
+            detail.setVisibility(GONE);
+        } else {
+            detail.setText(gage.getGageComment());
+            detail.setVisibility(VISIBLE);
+        }
         updateTime.setText(DisplayStringUtils.getGageDisplay(gage.getLastUpdated()));
         levelNumber.setText(gage.getCurrentLevel());
         unit.setText(gage.getUnit());
