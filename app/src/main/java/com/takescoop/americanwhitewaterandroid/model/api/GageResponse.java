@@ -21,7 +21,7 @@ public class GageResponse {
     private String lastGaugeUpdated;
     @Expose @SerializedName("gauge_comment")
     private String gaugeComment;
-//    @Expose @SerializedName("gauge_data")
+    //    @Expose @SerializedName("gauge_data")
 //    private Object gaugeData;
     @Expose @SerializedName("range_comment")
     private String rangeComment;
@@ -39,7 +39,7 @@ public class GageResponse {
     private String source;
     @Expose @SerializedName("source_id")
     private String sourceId;
-//    @Expose @SerializedName("dhid")
+    //    @Expose @SerializedName("dhid")
 //    public Integer dhid;
 //    @Expose @SerializedName("id")
 //    public Integer id;
@@ -51,8 +51,8 @@ public class GageResponse {
 //    public String epoch;
 //    @Expose @SerializedName("reading")
 //    public String reading;
-//    @Expose @SerializedName("gauge_metric")
-//    public Integer gaugeMetric;
+    @Expose @SerializedName("gauge_metric")
+    public Integer gaugeMetric;
 //    @Expose @SerializedName("gauge_min")
 //    public String gaugeMin;
 //    @Expose @SerializedName("gauge_max")
@@ -105,7 +105,8 @@ public class GageResponse {
                 .setMin(min)
                 .setMax(max)
                 .setSource(source)
-                .setSourceId(sourceId);
+                .setSourceId(sourceId)
+                .setGageMetricId(gaugeMetric);
 
         return builder.build();
     }

@@ -4,16 +4,21 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.google.common.collect.Lists;
+import com.squareup.picasso.Picasso;
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
+import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 
 import java.util.List;
 
@@ -21,6 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GageView extends LinearLayout implements RunsAdapter.ItemClickListener {
+    private static final String TAG = GageView.class.getSimpleName();
+
+    private final AWApi awApi = AWProvider.Instance.awApi();
     private final Gage gage;
 
     @BindView(R.id.gage_cell) GageCell gageCell;
@@ -47,7 +55,15 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
 
     public void displayGage(Gage gage) {
         gageCell.showGage(gage);
-        // TODO flowGraph
+
+        String flowGraphUrl = awApi.getFlowGraphUrl(gage);
+        if (!TextUtils.isEmpty(flowGraphUrl)) {
+            Log.e(TAG, "displayGage " + flowGraphUrl);
+            Picasso.with(getContext()).load(flowGraphUrl).into(flowGraph);
+            flowGraph.setVisibility(VISIBLE);
+        } else {
+            flowGraph.setVisibility(GONE);
+        }
 
         reachList.setLayoutManager(new LinearLayoutManager(getContext()));
         List<ReachSearchResult> reaches = Lists.newArrayList();

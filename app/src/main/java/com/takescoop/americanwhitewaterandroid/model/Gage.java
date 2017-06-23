@@ -1,8 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import org.threeten.bp.Instant;
 
@@ -19,6 +17,11 @@ public class Gage {
     private String max = "";
     private String source = "";
     private String sourceId = "";
+    private Integer awGageMetricId;
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -69,6 +72,10 @@ public class Gage {
         return null;
     }
 
+    public Integer getAwGageMetricId() {
+        return awGageMetricId;
+    }
+
     public static class Builder {
         private Integer id;
         private String name = "";
@@ -82,10 +89,11 @@ public class Gage {
         private String max = "";
         private String source = "";
         private String sourceId = "";
-        
+        private Integer awGageMetricId;
+
         public Gage build() {
             Gage gage = new Gage();
-            
+
             gage.id = this.id;
             gage.name = this.name;
             gage.currentLevel = this.currentLevel;
@@ -98,7 +106,8 @@ public class Gage {
             gage.max = this.max;
             gage.source = this.source;
             gage.sourceId = this.sourceId;
-            
+            gage.awGageMetricId = awGageMetricId;
+
             return gage;
         }
 
@@ -159,6 +168,11 @@ public class Gage {
 
         public Builder setSourceId(String sourceId) {
             this.sourceId = sourceId;
+            return this;
+        }
+
+        public Builder setGageMetricId(Integer metricId) {
+            this.awGageMetricId = metricId;
             return this;
         }
     }

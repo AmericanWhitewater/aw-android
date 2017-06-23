@@ -8,10 +8,12 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.model.Article;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
+import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,6 +26,7 @@ public enum AWApi {
 
     private static final String PHOTO_BASE_URL = "https://www.americanwhitewater.org/photos/archive/";
     private static final String ARTICLE_PHOTO_BASE_URL = "https://www.americanwhitewater.org/resources/images/abstract/";
+    private static final String FLOW_GRAPH_URL = "https://www.americanwhitewater.org/content/Gauge2/graph/id/%s/metric/%d/.raw";
 
     private AWApiService webService;
 
@@ -109,6 +112,13 @@ public enum AWApi {
 
     public String getArticlePhotoUrl(String articleId, String abstractPhotoNumber) {
         return ARTICLE_PHOTO_BASE_URL + articleId + "-" + abstractPhotoNumber + ".jpg";
+    }
+
+    public String getFlowGraphUrl(Gage gage) {
+        if (gage.getAwGageMetricId() == null) {
+            return "";
+        }
+        return String.format(Locale.US, FLOW_GRAPH_URL, gage.getId(), gage.getAwGageMetricId());
     }
 
     private String getRegions(@Nullable Filter filter) {
