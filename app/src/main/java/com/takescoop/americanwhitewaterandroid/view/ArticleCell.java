@@ -1,6 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -46,7 +47,7 @@ public class ArticleCell extends RelativeLayout {
 
     public void display(Article article) {
         title.setText(article.getTitle());
-        detail.setText(article.get_abstract());
+        detail.setText(Html.fromHtml(article.get_abstract()));
 
         String photoUrl = awApi.getArticlePhotoUrl(article.getArticleId(), article.getAbstractPhoto());
         Picasso.with(getContext()).load(photoUrl).into(image);

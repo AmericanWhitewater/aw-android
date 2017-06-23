@@ -1,5 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.model.api;
 
+import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -54,7 +56,12 @@ public class ApiUtils {
         return builder.build();
     }
 
+    @Nullable
     public static LatLng parseLatLng(String rawLat, String rawlng) {
+        if (rawLat == null || rawlng == null) {
+            return null;
+        }
+
         try {
             double lat = Double.parseDouble(rawLat);
             double lng = Double.parseDouble(rawlng);

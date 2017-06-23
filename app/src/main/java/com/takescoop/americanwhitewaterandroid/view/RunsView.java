@@ -62,7 +62,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
         // TODO
         Filter filter = new Filter();
-        filter.addRegion(AWRegion.Kansas);
+        filter.addRegion(AWRegion.NewHampshire);
         AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override
             public void onSuccess(@io.reactivex.annotations.NonNull List<ReachSearchResult> reachSearchResults) {
@@ -71,6 +71,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
             @Override public void onError(@io.reactivex.annotations.NonNull Throwable e) {
                 Log.e(TAG, "onError " + e);
+                e.printStackTrace();
             }
         });
     }

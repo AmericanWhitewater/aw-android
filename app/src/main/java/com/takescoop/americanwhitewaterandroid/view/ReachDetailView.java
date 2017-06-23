@@ -1,6 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -75,10 +76,13 @@ public class ReachDetailView extends LinearLayout {
         }
 
         gageCell.showReach(reach);
-        description.setText(reach.getDescription());
+        description.setText(Html.fromHtml(reach.getDescription()));
         difficulty.setText(String.format(getContext().getString(R.string.reach_detail_difficulty), reach.getDifficulty()));
         length.setText(String.format(getContext().getString(R.string.reach_detail_length), reach.getLength()));
-        gradient.setText(String.format(getContext().getString(R.string.reach_detail_gradient), reach.getAvgGradient().toString()));
+
+        if (reach.getAvgGradient() != null) {
+            gradient.setText(String.format(getContext().getString(R.string.reach_detail_gradient), reach.getAvgGradient().toString()));
+        }
     }
 
     @OnClick(R.id.description_layout)
