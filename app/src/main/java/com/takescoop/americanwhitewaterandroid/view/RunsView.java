@@ -15,6 +15,9 @@ import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
+import com.takescoop.americanwhitewaterandroid.utility.DisplayStringUtils;
+
+import org.threeten.bp.Instant;
 
 import java.util.List;
 
@@ -63,17 +66,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         // TODO
         Filter filter = new Filter();
         filter.addRegion(AWRegion.NewHampshire);
-        AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
-            @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull List<ReachSearchResult> reachSearchResults) {
-                runList.setAdapter(new RunsAdapter(getContext(), reachSearchResults, RunsView.this));
-            }
-
-            @Override public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Log.e(TAG, "onError " + e);
-                e.printStackTrace();
-            }
-        });
+        updateReaches(filter);
     }
 
     @Override
@@ -85,5 +78,19 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
     public void setRunsListener(RunsListener runsListener) {
         this.runsListener = runsListener;
+    }
+
+    private void updateReaches(Filter filter) {
+        AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
+            @Override
+            public void onSuccess(@io.reactivex.annotations.NonNull List<ReachSearchResult> reachSearchResults) {
+                runList.setAdapter(new RunsAdapter(getContext(), reachSearchResults, RunsView.this));
+                lastUpdatedText.setText(DisplayStringUtils.displayUpdateTime(Instant.now()));
+            }
+
+            @Override public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+            }
+        });
     }
 }

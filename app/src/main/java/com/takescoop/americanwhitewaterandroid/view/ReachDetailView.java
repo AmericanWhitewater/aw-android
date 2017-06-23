@@ -82,6 +82,8 @@ public class ReachDetailView extends LinearLayout {
 
         if (reach.getAvgGradient() != null) {
             gradient.setText(String.format(getContext().getString(R.string.reach_detail_gradient), reach.getAvgGradient().toString()));
+        } else {
+            gradient.setText("-");
         }
     }
 

@@ -25,6 +25,7 @@ public class RunDetailsNavigator extends Navigator<RunDetailsNavigator.ReachView
         this.listener = listener;
         reachView = new ReachView(container.getContext(), this, reachId);
         reachView.showViewState(ReachViewState.Details);
+        pushViewState(ReachViewState.Details);
 
         container.removeAllViews();
         container.addView(reachView);
@@ -32,7 +33,12 @@ public class RunDetailsNavigator extends Navigator<RunDetailsNavigator.ReachView
 
     @Override public void showViewState(ReachViewState viewState) {
         switch (viewState) {
-
+            case Details:
+                reachView.showViewState(ReachViewState.Details);
+                break;
+            case Map:
+                reachView.showViewState(ReachViewState.Map);
+                break;
         }
     }
 
@@ -41,11 +47,11 @@ public class RunDetailsNavigator extends Navigator<RunDetailsNavigator.ReachView
     }
 
     @Override public void onDetailsClicked() {
-        reachView.showViewState(ReachViewState.Details);
+        pushAndShowViewState(ReachViewState.Details);
     }
 
     @Override public void onMapClicked() {
-        reachView.showViewState(ReachViewState.Map);
+        pushAndShowViewState(ReachViewState.Map);
     }
 
     @Override public void onGageSelected(Gage gage) {

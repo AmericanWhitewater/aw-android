@@ -23,7 +23,6 @@ import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
 import com.takescoop.americanwhitewaterandroid.model.Rapid;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
-import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
@@ -35,7 +34,7 @@ import butterknife.ButterKnife;
 public class ReachMapView extends FrameLayout implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private static final String TAG = ReachMapView.class.getSimpleName();
     private static final int MIN_ZOOM = 15; // Google zoom level
-    private static final int MAP_PADDING_dp = 60;
+    private static final int MAP_PADDING_dp = 70;
 
     private Reach reach;
     private GoogleMap map;
@@ -120,7 +119,7 @@ public class ReachMapView extends FrameLayout implements OnMapReadyCallback, Goo
 
         MarkerOptions takeout = getMarker(MarkerType.TakeOut, reach.getTakeoutLatLng());
         if (takeout != null) {
-            Marker marker = map.addMarker(putin);
+            Marker marker = map.addMarker(takeout);
             marker.setSnippet("River Take-out");
             markers.add(marker);
         }
@@ -128,7 +127,7 @@ public class ReachMapView extends FrameLayout implements OnMapReadyCallback, Goo
         if (reach.getGage() != null) {
             MarkerOptions gage = getMarker(MarkerType.Gauge, reach.getGage().getLocation());
             if (gage != null) {
-                Marker marker = map.addMarker(putin);
+                Marker marker = map.addMarker(gage);
                 marker.setSnippet("Gauge");
                 markers.add(marker);
             }
@@ -139,7 +138,7 @@ public class ReachMapView extends FrameLayout implements OnMapReadyCallback, Goo
             if (rapidMarker != null) {
                 Marker marker = map.addMarker(rapidMarker);
 
-                if (TextUtils.isEmpty(rapid.getName())) {
+                if (!TextUtils.isEmpty(rapid.getName())) {
                     marker.setSnippet(rapid.getName());
                 } else {
                     marker.setSnippet("Rapid");

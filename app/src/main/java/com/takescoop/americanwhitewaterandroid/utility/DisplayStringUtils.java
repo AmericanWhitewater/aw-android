@@ -11,8 +11,7 @@ import java.util.TimeZone;
 
 public class DisplayStringUtils {
 
-    public static String getGageDisplay(Instant lastUpdated) {
-        TimeZone timeZone = TimeZone.getDefault();
+    public static String displayUpdateTime(Instant lastUpdated) {
         LocalDate localDate = LocalDateTime.ofInstant(lastUpdated, ZoneId.systemDefault()).toLocalDate();
         boolean isToday = localDate.isEqual(LocalDate.now());
         boolean isYesterday = localDate.isEqual(LocalDate.now().minusDays(1));

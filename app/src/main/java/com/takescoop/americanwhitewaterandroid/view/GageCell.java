@@ -55,7 +55,7 @@ public class GageCell extends LinearLayout {
 
         title.setText(reach.getRiver());
         detail.setText(reach.getName());
-        updateTime.setText(DisplayStringUtils.getGageDisplay(gage.getLastUpdated()));
+        updateTime.setText(DisplayStringUtils.displayUpdateTime(gage.getLastUpdated()));
         levelNumber.setText(gage.getCurrentLevel());
         unit.setText(gage.getUnit());
         levelDescription.setText(gage.getGageComment());
@@ -75,7 +75,7 @@ public class GageCell extends LinearLayout {
             detail.setText(gage.getGageComment());
             detail.setVisibility(VISIBLE);
         }
-        updateTime.setText(DisplayStringUtils.getGageDisplay(gage.getLastUpdated()));
+        updateTime.setText(DisplayStringUtils.displayUpdateTime(gage.getLastUpdated()));
         levelNumber.setText(gage.getCurrentLevel());
         unit.setText(gage.getUnit());
         levelDescription.setText(gage.getGageComment());
