@@ -3,6 +3,7 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,11 @@ import android.widget.TextView;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
+import com.takescoop.americanwhitewaterandroid.model.FilterManager;
+import com.takescoop.americanwhitewaterandroid.utility.Listener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +28,9 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FilterRegionView extends LinearLayout {
+public class FilterRegionView extends LinearLayout implements Listener<AWRegion> {
+    private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
+
     @BindView(R.id.fr_current_location) TextView currentLocationText;
     @BindView(R.id.fr_list) RecyclerView list;
 
@@ -48,7 +54,8 @@ public class FilterRegionView extends LinearLayout {
         ButterKnife.bind(this);
 
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        list.setAdapter(new FilterRegionAdapter(getContext()));
+        Set<AWRegion> selectedRegions = Sets.newHashSet(filterManager.getFilter().getRegions());
+        list.setAdapter(new FilterRegionAdapter(getContext(), selectedRegions, this));
     }
 
     public List<AWRegion> getSelectedRegions() {
@@ -56,13 +63,21 @@ public class FilterRegionView extends LinearLayout {
         return Lists.newArrayList(adapter.getSelections());
     }
 
+    @Override
+    public void onResponse(AWRegion region) {
+        currentLocationText.setText(TextUtils.join(", ", getSelectedRegions()));
+    }
+
     public class FilterRegionAdapter extends RecyclerView.Adapter<FilterRegionAdapter.FilterRegionCellViewHolder> {
         private Context context;
+        private Set<AWRegion> selections;
+        private Listener<AWRegion> listener;
         private List<AWRegion> regions = Lists.newArrayList(AWRegion.values());
-        private Set<AWRegion> selections = Sets.newHashSet();
 
-        public FilterRegionAdapter(Context context) {
+        public FilterRegionAdapter(Context context, Set<AWRegion> selections, Listener<AWRegion> listener) {
             this.context = context;
+            this.listener = listener;
+            this.selections = selections;
         }
 
         @Override
