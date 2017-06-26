@@ -93,6 +93,8 @@ public class ReachMapView extends FrameLayout implements OnMapReadyCallback, Goo
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
+        this.map.clear();
+
         this.map.setInfoWindowAdapter(new ReachInfoWindowAdapter());
         this.map.setOnInfoWindowClickListener(this);
 

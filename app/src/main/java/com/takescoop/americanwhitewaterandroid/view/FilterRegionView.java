@@ -55,6 +55,7 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
 
         list.setLayoutManager(new LinearLayoutManager(getContext()));
         Set<AWRegion> selectedRegions = Sets.newHashSet(filterManager.getFilter().getRegions());
+        displaySelectedRegions(filterManager.getFilter().getRegions());
         list.setAdapter(new FilterRegionAdapter(getContext(), selectedRegions, this));
     }
 
@@ -65,7 +66,11 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
 
     @Override
     public void onResponse(AWRegion region) {
-        currentLocationText.setText(TextUtils.join(", ", getSelectedRegions()));
+        displaySelectedRegions(getSelectedRegions());
+    }
+
+    private void displaySelectedRegions(List<AWRegion> selectedRegions) {
+        currentLocationText.setText(TextUtils.join(", ", selectedRegions));
     }
 
     public class FilterRegionAdapter extends RecyclerView.Adapter<FilterRegionAdapter.FilterRegionCellViewHolder> {
@@ -110,6 +115,8 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
                 }
 
                 holder.getFilterCell().setCheckboxVisible(isSelected(region));
+
+                listener.onResponse(region);
             });
         }
 
