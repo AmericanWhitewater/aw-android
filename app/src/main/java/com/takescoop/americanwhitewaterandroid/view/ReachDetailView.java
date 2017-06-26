@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -30,6 +31,7 @@ public class ReachDetailView extends LinearLayout {
 
     @BindView(R.id.gage_cell) GageCell gageCell;
     @BindView(R.id.image) ImageView image;
+    @BindView(R.id.description_layout) RelativeLayout descriptionLayout;
     @BindView(R.id.description) TextView description;
     @BindView(R.id.read_more) TextView readMore;
     @BindView(R.id.difficulty) TextView difficulty;
@@ -77,6 +79,14 @@ public class ReachDetailView extends LinearLayout {
 
         gageCell.showReach(reach);
         description.setText(Html.fromHtml(reach.getDescription()));
+        if (description.getLineCount() > DESCRIPTION_MAX_LINES) {
+            readMore.setVisibility(VISIBLE);
+            descriptionLayout.setOnClickListener(getOnDescriptionLayoutClickListener());
+        } else {
+            readMore.setVisibility(GONE);
+        }
+
+
         difficulty.setText(String.format(getContext().getString(R.string.reach_detail_difficulty), reach.getDifficulty()));
         length.setText(String.format(getContext().getString(R.string.reach_detail_length), reach.getLength()));
 
@@ -87,15 +97,16 @@ public class ReachDetailView extends LinearLayout {
         }
     }
 
-    @OnClick(R.id.description_layout)
-    protected void onDescriptionLayoutClick() {
-        if (description.getMaxLines() == DESCRIPTION_MAX_LINES) {
-            description.setMaxLines(Integer.MAX_VALUE);
-            readMore.setVisibility(GONE);
-        } else {
-            description.setMaxLines(DESCRIPTION_MAX_LINES);
-            readMore.setVisibility(VISIBLE);
-        }
+    protected OnClickListener getOnDescriptionLayoutClickListener() {
+        return v -> {
+            if (description.getMaxLines() == DESCRIPTION_MAX_LINES) {
+                description.setMaxLines(Integer.MAX_VALUE);
+                readMore.setVisibility(GONE);
+            } else {
+                description.setMaxLines(DESCRIPTION_MAX_LINES);
+                readMore.setVisibility(VISIBLE);
+            }
+        };
     }
 
     @OnClick(R.id.gage_cell)

@@ -10,9 +10,11 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
+import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 import com.takescoop.americanwhitewaterandroid.utility.DisplayStringUtils;
@@ -27,6 +29,8 @@ import io.reactivex.observers.DisposableSingleObserver;
 
 public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickListener {
     private static final String TAG = RunsView.class.getSimpleName();
+
+    private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
 
     private RunsListener runsListener;
 
@@ -63,10 +67,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
             }
         });
 
-        // TODO
-        Filter filter = new Filter();
-        filter.addRegion(AWRegion.NewHampshire);
-        updateReaches(filter);
+        updateReaches(filterManager.getFilter());
     }
 
     @Override

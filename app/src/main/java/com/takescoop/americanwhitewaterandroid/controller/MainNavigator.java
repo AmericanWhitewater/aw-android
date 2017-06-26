@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBar;
 import android.view.ViewGroup;
 
 import com.takescoop.americanwhitewaterandroid.model.Filter;
+import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.view.GageView;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
@@ -72,6 +73,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     ///////////////////////////////////////////////////////////////////////////
 
     @Override public void onClose(Filter filter) {
+        FilterManager.Instance.setFilter(filter);
         setChildNavigator(null);
 
         onBack();
