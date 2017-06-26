@@ -57,6 +57,9 @@ public class MainTabView extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+
+        // Default to runs
+        setViewState(Runs);
     }
 
     public void setTabListener(@NonNull TabListener tabListener) {

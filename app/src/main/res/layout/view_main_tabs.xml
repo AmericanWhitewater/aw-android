@@ -16,7 +16,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_news_feed"/>
 
@@ -40,7 +40,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_kayak"/>
 
@@ -64,7 +64,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_favorites"/>
 
@@ -83,12 +83,13 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
+        android:layout_gravity="bottom"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_map"/>
 
