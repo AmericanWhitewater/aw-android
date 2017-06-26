@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
+import com.takescoop.americanwhitewaterandroid.model.FavoriteManager;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
@@ -31,6 +32,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
     private static final String TAG = RunsView.class.getSimpleName();
 
     private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
+    private final FavoriteManager favoriteManager = AWProvider.Instance.getFavoriteManager();
 
     private RunsListener runsListener;
 
@@ -59,6 +61,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+
         runList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         showRunnableSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -67,6 +70,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
             }
         });
 
+        favoriteManager.retrieveFavorites();
         updateReaches(filterManager.getFilter());
     }
 

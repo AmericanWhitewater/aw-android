@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.takescoop.americanwhitewaterandroid.AWProvider;
+import com.takescoop.americanwhitewaterandroid.model.FavoriteManager;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
 import java.util.List;

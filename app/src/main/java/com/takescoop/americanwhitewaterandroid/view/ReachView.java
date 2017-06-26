@@ -1,6 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.RunDetailsNavigator;
+import com.takescoop.americanwhitewaterandroid.model.FavoriteManager;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
@@ -27,6 +29,8 @@ import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED
 
 public class ReachView extends LinearLayout {
     private AWApi awApi = AWProvider.Instance.awApi();
+    private final FavoriteManager favoriteManager = AWProvider.Instance.getFavoriteManager();
+
     private RunDetailsListener listener;
     private int reachId;
 
@@ -67,6 +71,7 @@ public class ReachView extends LinearLayout {
 
         ButterKnife.bind(this);
 
+        showFavorite(favoriteManager.isFavorite(reachId));
         fetchReach(reachId);
     }
 
@@ -109,6 +114,12 @@ public class ReachView extends LinearLayout {
         listener.onClose();
     }
 
+    @OnClick(R.id.favorite)
+    protected void onFavoriteClick() {
+        boolean isFavorite = favoriteManager.toggleFavorite(reachId);
+        showFavorite(isFavorite);
+    }
+
     public void showViewState(RunDetailsNavigator.ReachViewState viewState) {
         updateTabUI(viewState);
 
@@ -121,6 +132,15 @@ public class ReachView extends LinearLayout {
                 detail.setVisibility(INVISIBLE);
                 map.setVisibility(VISIBLE);
                 break;
+        }
+    }
+
+    private void showFavorite(boolean isFavorite) {
+        if (isFavorite) {
+            favorite.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_fav_yes));
+
+        } else {
+            favorite.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_fav_no));
         }
     }
 

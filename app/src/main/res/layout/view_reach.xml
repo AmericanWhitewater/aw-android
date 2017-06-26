@@ -41,6 +41,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="28dp"
             android:layout_marginRight="16dp"
+            android:tint="@color/white"
             app:srcCompat="@drawable/ic_fav_no"/>
     </LinearLayout>
 

@@ -8,15 +8,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.model.FavoriteManager;
 import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RunCell extends LinearLayout {
+    private final FavoriteManager favoriteManager = AWProvider.Instance.getFavoriteManager();
+
+    private ReachSearchResult result;
+
     @BindView(R.id.cell_run_highlight) View highlight;
     @BindView(R.id.cell_run_title) TextView title;
     @BindView(R.id.cell_run_detail) TextView detail;
@@ -39,6 +46,8 @@ public class RunCell extends LinearLayout {
     }
 
     public void showResult(ReachSearchResult result) {
+        this.result = result;
+
         showFlowLevel(result.getFlowLevel());
 
         String levelText = String.format(getContext().getString(R.string.level_class),
@@ -47,26 +56,41 @@ public class RunCell extends LinearLayout {
         title.setText(result.getRiver());
         detail.setText(result.getName());
 
-        //TODO favorite
-        favorite.setColorFilter(ContextCompat.getColor(getContext(), R.color.font_grey));
+        showFavorite(favoriteManager.isFavorite(result.getId()));
 
         showActive();
     }
 
-    public void showReach(Reach reach) {
+    @OnClick(R.id.cell_run_favorite)
+    protected void onFavoriteClick() {
+        if (result == null) {
+            return;
+        }
 
-        showActive();
+        boolean isFavorite = favoriteManager.toggleFavorite(result.getId());
+        showFavorite(isFavorite);
     }
 
-    public void showInactive() {
-        highlight.setVisibility(GONE);
-        level.setVisibility(GONE);
-        favorite.setVisibility(GONE);
+    private void showFavorite(boolean isFavorite) {
+        if (isFavorite) {
+            favorite.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_fav_yes));
+            favorite.setColorFilter(ContextCompat.getColor(getContext(), R.color.primary));
 
-        title.setTextColor(ContextCompat.getColor(getContext(), R.color.font_grey));
-
-        this.setAlpha(.38f);
+        } else {
+            favorite.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_fav_no));
+            favorite.setColorFilter(ContextCompat.getColor(getContext(), R.color.font_grey));
+        }
     }
+
+//    public void showInactive() {
+//        highlight.setVisibility(GONE);
+//        level.setVisibility(GONE);
+//        favorite.setVisibility(GONE);
+//
+//        title.setTextColor(ContextCompat.getColor(getContext(), R.color.font_grey));
+//
+//        this.setAlpha(.38f);
+//    }
 
     private void showActive() {
         highlight.setVisibility(VISIBLE);
