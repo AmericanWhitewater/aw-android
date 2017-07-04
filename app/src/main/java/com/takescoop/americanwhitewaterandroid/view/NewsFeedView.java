@@ -18,16 +18,22 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 
 public class NewsFeedView extends RelativeLayout {
     private static final AWApi awApi = AWProvider.Instance.awApi();
+    private NewsFeedListener listener;
 
     @BindView(R.id.articles_list) RecyclerView articlesList;
 
     public interface ArticleItemClickListener {
         void onArticleClick(Article article);
+    }
+
+    public interface NewsFeedListener {
+        void onReadMoreClicked();
     }
 
     public NewsFeedView(Context context) {
@@ -61,6 +67,17 @@ public class NewsFeedView extends RelativeLayout {
 
             }
         });
+    }
+
+    public void setListener(NewsFeedListener listener) {
+        this.listener = listener;
+    }
+
+    @OnClick(R.id.donate_view)
+    protected void onDonateViewClicked() {
+        if (listener != null) {
+            listener.onReadMoreClicked();
+        }
     }
 
     private void displayArticles(List<Article> articles) {

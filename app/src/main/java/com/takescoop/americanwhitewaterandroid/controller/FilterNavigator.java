@@ -3,10 +3,11 @@ package com.takescoop.americanwhitewaterandroid.controller;
 import android.view.ViewGroup;
 
 import com.takescoop.americanwhitewaterandroid.model.Filter;
+import com.takescoop.americanwhitewaterandroid.view.FilterContainer;
 
-public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> implements FilterVC.FilterListener{
+public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> implements FilterContainer.FilterListener{
     private FilterNavigatorParentListener parentListener;
-    private final FilterVC filterVC;
+    private final FilterContainer filterContainer;
 
     public interface FilterNavigatorParentListener {
         void onClose(Filter filter);
@@ -20,10 +21,10 @@ public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> 
         super(container);
 
         this.parentListener = parentListener;
-        filterVC = new FilterVC(container.getContext(), this);
+        filterContainer = new FilterContainer(container.getContext(), this);
 
         container.removeAllViews();
-        container.addView(filterVC);
+        container.addView(filterContainer);
 
         pushAndShowViewState(FilterViewState.Region);
     }
@@ -46,7 +47,7 @@ public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> 
 
     @Override
     public void showViewState(FilterViewState viewState) {
-        filterVC.showViewState(viewState);
+        filterContainer.showViewState(viewState);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> 
     public BackEventResult onBack() {
         BackEventResult result = super.onBack();
         if (result == BackEventResult.NotHandled) {
-            parentListener.onClose(filterVC.getFilter());
+            parentListener.onClose(filterContainer.getFilter());
         }
 
         return BackEventResult.Handled;

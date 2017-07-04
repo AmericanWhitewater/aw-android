@@ -14,8 +14,7 @@
         android:layout_alignParentTop="true"
         android:background="@color/background"
         android:gravity="center_horizontal"
-        android:padding="12dp"
-        android:text="@string/last_update"/>
+        android:padding="12dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/view_run_list"
@@ -25,6 +24,7 @@
         android:layout_below="@id/view_run_last_updated_text"/>
 
     <LinearLayout
+        android:id="@+id/view_run_runnable_layout"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
@@ -50,7 +50,9 @@
             android:id="@+id/view_run_show_runnable"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:showText="false"
             android:trackTint="@color/status_green"/>
     </LinearLayout>

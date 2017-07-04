@@ -12,6 +12,8 @@ import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -45,6 +47,10 @@ public enum AWApi {
 //        @GET("River/state-summary/state/:stateabbreviation/.json")
 //        Single<ReachSearchResponse> getReachesByState();
 
+        // ":" separated
+        @GET("River/list/list/{reachIdList}/.json")
+        Single<List<ReachSearchResponse>> getReachesList(@Path("reachIdList") String reachIdList);
+
         @GET("River/detail/id/{reachId}/.json")
         Single<ReachResponse> getReachDetail(@Path("reachId") Integer reachId);
 
@@ -66,6 +72,18 @@ public enum AWApi {
 
     public Single<List<ReachSearchResult>> getReaches(@Nullable Filter filter) {
         return getReaches(null, filter);
+    }
+
+    public Single<List<ReachSearchResult>> getReaches(List<Integer> reachIds) {
+        String reachIdsString = TextUtils.join(":", reachIds);
+        return webService.getReachesList(reachIdsString)
+                .map(reachSearchResponses -> {
+                    List<ReachSearchResult> results = Lists.newArrayList();
+                    for (ReachSearchResponse response : reachSearchResponses) {
+                        results.add(response.toModel());
+                    }
+                    return results;
+                }).observeOn(AndroidSchedulers.mainThread());
     }
 
     private Single<List<ReachSearchResult>> getReaches(@Nullable String searchText, @Nullable Filter filter) {

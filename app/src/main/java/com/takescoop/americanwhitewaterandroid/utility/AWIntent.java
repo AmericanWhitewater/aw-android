@@ -19,4 +19,10 @@ public class AWIntent {
                 Uri.parse("http://maps.google.com/maps?daddr=" + latLng.latitude + "," + latLng.longitude));
         context.startActivity(intent);
     }
+
+    public static void goToUrl(final Context context, String urlString) {
+        Intent urlIntent = new Intent(Intent.ACTION_VIEW);
+        urlIntent.setData(Uri.parse(urlString));
+        context.startActivity(urlIntent);
+    }
 }

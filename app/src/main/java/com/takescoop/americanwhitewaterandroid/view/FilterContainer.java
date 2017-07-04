@@ -1,4 +1,4 @@
-package com.takescoop.americanwhitewaterandroid.controller;
+package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -21,7 +21,7 @@ import butterknife.OnClick;
 import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.DISABLED_ALPHA;
 import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED_ALPHA;
 
-public class FilterVC extends LinearLayout {
+public class FilterContainer extends LinearLayout {
     private FilterListener filterListener;
 
     @BindView(R.id.region_tab) TextView regionTab;
@@ -43,7 +43,7 @@ public class FilterVC extends LinearLayout {
         void onClose(Filter filter);
     }
 
-    public FilterVC(Context context, FilterListener listener) {
+    public FilterContainer(Context context, FilterListener listener) {
         super(context);
 
         this.filterListener = listener;
@@ -57,8 +57,6 @@ public class FilterVC extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
-
-
     }
 
     @OnClick(R.id.region_tab)
@@ -72,7 +70,7 @@ public class FilterVC extends LinearLayout {
     }
 
     @OnClick(R.id.difficulty_tab)
-    protected void onDifficultylicked() {
+    protected void onDifficultyClicked() {
         filterListener.onDifficultySelected();
     }
 
@@ -128,7 +126,6 @@ public class FilterVC extends LinearLayout {
     }
 
     private void setHighlighted(boolean isHighlighted, TextView tabText, View tabHighlight) {
-
         if (isHighlighted) {
             tabText.setAlpha(ENABLED_ALPHA);
             tabHighlight.setVisibility(VISIBLE);

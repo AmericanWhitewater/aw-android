@@ -9,6 +9,7 @@ import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.view.GageView;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
+import com.takescoop.americanwhitewaterandroid.view.NewsFeedView;
 import com.takescoop.americanwhitewaterandroid.view.RunsView;
 import com.takescoop.americanwhitewaterandroid.view.SearchView;
 
@@ -16,7 +17,8 @@ import java.util.Stack;
 
 public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener,
         FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener,
-        RunDetailsNavigator.RunDetailsParentListener, GageView.GageViewListener {
+        RunDetailsNavigator.RunDetailsParentListener, GageView.GageViewListener, NewsFeedView.NewsFeedListener,
+        AboutNavigator.AboutNavigatorParentListener {
     private Stack<Integer> reachIds = new Stack<>(); // A bit of a hack to save for the backstack
     private final MainContainer mainContainer;
 
@@ -38,7 +40,8 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         Favorites,
         Map,
         Filter,
-        Search;
+        Search,
+        About;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -48,11 +51,18 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     public void showViewState(ViewState viewState) {
         if (viewState == ViewState.RunsList) {
             mainContainer.showRunsList(this);
+        } else if (viewState == ViewState.Favorites) {
+            mainContainer.showFavoritesList(this);
         } else if (viewState == ViewState.Filter) {
             FilterNavigator filterNavigator = mainContainer.showFilterView(this);
             setChildNavigator(filterNavigator);
         } else if (viewState == ViewState.Search) {
             mainContainer.showSearchView(this);
+        } else if (viewState == ViewState.News) {
+            mainContainer.showNewsFeed(this);
+        } else if (viewState == ViewState.About) {
+            AboutNavigator aboutNavigator = mainContainer.showAboutView(this);
+            setChildNavigator(aboutNavigator);
         } else {
             mainContainer.show(viewState);
         }
@@ -112,5 +122,9 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         setChildNavigator(null);
 
         onBack();
+    }
+
+    @Override public void onReadMoreClicked() {
+        pushAndShowViewState(ViewState.About);
     }
 }

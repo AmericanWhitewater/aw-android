@@ -87,6 +87,16 @@ public enum AWRegion {
         this.country = country;
     }
 
+    public static AWRegion fromStateName(String stateName) {
+        for (AWRegion awRegion : AWRegion.values()) {
+            if (awRegion.getTitle().equals(stateName)) {
+                return awRegion;
+            }
+        }
+
+        throw new IllegalArgumentException("Unrecognized state name");
+    }
+
     public String getCode() {
         return code;
     }

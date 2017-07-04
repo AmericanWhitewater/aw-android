@@ -22,8 +22,14 @@ public class Filter {
         this.regions = regions;
     }
 
-    public void addRegion(AWRegion region) {
-        regions.add(region);
+    public void addRegion(@Nullable AWRegion region) {
+        if (region != null) {
+            regions.add(region);
+        }
+    }
+
+    public boolean hasRegion() {
+        return !regions.isEmpty();
     }
 
     public void clearRegions() {

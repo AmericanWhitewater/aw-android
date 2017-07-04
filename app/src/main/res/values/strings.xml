@@ -7,7 +7,6 @@
     <string name="runs">Runs</string>
     <string name="favorites">Favorites</string>
     <string name="map">Map</string>
-    <string name="last_update">Last Update Yesterday at 2:13pm PST</string>
     <string name="show_runnable">Only show runnable results</string>
     <string name="level_class">Level: %1$s, Class: %2$s</string>
     <string name="region_tab_title">By Region</string>
@@ -50,6 +49,26 @@
     <string name="directions">Directions</string>
     <string name="flow_and_difficulty">Level:%1$s, Class:%2$s</string>
     <string name="donate_title">Let’s Support AW together!</string>
-    <string name="donate_detail">American Whitewater is a national non-profit organization with a mission to conserve and restore America\'s whitewater resources and to enhance opportunities to enjoy them safely.</string>
+    <string name="donate_detail">American Whitewater is a national non-profit organization with a mission to conserve and restore America\’s whitewater resources and to enhance opportunities to enjoy them safely.</string>
     <string name="donate_button_title">Donate now</string>
+    <string name="close">Close</string>
+    <string name="donate">Donate!</string>
+    <string name="join">Join!</string>
+    <string name="about_title">About Amerian Whitewater</string>
+    <string name="mission">Mission</string>
+    <string name="stewardship">Stewardship</string>
+    <string name="funding">Funding</string>
+
+    <string name="about_mission">Founded in 1954, American Whitewater is a national non-profit organization (Non-profit # 23-7083760) with a mission “to conserve and restore America’s whitewater resources and to enhance opportunities to enjoy them safely.” American Whitewater is a membership organization representing a broad diversity of individual whitewater enthusiasts, river conservationists, and more than 100 local paddling club affiliates across America. The organization is the primary advocate for the preservation and protection of whitewater rivers throughout the United States, and connects the interests of human-powered recreational river users with ecological and science-based data to achieve the goals within its mission.</string>
+    <string name="about_funding">To finance its projects, American Whitewater seeks memberships, member gifts, corporate and foundation support. In addition, revenue from events, advertising and branded products support stewardship efforts.
+\n\n
+Individual memberships are crucial to American Whitewater and our goal is to remain an organization of whitewater enthusiasts funded by and ultimately representative of the interests of those to whom the health and enjoyment of our nation’s rivers is a priority. Currently American Whitewater receives support from over 5,000 dues paying member and 100 affiliate paddling clubs.</string>
+    <string name="about_stewardship">American Whitewater works to protect and restore rivers, maintains a national inventory of whitewater rivers, monitors potential threats to whitewater river resources, publishes information on river conservation, works with government agencies to protect the ability of the public to have a voice in the management of rivers, advocates for legislation protecting our rivers and their aquatic resources, and provides technical advice to local groups regarding river conservation and management.
+\n\n
+American Whitewater is working full-time to assure protection of whitewater rivers and the ability of the public to enjoy clean, free-flowing rivers. This includes our access program that focuses on protecting navigability on our nation’s waterways and acquisition of lands that provide public access to rivers. </string>
+    <string name="about_read_more">Read more about American Whitewater</string>
+    <string name="about_join">Join our membership</string>
+    <string name="about_stewardship_learn_more">Learn more about stewardship program</string>
+
+
 </resources>

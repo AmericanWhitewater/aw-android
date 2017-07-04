@@ -27,6 +27,7 @@ import com.takescoop.americanwhitewaterandroid.controller.BackEventResult;
 import com.takescoop.americanwhitewaterandroid.controller.LocationProviderActivity;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
+import com.takescoop.americanwhitewaterandroid.controller.NavigationDrawerActivity;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 
 import butterknife.BindView;
@@ -36,7 +37,7 @@ import io.reactivex.subjects.SingleSubject;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        MapViewActivity, LocationProviderActivity {
+        MapViewActivity, LocationProviderActivity, NavigationDrawerActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_LOCATION_CODE = 111; // Number to tag the request with.  Complete Android BS.
 
@@ -135,6 +136,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override public void setNavDrawerEnabled(boolean isEnabled) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (isEnabled) {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        } else {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
     }
 
     @Override public SupportMapFragment putMapFragmentInContainer(FrameLayout frameLayout) {
