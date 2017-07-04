@@ -15,6 +15,8 @@ import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
+import com.takescoop.americanwhitewaterandroid.model.api.Urls;
+import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,5 +116,11 @@ public class ReachDetailView extends LinearLayout {
         if (listener != null) {
             listener.onGageSelected(reach.getGage());
         }
+    }
+
+    @OnClick(R.id.website_link)
+    protected void onWebsiteClick() {
+        String url = String.format(Urls.REACH_DETAIL_URL, reach.getId());
+        AWIntent.goToUrl(getContext(), url);
     }
 }

@@ -17,6 +17,8 @@ import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
+import com.takescoop.americanwhitewaterandroid.model.api.Urls;
+import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 
 import java.util.List;
 
@@ -78,6 +80,12 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
         reachList.setLayoutManager(new LinearLayoutManager(getContext()));
         List<ReachSearchResult> reaches = Lists.newArrayList();
         reachList.setAdapter(new RunsAdapter(getContext(), reaches, this));
+    }
+
+    @OnClick(R.id.flow_graph)
+    protected void onFlowGraphClick() {
+        String url = String.format(Urls.GAGE_DETAIL_URL, gage.getId());
+        AWIntent.goToUrl(getContext(), url);
     }
 
     @Override
