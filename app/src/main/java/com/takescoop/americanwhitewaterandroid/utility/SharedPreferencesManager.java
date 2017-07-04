@@ -15,7 +15,7 @@ public enum SharedPreferencesManager {
     private static final String ARRAY_DELIMITER = ",,,";
     private static final String ACCOUNT_PREFERENCES = "account_preferences";
 
-    private SharedPreferences getSharedPrefs() {
+    public SharedPreferences getSharedPrefs() {
         return AWApplication.getContext().getSharedPreferences(ACCOUNT_PREFERENCES, Context.MODE_PRIVATE);
     }
 

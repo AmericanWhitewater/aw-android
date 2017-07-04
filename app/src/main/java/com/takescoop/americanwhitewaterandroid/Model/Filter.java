@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.model;
 
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.common.collect.Lists;
 
@@ -36,6 +37,7 @@ public class Filter {
         regions.clear();
     }
 
+    @Nullable
     public LatLngBounds getBounds() {
         return bounds;
     }

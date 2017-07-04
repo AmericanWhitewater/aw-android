@@ -90,6 +90,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         if (getContext() instanceof LocationProviderActivity && !filterManager.getFilter().hasRegion()) {
             updateCurrentRegion(region -> {
                 filterManager.getFilter().addRegion(region);
+                filterManager.save();
                 updateReaches(filterManager.getFilter());
             });
         } else {
