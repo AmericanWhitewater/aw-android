@@ -30,7 +30,10 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
             android:layout_weight="1"
-            android:textColor="@color/white"/>
+            android:hint="@string/search_hint"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/white"
+            android:theme="@style/EditText"/>
 
         <ImageView
             android:id="@+id/clear"

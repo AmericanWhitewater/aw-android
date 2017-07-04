@@ -68,9 +68,7 @@ public class SearchView extends LinearLayout implements RunsAdapter.ItemClickLis
     private void init() {
         searchList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        searchEdit.requestFocus();
-
-        searchEdit.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.white), PorterDuff.Mode.SRC_IN);
+        clear.requestFocus();
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
