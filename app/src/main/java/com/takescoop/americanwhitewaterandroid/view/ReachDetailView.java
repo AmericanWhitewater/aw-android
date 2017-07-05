@@ -120,7 +120,9 @@ public class ReachDetailView extends LinearLayout {
 
     @OnClick(R.id.website_link)
     protected void onWebsiteClick() {
-        String url = String.format(Urls.REACH_DETAIL_URL, reach.getId());
-        AWIntent.goToUrl(getContext(), url);
+        if (reach != null) {
+            String url = String.format(Urls.REACH_DETAIL_URL, reach.getId());
+            AWIntent.goToUrl(getContext(), url);
+        }
     }
 }

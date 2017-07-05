@@ -55,8 +55,8 @@ public class AboutNavigator extends Navigator<AboutNavigator.ViewState> implemen
         }
     }
 
-    @Override public void onClose() {
-        onBack();
+    @Override public void onCloseClicked() {
+        listener.onClose();
     }
 
     @Override

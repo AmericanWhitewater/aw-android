@@ -48,14 +48,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height=".5dp"
-            android:alpha=".5"
+            android:alpha=".2"
             android:background="@color/font_grey"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginRight="16dp"
         android:orientation="vertical">
 
         <TextView
@@ -63,6 +62,7 @@
             style="@style/Headline1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"/>
 
         <View
@@ -74,6 +74,7 @@
             android:id="@+id/cell_run_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:alpha=".5"
             app:srcCompat="@drawable/ic_fav_no"/>
@@ -81,7 +82,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height=".5dp"
-            android:alpha=".5"
+            android:alpha=".2"
             android:background="@color/font_grey"/>
     </LinearLayout>
 </LinearLayout>

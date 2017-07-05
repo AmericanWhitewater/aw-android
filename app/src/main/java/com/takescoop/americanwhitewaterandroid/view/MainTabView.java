@@ -23,6 +23,7 @@ public class MainTabView extends LinearLayout {
 
     // Initialized empty
     private TabListener tabListener = emptyListener();
+    private TabViewState currentViewState;
     
     @BindView(R.id.news_tab) LinearLayout newsTab;
     @BindView(R.id.runs_tab) LinearLayout runsTab;
@@ -95,24 +96,44 @@ public class MainTabView extends LinearLayout {
 
     @OnClick(R.id.news_tab)
     protected void onNewsClicked() {
+        if (currentViewState == News) {
+            return;
+        }
+
+        currentViewState = News;
         tabListener.onNewsClicked();
         setViewState(News);
     }
 
     @OnClick(R.id.runs_tab)
     protected void onRunsClicked() {
+        if (currentViewState == Runs) {
+            return;
+        }
+
+        currentViewState = Runs;
         tabListener.onRunsClicked();
         setViewState(Runs);
     }
 
     @OnClick(R.id.favorites_tab)
     protected void onFavoritesClicked() {
+        if (currentViewState == Favorites) {
+            return;
+        }
+
+        currentViewState = Favorites;
         tabListener.onFavoritesClicked();
         setViewState(Favorites);
     }
 
     @OnClick(R.id.map_tab)
     protected void onMapClicked() {
+        if (currentViewState == Map) {
+            return;
+        }
+
+        currentViewState = Map;
         tabListener.onMapClicked();
         setViewState(Map);
     }

@@ -18,6 +18,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">17sp</item>
+    </style>
+
     <style name="EditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/primary</item>
         <item name="colorControlActivated">@color/white</item>
@@ -40,7 +44,14 @@
     <style name="Text2">
         <item name="android:textColor">@color/font_grey</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:alpha">.54</item>
+        <item name="android:alpha">.8</item>
+        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+    </style>
+
+    <style name="Text3">
+        <item name="android:textColor">@color/font_black</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:alpha">.78</item>
         <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
     </style>
 
@@ -52,6 +63,11 @@
     <style name="Label2">
         <item name="android:textColor">@color/font_black</item>
         <item name="android:textSize">12sp</item>
+        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+    </style>
+
+    <style name="Label3">
+        <item name="android:textSize">14sp</item>
         <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
     </style>
 

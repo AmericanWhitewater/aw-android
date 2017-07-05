@@ -37,7 +37,7 @@ public class AboutContainer extends LinearLayout {
 
         void onFundingSelected();
 
-        void onClose();
+        void onCloseClicked();
     }
 
     public AboutContainer(Context context, AboutListener aboutListener) {
@@ -71,8 +71,8 @@ public class AboutContainer extends LinearLayout {
     }
 
     @OnClick(R.id.close)
-    protected void onClose() {
-        aboutListener.onClose();
+    protected void onCloseClicked() {
+        aboutListener.onCloseClicked();
     }
 
     public void showViewState(AboutNavigator.ViewState viewState) {

@@ -2,11 +2,11 @@ package com.takescoop.americanwhitewaterandroid.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.R;
@@ -17,7 +17,7 @@ import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AboutView extends ScrollView {
+public class AboutView extends LinearLayout {
     @BindView(R.id.logo) ImageView logo;
     @BindView(R.id.detail) TextView detail;
     @BindView(R.id.donate_button) LinearLayout donateButton;
@@ -43,6 +43,7 @@ public class AboutView extends ScrollView {
 
         ButterKnife.bind(this);
 
+        detail.setMovementMethod(new ScrollingMovementMethod());
         readMore.setOnClickListener(v -> AWIntent.goToUrl(getContext(), Urls.ABOUT_URL));
     }
 
