@@ -26,9 +26,9 @@ import io.reactivex.observers.DisposableSingleObserver;
 public class FavoritesView extends LinearLayout implements RunsAdapter.ItemClickListener {
     private final AWApi awApi = AWProvider.Instance.awApi();
     private final FavoriteManager favoriteManager = AWProvider.Instance.getFavoriteManager();
-
     private RunsView.RunsListener runsListener;
 
+    @BindView(R.id.no_favorites_layout) LinearLayout noFavoritesLayout;
     @BindView(R.id.last_updated_text) TextView lastUpdatedText;
     @BindView(R.id.favorites_list) RecyclerView favoritesList;
 
@@ -60,6 +60,17 @@ public class FavoritesView extends LinearLayout implements RunsAdapter.ItemClick
     }
 
     private void updateFavorites() {
+        if (!favoriteManager.hasFavorite()) {
+            noFavoritesLayout.setVisibility(VISIBLE);
+            lastUpdatedText.setVisibility(GONE);
+            favoritesList.setVisibility(GONE);
+            return;
+        }
+
+        noFavoritesLayout.setVisibility(GONE);
+        lastUpdatedText.setVisibility(VISIBLE);
+        favoritesList.setVisibility(VISIBLE);
+
         awApi.getReaches(favoriteManager.getFavoriteReachIds()).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override public void onSuccess(@NonNull List<ReachSearchResult> results) {
                 favoritesList.setAdapter(new RunsAdapter(getContext(), results, FavoritesView.this));

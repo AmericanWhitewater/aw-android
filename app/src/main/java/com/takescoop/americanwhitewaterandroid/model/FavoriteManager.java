@@ -23,6 +23,10 @@ public enum FavoriteManager {
         persistFavorites(favoriteReachIds);
     }
 
+    public boolean hasFavorite() {
+        return favoriteReachIds.size() > 0;
+    }
+
     public boolean isFavorite(Integer reachId) {
         return favoriteReachIds.contains(reachId);
     }

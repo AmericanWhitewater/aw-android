@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/no_favorites_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dp"
+            android:alpha=".2"
+            android:scaleType="fitCenter"
+            android:tint="@color/font_grey"
+            app:srcCompat="@drawable/ic_fav_no"/>
+
+        <TextView
+            style="@style/Number1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:text="@string/no_favorites_title"
+            android:textColor="@color/primary"/>
+
+        <TextView
+            style="@style/Headline1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="26dp"
+            android:text="@string/no_favorites_detail"/>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/last_updated_text"
         style="@style/Text2"
@@ -10,7 +47,8 @@
         android:layout_height="wrap_content"
         android:background="@color/background"
         android:gravity="center_horizontal"
-        android:padding="12dp"/>
+        android:padding="20dp"
+        android:visibility="gone"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/favorites_list"
