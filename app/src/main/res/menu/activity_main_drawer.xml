@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item-->
+        <!--android:id="@+id/empty"-->
+        <!--android:title=""/>-->
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import"/>
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery"/>
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow"/>
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools"/>
-    </group>
+    <item android:title="About">
+        <menu>
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_menu_share"
+                android:title="About AW"/>
+            <item
+                android:id="@+id/team"
+                android:icon="@drawable/ic_menu_send"
+                android:title="App Team"/>
+        </menu>
+    </item>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share"/>
+                android:id="@+id/rate"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Rate this app"/>
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/feedback"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send"/>
+                android:title="Feedback"/>
+            <item
+                android:id="@+id/donate"
+                android:title="Donate!"/>
         </menu>
     </item>
 

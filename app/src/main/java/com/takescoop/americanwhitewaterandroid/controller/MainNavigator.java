@@ -78,6 +78,10 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         }
     }
 
+    public void showAbout() {
+        pushAndShowViewState(ViewState.About);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Events
     ///////////////////////////////////////////////////////////////////////////

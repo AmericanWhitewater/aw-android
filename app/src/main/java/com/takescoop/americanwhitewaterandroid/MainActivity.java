@@ -28,11 +28,12 @@ import com.takescoop.americanwhitewaterandroid.controller.LocationProviderActivi
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
 import com.takescoop.americanwhitewaterandroid.controller.NavigationDrawerActivity;
+import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
+import com.takescoop.americanwhitewaterandroid.view.DonateView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Single;
 import io.reactivex.subjects.SingleSubject;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -108,18 +109,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.about) {
+            mainNavigator.showAbout();
+        } else if (id == R.id.team) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.rate) {
+            AWIntent.goToRateApp(this);
+        } else if (id == R.id.feedback) {
+            AWIntent.goToEmail(this, "Android App Feedback", "");
+        } else if (id == R.id.donate) {
+            DonateView.getDonateMenu(this).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

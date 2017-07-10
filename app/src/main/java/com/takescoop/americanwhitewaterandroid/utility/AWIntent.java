@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.takescoop.americanwhitewaterandroid.AWApplication;
+import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 
 public class AWIntent {
 
@@ -24,5 +26,23 @@ public class AWIntent {
         Intent urlIntent = new Intent(Intent.ACTION_VIEW);
         urlIntent.setData(Uri.parse(urlString));
         context.startActivity(urlIntent);
+    }
+
+    public static void goToEmail(final Context context, String subject, String emailText) {
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.setType("message/rfc822");
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, emailText);
+        context.startActivity(sendIntent);
+    }
+
+    public static void goToRateApp(final Context context) {
+        final Uri uri = Uri.parse("market://details?id=" + AWApplication.getContext().getPackageName());
+        final Intent rateAppIntent = new Intent(Intent.ACTION_VIEW, uri);
+
+        if (context.getPackageManager().queryIntentActivities(rateAppIntent, 0).size() > 0)
+        {
+            context.startActivity(rateAppIntent);
+        }
     }
 }
