@@ -22,6 +22,7 @@ import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED
 
 public class FilterContainer extends LinearLayout {
     private FilterListener filterListener;
+    private FilterViewState currentViewState;
 
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.search) ImageView search;
@@ -69,16 +70,35 @@ public class FilterContainer extends LinearLayout {
 
     @OnClick(R.id.region_tab)
     protected void onRegionClicked() {
+        if (currentViewState == FilterViewState.Region) {
+            return;
+        }
+
+        search.setVisibility(VISIBLE);
         filterListener.onRegionSelected();
     }
 
     @OnClick(R.id.distance_tab)
     protected void onDistanceClicked() {
+        if (currentViewState == FilterViewState.Distance) {
+            return;
+        }
+
+        search.setVisibility(GONE);
+        searchEdit.setVisibility(GONE);
+        toolbarTitle.setVisibility(VISIBLE);
         filterListener.onDistanceSelected();
     }
 
     @OnClick(R.id.difficulty_tab)
     protected void onDifficultyClicked() {
+        if (currentViewState == FilterViewState.Difficulty) {
+            return;
+        }
+
+        search.setVisibility(GONE);
+        searchEdit.setVisibility(GONE);
+        toolbarTitle.setVisibility(VISIBLE);
         filterListener.onDifficultySelected();
     }
 
@@ -111,6 +131,8 @@ public class FilterContainer extends LinearLayout {
     }
 
     public void showViewState(FilterViewState viewState) {
+        currentViewState = viewState;
+
         updateTabUI(viewState);
 
         switch (viewState) {

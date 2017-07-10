@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.LocationProviderActivity;
+import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
@@ -30,16 +32,16 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.subjects.SingleSubject;
 
 public class FilterDistanceView extends LinearLayout {
-    private static final String TAG = FilterDistanceView.class.getSimpleName();
     private static final int SLIDER_MAX = 100;
 
+    private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
     private LatLng currentLocation;
 
     @BindView(R.id.filter_distance_slider) SeekBar slider;
     @BindView(R.id.slider_value) TextView sliderValue;
     @BindView(R.id.filter_distance_address1) TextView address1;
     @BindView(R.id.filter_distance_address2) TextView address2;
-    @BindView(R.id.filter_distance_new_address) TextView newAddressButton;
+//    @BindView(R.id.filter_distance_new_address) TextView newAddressButton;
     @BindView(R.id.filter_distance_update_location) TextView updateLocationButton;
 
     public FilterDistanceView(Context context) {

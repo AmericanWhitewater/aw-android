@@ -5,15 +5,23 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
+import com.google.common.collect.Lists;
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Difficulty;
+import com.takescoop.americanwhitewaterandroid.model.Filter;
+import com.takescoop.americanwhitewaterandroid.model.FilterManager;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FilterDifficultyView extends LinearLayout {
+    private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
 
     @BindView(R.id.class_1) AppCompatCheckBox class1;
     @BindView(R.id.class_2) AppCompatCheckBox class2;
@@ -40,6 +48,8 @@ public class FilterDifficultyView extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+
+        populate(filterManager.getFilter());
     }
 
     @Nullable
@@ -79,5 +89,36 @@ public class FilterDifficultyView extends LinearLayout {
         }
 
         return null;
+    }
+
+    private void populate(Filter filter) {
+        if (filter.getDifficultyLowerBound() == null || filter.getDifficultyUpperBound() == null) {
+            return;
+        }
+
+        List<AppCompatCheckBox> checkboxes = Lists.newArrayList(class1, class2, class3, class4, class5, class5Plus);
+        for (AppCompatCheckBox checkBox : checkboxes) {
+            Difficulty difficulty = difficultyForView(checkBox);
+            boolean isChecked = difficulty.ordinal() >= filter.getDifficultyLowerBound().ordinal() && difficulty.ordinal() <= filter.getDifficultyUpperBound().ordinal();
+            checkBox.setChecked(isChecked);
+        }
+    }
+
+    private Difficulty difficultyForView(AppCompatCheckBox view) {
+        if (view == class1) {
+            return Difficulty.I;
+        } else if (view == class2) {
+            return Difficulty.II;
+        } else if (view == class3) {
+            return Difficulty.III;
+        } else if (view == class4) {
+            return Difficulty.IV;
+        } else if (view == class5) {
+            return Difficulty.V;
+        } else if (view == class5Plus) {
+            return Difficulty.VPlus;
+        } else {
+            throw new IllegalArgumentException("No associated difficulty");
+        }
     }
 }

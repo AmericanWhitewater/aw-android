@@ -3,6 +3,7 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -40,6 +41,9 @@ public class MainContainer extends RelativeLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+
+        // Swallow clicks
+        modalContainer.setOnClickListener(v -> { });
     }
 
     ///////////////////////////////////////////////////////////////////////////

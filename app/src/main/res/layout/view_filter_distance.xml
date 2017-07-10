@@ -107,6 +107,7 @@
             android:padding="16dp"
             android:text="@string/filter_distance_new_address"
             android:textColor="@color/font_blue"
+            android:visibility="gone"
             android:textSize="14sp"/>
     </LinearLayout>
 </LinearLayout>
