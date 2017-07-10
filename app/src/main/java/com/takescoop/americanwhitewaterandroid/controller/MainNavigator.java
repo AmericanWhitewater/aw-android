@@ -12,13 +12,14 @@ import com.takescoop.americanwhitewaterandroid.view.MainTabView;
 import com.takescoop.americanwhitewaterandroid.view.NewsFeedView;
 import com.takescoop.americanwhitewaterandroid.view.RunsView;
 import com.takescoop.americanwhitewaterandroid.view.SearchView;
+import com.takescoop.americanwhitewaterandroid.view.TeamView;
 
 import java.util.Stack;
 
 public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener,
         FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener,
         RunDetailsNavigator.RunDetailsParentListener, GageView.GageViewListener, NewsFeedView.NewsFeedListener,
-        AboutNavigator.AboutNavigatorParentListener {
+        AboutNavigator.AboutNavigatorParentListener, TeamView.TeamViewListener {
     private Stack<Integer> reachIds = new Stack<>(); // A bit of a hack to save for the backstack
     private final MainContainer mainContainer;
 
@@ -41,7 +42,8 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         Map,
         Filter,
         Search,
-        About;
+        About,
+        Team;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -63,6 +65,8 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         } else if (viewState == ViewState.About) {
             AboutNavigator aboutNavigator = mainContainer.showAboutView(this);
             setChildNavigator(aboutNavigator);
+        } else if (viewState == ViewState.Team) {
+            mainContainer.showTeam(this);
         } else {
             mainContainer.show(viewState);
         }
@@ -80,6 +84,10 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
 
     public void showAbout() {
         pushAndShowViewState(ViewState.About);
+    }
+
+    public void showTeam() {
+        pushAndShowViewState(ViewState.Team);
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -2,7 +2,9 @@ package com.takescoop.americanwhitewaterandroid.utility;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.takescoop.americanwhitewaterandroid.AWApplication;
@@ -28,13 +30,17 @@ public class AWIntent {
         context.startActivity(urlIntent);
     }
 
-    public static void goToEmail(final Context context, String subject, String emailText) {
-        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        sendIntent.setType("message/rfc822");
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, emailText);
-        context.startActivity(sendIntent);
+
+    public static void goToEmail(Context context, String email) {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null));
+
+        try {
+            context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+        } catch (android.content.ActivityNotFoundException e) {
+            Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     public static void goToRateApp(final Context context) {
         final Uri uri = Uri.parse("market://details?id=" + AWApplication.getContext().getPackageName());

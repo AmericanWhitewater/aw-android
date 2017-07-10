@@ -161,6 +161,14 @@ public class MainContainer extends RelativeLayout {
         actionBar.hide();
     }
 
+    public void showTeam(TeamView.TeamViewListener listener) {
+        modalContainer.removeAllViews();
+        modalContainer.addView(new TeamView(getContext(), listener));
+
+        showModal();
+        actionBar.hide();
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // View
     ///////////////////////////////////////////////////////////////////////////
