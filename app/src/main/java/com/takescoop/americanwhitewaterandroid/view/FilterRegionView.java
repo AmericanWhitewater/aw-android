@@ -3,17 +3,18 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
@@ -21,7 +22,6 @@ import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.utility.Listener;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +31,9 @@ import butterknife.ButterKnife;
 public class FilterRegionView extends LinearLayout implements Listener<AWRegion> {
     private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
 
-    @BindView(R.id.fr_current_location) TextView currentLocationText;
+    private EditText searchEdit;
+
+    @BindView(R.id.selected_regions_text) TextView selectedRegionsText;
     @BindView(R.id.fr_list) RecyclerView list;
 
     public FilterRegionView(Context context) {
@@ -69,8 +71,31 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
         displaySelectedRegions(getSelectedRegions());
     }
 
+    public void setSearchEdit(EditText searchEdit) {
+        this.searchEdit = searchEdit;
+
+        searchEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                FilterRegionAdapter adapter = (FilterRegionAdapter) list.getAdapter();
+                List<AWRegion> filteredRegions = Lists.newArrayList(Iterables.filter(Lists.newArrayList(AWRegion.values()),
+                        region -> region.getTitle().toLowerCase().contains(s.toString().toLowerCase())));
+                adapter.setRegions(filteredRegions);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     private void displaySelectedRegions(List<AWRegion> selectedRegions) {
-        currentLocationText.setText(TextUtils.join(", ", selectedRegions));
+        selectedRegionsText.setText(TextUtils.join(", ", selectedRegions));
     }
 
     public class FilterRegionAdapter extends RecyclerView.Adapter<FilterRegionAdapter.FilterRegionCellViewHolder> {
@@ -127,6 +152,10 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
 
         public Set<AWRegion> getSelections() {
             return selections;
+        }
+
+        public void setRegions(List<AWRegion> regions) {
+            this.regions = regions;
         }
 
         private boolean hasDifferentFirstLetter(AWRegion region1, AWRegion region2) {

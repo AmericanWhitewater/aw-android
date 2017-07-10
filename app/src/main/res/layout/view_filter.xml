@@ -16,21 +16,45 @@
 
         <ImageView
             android:id="@+id/close"
-            android:layout_marginLeft="20dp"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
             app:srcCompat="@drawable/ic_close"/>
 
         <TextView
+            android:id="@+id/toolbar_title"
             style="@style/Headline1"
-            android:layout_marginLeft="32dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="32dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textColor="@color/white"
-            android:text="@string/filters_title"/>
+            android:text="@string/filters_title"
+            android:textColor="@color/white"/>
 
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            app:srcCompat="@drawable/ic_search"/>
+
+        <EditText
+            android:id="@+id/search_edit"
+            style="@style/Headline1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_weight="1"
+            android:hint="@string/search_regions"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/white"
+            android:theme="@style/EditText"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -82,8 +106,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
         android:background="@color/primary"
+        android:elevation="4dp"
         android:orientation="horizontal">
 
         <View
@@ -117,6 +141,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.takescoop.americanwhitewaterandroid.view.FilterRegionView
             android:id="@+id/filter_region"
             android:layout_width="match_parent"

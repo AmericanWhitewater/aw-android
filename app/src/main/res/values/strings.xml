@@ -75,6 +75,8 @@ American Whitewater is working full-time to assure protection of whitewater rive
     <string name="search_hint">Search runs</string>
     <string name="no_favorites_title">No favorite runs, yet.</string>
     <string name="no_favorites_detail">You haven’t favorited any runs, yet!\n Start to search and favorite a run to get updated info!</string>
+    <string name="search_regions">Search regions</string>
+    <string name="your_selected_regions">Your selected regions</string>
 
 
 </resources>

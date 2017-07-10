@@ -1,18 +1,17 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.FilterNavigator.FilterViewState;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
-import com.takescoop.americanwhitewaterandroid.view.FilterDifficultyView;
-import com.takescoop.americanwhitewaterandroid.view.FilterDistanceView;
-import com.takescoop.americanwhitewaterandroid.view.FilterRegionView;
+import com.takescoop.americanwhitewaterandroid.utility.ViewUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +22,10 @@ import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED
 
 public class FilterContainer extends LinearLayout {
     private FilterListener filterListener;
+
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.search) ImageView search;
+    @BindView(R.id.search_edit) EditText searchEdit;
 
     @BindView(R.id.region_tab) TextView regionTab;
     @BindView(R.id.distance_tab) TextView distanceTab;
@@ -38,8 +41,11 @@ public class FilterContainer extends LinearLayout {
 
     public interface FilterListener {
         void onRegionSelected();
+
         void onDistanceSelected();
+
         void onDifficultySelected();
+
         void onClose(Filter filter);
     }
 
@@ -57,6 +63,8 @@ public class FilterContainer extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+
+        filterRegion.setSearchEdit(searchEdit);
     }
 
     @OnClick(R.id.region_tab)
@@ -81,8 +89,13 @@ public class FilterContainer extends LinearLayout {
         }
     }
 
-    public void setFilterListener(FilterListener filterListener) {
-        this.filterListener = filterListener;
+    @OnClick(R.id.search)
+    protected void onSearchClick() {
+        search.setVisibility(GONE);
+        toolbarTitle.setVisibility(GONE);
+        searchEdit.setVisibility(VISIBLE);
+        searchEdit.requestFocus();
+        ViewUtils.showKeyboard(getContext(), searchEdit);
     }
 
     public Filter getFilter() {

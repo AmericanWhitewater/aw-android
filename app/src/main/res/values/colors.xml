@@ -6,6 +6,7 @@
     <color name="accent">#F35C49</color>
     <color name="background">#FAFAFA</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_alpha70">#7FFFFFFF</color>
     <color name="blue_oval">#01AAF7</color>
     <color name="grey_divider">#E5E5E5</color>
 
