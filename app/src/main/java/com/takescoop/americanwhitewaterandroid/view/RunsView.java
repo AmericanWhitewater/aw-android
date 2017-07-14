@@ -79,9 +79,9 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         runList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         showRunnableSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Log.e(TAG, "onCheckedChanged isChecked");
-            }
+            RunsAdapter adapter = (RunsAdapter) runList.getAdapter();
+            adapter.setShowRunnableOnly(isChecked);
+            adapter.notifyDataSetChanged();
         });
 
         favoriteManager.retrieveFavorites();

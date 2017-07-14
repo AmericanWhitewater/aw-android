@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -33,6 +34,9 @@ import butterknife.ButterKnife;
 
 public class ReachMapView extends FrameLayout implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private static final String TAG = ReachMapView.class.getSimpleName();
+
+    // Default to US at the bottom of the map
+    private static final LatLng MAP_DEFAULT_CENTER = new LatLng(56.09024, -95.712891);
     private static final int MIN_ZOOM = 15; // Google zoom level
     private static final int MAP_PADDING_dp = 70;
 
@@ -97,6 +101,8 @@ public class ReachMapView extends FrameLayout implements OnMapReadyCallback, Goo
 
         this.map.setInfoWindowAdapter(new ReachInfoWindowAdapter());
         this.map.setOnInfoWindowClickListener(this);
+
+        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(MAP_DEFAULT_CENTER, 3.0f));
 
         display(reach, map);
     }

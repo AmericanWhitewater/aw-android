@@ -5,8 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.model.FavoriteManager;
+import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
 import java.util.List;
@@ -14,6 +18,8 @@ import java.util.List;
 public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHolder> {
     private Context context;
     private List<ReachSearchResult> searchResults;
+    private List<ReachSearchResult> runnableSearchResults;
+    private boolean showRunnableOnly = false;
     private ItemClickListener itemClickListener;
 
     public interface ItemClickListener {
@@ -22,12 +28,19 @@ public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHol
 
     public RunsAdapter(Context context, @NonNull List<ReachSearchResult> searchResults, ItemClickListener itemClickListener) {
         this.context = context;
-        this.searchResults = searchResults;
         this.itemClickListener = itemClickListener;
+
+        setSearchResults(searchResults);
     }
 
     public void setSearchResults(List<ReachSearchResult> searchResults) {
         this.searchResults = searchResults;
+
+        runnableSearchResults = Lists.newArrayList(Iterables.filter(searchResults, input -> input.getFlowLevel() == FlowLevel.Runnable));
+    }
+
+    public void setShowRunnableOnly(boolean showRunnableOnly) {
+        this.showRunnableOnly = showRunnableOnly;
     }
 
     @Override
@@ -41,7 +54,7 @@ public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHol
 
     @Override
     public void onBindViewHolder(RunsAdapter.RunCellViewHolder holder, int position) {
-        ReachSearchResult result = searchResults.get(position);
+        ReachSearchResult result = showRunnableOnly ? runnableSearchResults.get(position) : searchResults.get(position);
         holder.getRunCell().showResult(result);
 
         holder.getRunCell().setOnClickListener(v -> {
@@ -53,7 +66,7 @@ public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHol
 
     @Override
     public int getItemCount() {
-        return searchResults.size();
+        return showRunnableOnly ? runnableSearchResults.size() : searchResults.size();
     }
 
     class RunCellViewHolder extends RecyclerView.ViewHolder {

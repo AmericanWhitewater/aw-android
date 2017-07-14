@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -39,6 +40,9 @@ import io.reactivex.observers.DisposableSingleObserver;
 
 public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private static final String TAG = BrowseMapView.class.getSimpleName();
+
+    // Default to US at the bottom of the map
+    private static final LatLng MAP_DEFAULT_CENTER = new LatLng(56.09024, -95.712891);
     private static final int MIN_ZOOM = 15; // Google zoom level
     private static final int MAP_PADDING_dp = 60;
 
@@ -116,6 +120,8 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
 
         this.map.setInfoWindowAdapter(new BrowseInfoWindowAdapter());
         this.map.setOnInfoWindowClickListener(this);
+
+        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(MAP_DEFAULT_CENTER, 3.0f));
 
         display(reachSearchResults, map);
     }
