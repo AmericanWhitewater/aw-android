@@ -16,30 +16,39 @@
         android:gravity="center_horizontal"
         android:padding="12dp"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/view_run_list"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/view_run_last_updated_text"/>
+        android:layout_below="@id/view_run_last_updated_text">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_run_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/view_run_runnable_layout"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/blue_oval"
-        android:layout_margin="16dp">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/blue_oval">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
             android:layout_marginBottom="14dp"
             android:layout_marginLeft="20dp"
-            android:textSize="14sp"
+            android:layout_marginTop="14dp"
+            android:text="@string/show_runnable"
             android:textColor="@color/white"
-            android:text="@string/show_runnable"/>
+            android:textSize="14sp"/>
 
         <android.support.v4.widget.Space
             android:layout_width="0dp"
@@ -48,9 +57,9 @@
 
         <Switch
             android:id="@+id/view_run_show_runnable"
-            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:showText="false"

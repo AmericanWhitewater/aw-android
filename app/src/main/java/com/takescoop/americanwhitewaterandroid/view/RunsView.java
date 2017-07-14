@@ -3,10 +3,11 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,13 +47,14 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
     private final AWApi awApi = AWProvider.Instance.awApi();
     private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
     private final FavoriteManager favoriteManager = AWProvider.Instance.getFavoriteManager();
-    @BindView(R.id.view_run_runnable_layout) LinearLayout viewRunRunnableLayout;
 
     private RunsListener runsListener;
 
     @BindView(R.id.view_run_last_updated_text) TextView lastUpdatedText;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.view_run_list) RecyclerView runList;
     @BindView(R.id.view_run_show_runnable) Switch showRunnableSwitch;
+    @BindView(R.id.view_run_runnable_layout) LinearLayout viewRunRunnableLayout;
 
     public interface RunsListener {
         void onReachSelected(int reachId);
@@ -76,7 +78,32 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
         ButterKnife.bind(this);
 
+        init();
+    }
+
+    @Override
+    public void onReachItemClick(int reachId) {
+        if (runsListener != null) {
+            runsListener.onReachSelected(reachId);
+        }
+    }
+
+    public void setRunsListener(RunsListener runsListener) {
+        this.runsListener = runsListener;
+    }
+
+    @OnClick(R.id.view_run_runnable_layout)
+    protected void onRunnableLayoutClick() {
+        // Swallow
+    }
+
+    private void init() {
         runList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        swipeContainer.setOnRefreshListener(() -> {
+            updateReaches(filterManager.getFilter());
+        });
+        swipeContainer.setColorSchemeResources(R.color.primary);
 
         showRunnableSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             RunsAdapter adapter = (RunsAdapter) runList.getAdapter();
@@ -98,32 +125,19 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         }
     }
 
-    @Override
-    public void onReachItemClick(int reachId) {
-        if (runsListener != null) {
-            runsListener.onReachSelected(reachId);
-        }
-    }
-
-    public void setRunsListener(RunsListener runsListener) {
-        this.runsListener = runsListener;
-    }
-
-    @OnClick(R.id.view_run_runnable_layout)
-    protected void onRunnableLayoutClick() {
-        // Swallow
-    }
-
     private void updateReaches(Filter filter) {
+        swipeContainer.setRefreshing(true);
         awApi.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override
             public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
                 runList.setAdapter(new RunsAdapter(getContext(), reachSearchResults, RunsView.this));
                 lastUpdatedText.setText(DisplayStringUtils.displayUpdateTime(Instant.now()));
+
+                swipeContainer.setRefreshing(false);
             }
 
             @Override public void onError(@NonNull Throwable e) {
-
+                swipeContainer.setRefreshing(false);
             }
         });
     }

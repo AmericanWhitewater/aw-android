@@ -1,6 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class FavoritesView extends LinearLayout implements RunsAdapter.ItemClick
 
     @BindView(R.id.no_favorites_layout) LinearLayout noFavoritesLayout;
     @BindView(R.id.last_updated_text) TextView lastUpdatedText;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.favorites_list) RecyclerView favoritesList;
 
     public FavoritesView(Context context) {
@@ -57,6 +59,9 @@ public class FavoritesView extends LinearLayout implements RunsAdapter.ItemClick
 
         favoriteManager.retrieveFavorites();
         updateFavorites();
+
+        swipeContainer.setOnRefreshListener(this::updateFavorites);
+        swipeContainer.setColorSchemeResources(R.color.primary);
     }
 
     private void updateFavorites() {
@@ -71,14 +76,17 @@ public class FavoritesView extends LinearLayout implements RunsAdapter.ItemClick
         lastUpdatedText.setVisibility(VISIBLE);
         favoritesList.setVisibility(VISIBLE);
 
+        swipeContainer.setRefreshing(true);
         awApi.getReaches(favoriteManager.getFavoriteReachIds()).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override public void onSuccess(@NonNull List<ReachSearchResult> results) {
                 favoritesList.setAdapter(new RunsAdapter(getContext(), results, FavoritesView.this));
                 lastUpdatedText.setText(DisplayStringUtils.displayUpdateTime(Instant.now()));
+
+                swipeContainer.setRefreshing(false);
             }
 
             @Override public void onError(@NonNull Throwable e) {
-
+                swipeContainer.setRefreshing(false);
             }
         });
     }
