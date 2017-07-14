@@ -19,6 +19,8 @@ import java.util.Locale;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -44,15 +46,15 @@ public enum AWApi {
         @GET("River/geo-summary/.json")
         Single<List<ReachSearchResponse>> getReachesByGeo(@Query("BBOX") String bounds);
 
-//        @GET("River/state-summary/state/:stateabbreviation/.json")
-//        Single<ReachSearchResponse> getReachesByState();
-
         // ":" separated
         @GET("River/list/list/{reachIdList}/.json")
         Single<List<ReachSearchResponse>> getReachesList(@Path("reachIdList") String reachIdList);
 
         @GET("River/detail/id/{reachId}/.json")
         Single<ReachResponse> getReachDetail(@Path("reachId") Integer reachId);
+
+        @GET("News/archive/type/frontpagenews/subtype//page/1/.json")
+        Single<ArticlesResponse> getArticlesList();
 
         @GET("Article/view/articleid/{articleId}/.json")
         Single<Article> getArticle(@Path("articleId") Integer articleId);
@@ -97,6 +99,7 @@ public enum AWApi {
                 }).observeOn(AndroidSchedulers.mainThread());
     }
 
+
     public Single<List<ReachSearchResult>> getReaches(LatLngBounds bounds) {
         LatLng sw = bounds.southwest;
         LatLng ne = bounds.northeast;
@@ -118,6 +121,10 @@ public enum AWApi {
         }
 
         return webService.getReachDetail(reachId).map(ReachResponse::toModel).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<List<Article>> getArticlesList() {
+        return webService.getArticlesList().map(ArticlesResponse::getArticles).observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Article> getArticle(Integer articleId) {

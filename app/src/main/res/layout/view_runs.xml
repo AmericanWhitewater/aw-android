@@ -54,6 +54,6 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:showText="false"
-            android:trackTint="@color/status_green"/>
+            android:thumb="@drawable/switch_thumb"/>
     </LinearLayout>
 </RelativeLayout>

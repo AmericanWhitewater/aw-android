@@ -57,10 +57,9 @@ public class NewsFeedView extends RelativeLayout {
 
         articlesList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // TODO get all
-        awApi.getArticle(33829).subscribe(new DisposableSingleObserver<Article>() {
-            @Override public void onSuccess(@NonNull Article article) {
-                displayArticles(Lists.newArrayList(article));
+        awApi.getArticlesList().subscribe(new DisposableSingleObserver<List<Article>>() {
+            @Override public void onSuccess(@NonNull List<Article> articles) {
+                displayArticles(articles);
             }
 
             @Override public void onError(@NonNull Throwable e) {
