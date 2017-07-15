@@ -85,7 +85,7 @@ public class NewsFeedView extends RelativeLayout {
 
     private void displayArticles(List<Article> articles) {
         articlesList.setAdapter(new ArticleAdapter(getContext(), articles, article -> {
-            // TODO
+            // TODO show article on click
         }));
     }
 

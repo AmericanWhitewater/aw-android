@@ -32,18 +32,18 @@ public class MapUtils {
         if (markers.size() > 0) {
             final LatLngBounds bounds = getBounds(markers);
             try {
-                map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, pixelsFromDP(padding_dp, (Activity) context))); // map padding
+                map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, pixelsFromDP(padding_dp, (Activity) context))); // map padding
 
                 // Hack, the bounds method requires waiting for layout and for some reason the on global layout listener isn't doing the trick.  So, use the non-bounds method instead.
             } catch (IllegalStateException e) {
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(markers.get(0).getPosition()).zoom(minZoom).build();
-                map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         }
 
         if (map.getCameraPosition().zoom > minZoom) {
             CameraPosition cameraPosition = new CameraPosition.Builder().target(markers.get(0).getPosition()).zoom(minZoom).build();
-            map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
     }
 

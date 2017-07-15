@@ -75,7 +75,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     @Override
     public void goBackToViewState(ViewState viewState) {
         if (viewState == ViewState.RunDetails) {
-            Integer reachId = reachIds.pop(); // TODO
+            Integer reachId = reachIds.pop(); // TODO was crashing
             mainContainer.showRunDetails(reachId, this);
         } else {
             showViewState(viewState);
