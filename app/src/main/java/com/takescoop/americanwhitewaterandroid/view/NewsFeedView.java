@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.google.common.collect.Lists;
@@ -26,6 +27,7 @@ public class NewsFeedView extends RelativeLayout {
     private static final AWApi awApi = AWProvider.Instance.awApi();
     private NewsFeedListener listener;
 
+    @BindView(R.id.progressWheel) ProgressBar progressWheel;
     @BindView(R.id.articles_list) RecyclerView articlesList;
 
     public interface ArticleItemClickListener {
@@ -57,13 +59,15 @@ public class NewsFeedView extends RelativeLayout {
 
         articlesList.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        progressWheel.setVisibility(VISIBLE);
         awApi.getArticlesList().subscribe(new DisposableSingleObserver<List<Article>>() {
             @Override public void onSuccess(@NonNull List<Article> articles) {
+                progressWheel.setVisibility(GONE);
                 displayArticles(articles);
             }
 
             @Override public void onError(@NonNull Throwable e) {
-
+                progressWheel.setVisibility(GONE);
             }
         });
     }

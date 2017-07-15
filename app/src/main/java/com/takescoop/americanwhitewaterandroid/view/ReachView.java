@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.AWProvider;
@@ -34,6 +35,8 @@ public class ReachView extends LinearLayout {
     private RunDetailsListener listener;
     private int reachId;
 
+
+    @BindView(R.id.progressWheel) ProgressBar progressWheel;
     @BindView(R.id.back) ImageView back;
     @BindView(R.id.title) TextView title;
     @BindView(R.id.favorite) ImageView favorite;
@@ -76,13 +79,15 @@ public class ReachView extends LinearLayout {
     }
 
     public void fetchReach(int reachId) {
+        progressWheel.setVisibility(VISIBLE);
         awApi.getReach(reachId).subscribe(new DisposableSingleObserver<Reach>() {
             @Override public void onSuccess(@NonNull Reach reach) {
+                progressWheel.setVisibility(GONE);
                 updateReach(reach);
             }
 
             @Override public void onError(@NonNull Throwable e) {
-
+                progressWheel.setVisibility(GONE);
             }
         });
     }

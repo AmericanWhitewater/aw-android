@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,7 +24,6 @@ import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
-import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
@@ -36,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 
 public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -51,6 +52,7 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
     private List<ReachSearchResult> reachSearchResults;
     private GoogleMap map;
 
+    @BindView(R.id.progressWheel) ProgressBar progressWheel;
     @BindView(R.id.map_container) FrameLayout mapContainer;
 
     private enum MarkerType {
@@ -137,13 +139,16 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
     }
 
     private void updateReaches(Filter filter) {
+        progressWheel.setVisibility(VISIBLE);
         AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override
-            public void onSuccess(@io.reactivex.annotations.NonNull List<ReachSearchResult> reachSearchResults) {
+            public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
                 setReachSearchResults(reachSearchResults);
+                progressWheel.setVisibility(GONE);
             }
 
-            @Override public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+            @Override public void onError(@NonNull Throwable e) {
+                progressWheel.setVisibility(GONE);
             }
         });
     }
@@ -154,7 +159,7 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
         }
 
         map.clear();
-        
+
         List<Marker> markers = Lists.newArrayList();
 
         for (ReachSearchResult result : results) {

@@ -9,6 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <ProgressBar
+        android:id="@+id/progressWheel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_small_height"
+        android:layout_margin="8dp"
+        android:indeterminate="true"
+        android:layout_alignParentTop="true"
+        android:indeterminateDrawable="@drawable/progress_wheel_dark"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"

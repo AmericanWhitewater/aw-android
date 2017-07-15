@@ -5,6 +5,15 @@
               android:background="@color/white"
               android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/progressWheel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_small_height"
+        android:layout_margin="8dp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_wheel"
+        android:visibility="gone"/>
+
     <com.takescoop.americanwhitewaterandroid.view.DonateView
         android:id="@+id/donate_view"
         android:layout_width="match_parent"
