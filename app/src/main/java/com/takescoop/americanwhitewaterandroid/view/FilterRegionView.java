@@ -1,6 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.common.base.Function;
+import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -95,7 +98,8 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
     }
 
     private void displaySelectedRegions(List<AWRegion> selectedRegions) {
-        selectedRegionsText.setText(TextUtils.join(", ", selectedRegions));
+        String regionsString = TextUtils.join(", ", Lists.transform(selectedRegions, AWRegion::getTitle));
+        selectedRegionsText.setText(regionsString);
     }
 
     public class FilterRegionAdapter extends RecyclerView.Adapter<FilterRegionAdapter.FilterRegionCellViewHolder> {

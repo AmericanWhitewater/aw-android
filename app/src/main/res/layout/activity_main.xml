@@ -57,7 +57,19 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:itemIconTint="@color/primary"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer"/>
+        app:itemIconTint="@color/primary"
+        app:menu="@menu/activity_main_drawer">
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:alpha=".5"
+            android:gravity="right"
+            android:textColor="@color/font_grey"
+            android:textSize="14sp"/>
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

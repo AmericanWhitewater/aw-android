@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -41,11 +43,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MapViewActivity, LocationProviderActivity, NavigationDrawerActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_LOCATION_CODE = 111; // Number to tag the request with.  Complete Android BS.
-
     private MainNavigator mainNavigator;
+
     private SingleSubject<LatLng> getLocationObservable;
 
     @BindView(R.id.container) FrameLayout container;
+    @BindView(R.id.version) TextView version;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +138,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        String versionName = getVersionName(this);
+        String versionCode = getVersionCode(this);
+        version.setText("v " + versionName + "." + versionCode);
     }
 
     @Override public void setNavDrawerEnabled(boolean isEnabled) {
@@ -227,5 +234,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         boolean areFinePermissionsGranted = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         return isLocationManagerEnabled && areFinePermissionsGranted;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Helpers
+    ///////////////////////////////////////////////////////////////////////////
+
+    private String getVersionName(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
+    }
+
+    private String getVersionCode(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return String.valueOf(info.versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
     }
 }

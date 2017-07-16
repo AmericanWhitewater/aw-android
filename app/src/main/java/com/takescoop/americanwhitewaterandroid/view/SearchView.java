@@ -19,6 +19,7 @@ import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
+import com.takescoop.americanwhitewaterandroid.utility.ViewUtils;
 
 import java.util.List;
 
@@ -68,7 +69,9 @@ public class SearchView extends LinearLayout implements RunsAdapter.ItemClickLis
     private void init() {
         searchList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        clear.requestFocus();
+        searchEdit.requestFocus();
+        searchEdit.postDelayed(() -> ViewUtils.showKeyboard(getContext(), searchEdit), 100);
+
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
