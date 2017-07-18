@@ -13,7 +13,7 @@
         android:layout_height="@dimen/progress_small_height"
         android:layout_margin="8dp"
         android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/progress_wheel_dark"
+        android:indeterminateDrawable="@drawable/progress_wheel"
         android:visibility="gone"/>
 
     <LinearLayout

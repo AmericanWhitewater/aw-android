@@ -17,7 +17,7 @@
         android:layout_margin="8dp"
         android:indeterminate="true"
         android:layout_alignParentTop="true"
-        android:indeterminateDrawable="@drawable/progress_wheel_dark"
+        android:indeterminateDrawable="@drawable/progress_wheel"
         android:visibility="gone"/>
 
     <LinearLayout
