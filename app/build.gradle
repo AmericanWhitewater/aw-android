@@ -31,10 +31,23 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+    signingConfigs {
+        production {
+            Properties props = new Properties()
+            if (rootProject.file('key.properties').exists()) {
+                props.load(new FileInputStream(rootProject.file('key.properties')))
+                storeFile file(rootProject.file(props.store))
+                keyAlias props.alias
+                storePassword props.storePassword
+                keyPassword props.aliasPassword
+            }
+        }
+    }
+
     productFlavors {
         production {
             applicationId "org.americanwhitewater"
-//            signingConfig signingConfigs.production
+            signingConfig signingConfigs.production
             resValue "string", "app_name", "American Whitewater"
 //            buildConfigField 'boolean', 'SHOW_DEBUG_CONSOLE', 'false'
         }
