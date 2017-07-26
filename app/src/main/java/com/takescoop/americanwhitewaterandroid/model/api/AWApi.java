@@ -22,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -53,7 +54,8 @@ public enum AWApi {
         @GET("River/detail/id/{reachId}/.json")
         Single<ReachResponse> getReachDetail(@Path("reachId") Integer reachId);
 
-        @GET("News/archive/type/frontpagenews/subtype//page/1/.json")
+        @Headers("accept-encoding: identity")
+        @GET("News/all/type/frontpagenews/subtype//page/0/.json?limit=10")
         Single<ArticlesResponse> getArticlesList();
 
         @GET("Article/view/articleid/{articleId}/.json")
