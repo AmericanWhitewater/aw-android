@@ -35,6 +35,7 @@ public class NewsFeedView extends RelativeLayout {
     }
 
     public interface NewsFeedListener {
+        void onArticleSelected(Article article);
         void onReadMoreClicked();
     }
 
@@ -85,7 +86,9 @@ public class NewsFeedView extends RelativeLayout {
 
     private void displayArticles(List<Article> articles) {
         articlesList.setAdapter(new ArticleAdapter(getContext(), articles, article -> {
-            // TODO show article on click
+            if (listener != null) {
+                listener.onArticleSelected(article);
+            }
         }));
     }
 

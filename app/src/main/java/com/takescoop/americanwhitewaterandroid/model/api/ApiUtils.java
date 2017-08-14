@@ -49,10 +49,6 @@ public class ApiUtils {
             builder.addInterceptor(loggingInterceptor);
         }
 
-//        if (options.contains(RetrofitOptions.HandleErrors)) {
-//            builder.addInterceptor(new ScoopErrorInterceptor());
-//        }
-
         return builder.build();
     }
 

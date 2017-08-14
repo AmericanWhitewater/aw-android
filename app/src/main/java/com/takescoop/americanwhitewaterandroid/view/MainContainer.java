@@ -3,7 +3,6 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -13,6 +12,7 @@ import com.takescoop.americanwhitewaterandroid.controller.FilterNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.MainNavigator;
 import com.takescoop.americanwhitewaterandroid.controller.NavigationDrawerActivity;
 import com.takescoop.americanwhitewaterandroid.controller.RunDetailsNavigator;
+import com.takescoop.americanwhitewaterandroid.model.Article;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 
 import butterknife.BindView;
@@ -55,6 +55,9 @@ public class MainContainer extends RelativeLayout {
             case News:
                 break;
 
+            case Article:
+                throw new IllegalArgumentException("Use the method with dependencies");
+
             case RunsList:
                 throw new IllegalArgumentException("Use the method with dependencies");
 
@@ -80,6 +83,10 @@ public class MainContainer extends RelativeLayout {
 
             case Search:
                 throw new IllegalArgumentException("Use the method with dependencies");
+            case About:
+                break;
+            case Team:
+                break;
         }
     }
 
@@ -164,6 +171,14 @@ public class MainContainer extends RelativeLayout {
     public void showTeam(TeamView.TeamViewListener listener) {
         modalContainer.removeAllViews();
         modalContainer.addView(new TeamView(getContext(), listener));
+
+        showModal();
+        actionBar.hide();
+    }
+
+    public void showArticle(Article article, ArticleView.ArticleViewListener listener) {
+        modalContainer.removeAllViews();
+        modalContainer.addView(new ArticleView(getContext(), article, listener));
 
         showModal();
         actionBar.hide();

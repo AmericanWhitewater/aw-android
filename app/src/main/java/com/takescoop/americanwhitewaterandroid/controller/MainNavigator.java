@@ -3,9 +3,11 @@ package com.takescoop.americanwhitewaterandroid.controller;
 import android.support.v7.app.ActionBar;
 import android.view.ViewGroup;
 
+import com.takescoop.americanwhitewaterandroid.model.Article;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
+import com.takescoop.americanwhitewaterandroid.view.ArticleView;
 import com.takescoop.americanwhitewaterandroid.view.GageView;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
@@ -19,7 +21,8 @@ import java.util.Stack;
 public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener,
         FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener,
         RunDetailsNavigator.RunDetailsParentListener, GageView.GageViewListener, NewsFeedView.NewsFeedListener,
-        AboutNavigator.AboutNavigatorParentListener, TeamView.TeamViewListener {
+        AboutNavigator.AboutNavigatorParentListener, TeamView.TeamViewListener, ArticleView.ArticleViewListener {
+
     private Stack<Integer> reachIds = new Stack<>(); // A bit of a hack to save for the backstack
     private final MainContainer mainContainer;
 
@@ -35,6 +38,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
 
     public enum ViewState {
         News,
+        Article,
         RunsList,
         GageDetails,
         RunDetails,
@@ -134,6 +138,11 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         setChildNavigator(null);
 
         onBack();
+    }
+
+    @Override public void onArticleSelected(Article article) {
+        pushViewState(ViewState.Article);
+        mainContainer.showArticle(article, this);
     }
 
     @Override public void onReadMoreClicked() {
