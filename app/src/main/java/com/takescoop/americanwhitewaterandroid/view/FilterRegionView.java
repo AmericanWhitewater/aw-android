@@ -138,12 +138,13 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
             holder.getFilterCell().setCheckboxVisible(isSelected(region));
             holder.getFilterCell().setOnClickListener(v -> {
                 if (isSelected(region)) {
-                    selections.remove(region);
+                    selections.clear();
                 } else {
+                    selections.clear();
                     selections.add(region);
                 }
 
-                holder.getFilterCell().setCheckboxVisible(isSelected(region));
+                notifyDataSetChanged();
 
                 listener.onResponse(region);
             });
