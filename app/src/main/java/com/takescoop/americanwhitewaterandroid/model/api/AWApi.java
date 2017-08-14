@@ -11,6 +11,7 @@ import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Article;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
+import com.takescoop.americanwhitewaterandroid.model.GageDetailResponse;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
@@ -54,6 +55,9 @@ public enum AWApi {
 
         @GET("River/detail/id/{reachId}/.json")
         Single<ReachResponse> getReachDetail(@Path("reachId") Integer reachId);
+
+        @GET("Gauge2/detail/id/{gageId}/.json")
+        Single<GageDetailResponse> getGageDetail(@Path("gageId") Integer gageId);
 
         @GET("News/all/type/frontpagenews/subtype//page/0/.json?limit=10")
         Single<ArticlesResponse> getArticlesList();
@@ -123,6 +127,24 @@ public enum AWApi {
         }
 
         return webService.getReachDetail(reachId).map(ReachResponse::toModel).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    // Updates the given gage with the linked reaches
+    public Single<Gage> getGageReaches(final Gage gage) {
+        if (gage == null || gage.getId() == null || gage.getId() == 0) {
+            return Single.error(new Exception("No gage id"));
+        }
+
+        return webService.getGageDetail(gage.getId()).map(new Function<GageDetailResponse, Gage>() {
+            @Override public Gage apply(@NonNull GageDetailResponse gageDetailResponse) throws Exception {
+                List<ReachSearchResult> results = Lists.newArrayList();
+                for (ReachSearchResponse response : gageDetailResponse.getRiverinfo()) {
+                    results.add(response.toModel());
+                }
+                gage.setLinkedReaches(results);
+                return gage;
+            }
+        }).observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<List<Article>> getArticlesList() {

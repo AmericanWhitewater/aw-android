@@ -1,8 +1,11 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.common.collect.Lists;
 
 import org.threeten.bp.Instant;
+
+import java.util.List;
 
 public class Gage {
     private Integer id;
@@ -19,6 +22,7 @@ public class Gage {
     private String sourceId = "";
     private Integer awGageMetricId;
     private FlowLevel flowLevel;
+    private List<ReachSearchResult> linkedReaches = Lists.newArrayList();
 
     public Integer getId() {
         return id;
@@ -79,6 +83,14 @@ public class Gage {
 
     public FlowLevel getFlowLevel() {
         return flowLevel;
+    }
+
+    public List<ReachSearchResult> getLinkedReaches() {
+        return linkedReaches;
+    }
+
+    public void setLinkedReaches(List<ReachSearchResult> linkedReaches) {
+        this.linkedReaches = linkedReaches;
     }
 
     public static class Builder {

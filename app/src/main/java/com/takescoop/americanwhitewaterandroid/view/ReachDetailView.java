@@ -80,7 +80,9 @@ public class ReachDetailView extends LinearLayout {
         }
 
         gageCell.showReach(reach);
-        description.setText(Html.fromHtml(reach.getDescription()));
+        if (reach.getDescription() != null) {
+            description.setText(Html.fromHtml(reach.getDescription()));
+        }
         if (description.getLineCount() > DESCRIPTION_MAX_LINES) {
             readMore.setVisibility(VISIBLE);
             descriptionLayout.setOnClickListener(getOnDescriptionLayoutClickListener());

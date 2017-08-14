@@ -34,7 +34,7 @@
             style="@style/Headline1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="32dp"
+            android:layout_marginLeft="12dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -56,6 +56,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/reach_list"
+        android:layout_marginTop="28dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

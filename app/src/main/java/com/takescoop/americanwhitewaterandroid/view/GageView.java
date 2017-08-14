@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.common.collect.Lists;
@@ -25,8 +26,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableSingleObserver;
 
-public class GageView extends LinearLayout implements RunsAdapter.ItemClickListener {
+public class GageView extends ScrollView implements RunsAdapter.ItemClickListener {
     private static final String TAG = GageView.class.getSimpleName();
     private GageViewListener listener;
 
@@ -75,10 +78,11 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
             flowGraph.setVisibility(GONE);
         }
 
-        // TODO add reaches
         reachList.setLayoutManager(new LinearLayoutManager(getContext()));
         List<ReachSearchResult> reaches = Lists.newArrayList();
         reachList.setAdapter(new RunsAdapter(getContext(), reaches, this));
+
+        updateReaches(gage);
     }
 
     @OnClick(R.id.flow_graph)
@@ -95,5 +99,19 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
     @OnClick(R.id.back_tap_target)
     protected void onBackClick() {
         listener.onClose();
+    }
+
+    private void updateReaches(Gage gage) {
+        awApi.getGageReaches(gage).subscribe(new DisposableSingleObserver<Gage>() {
+            @Override public void onSuccess(@NonNull Gage gage) {
+                RunsAdapter runsAdapter = (RunsAdapter) reachList.getAdapter();
+                runsAdapter.setSearchResults(gage.getLinkedReaches());
+                runsAdapter.notifyDataSetChanged();
+            }
+
+            @Override public void onError(@NonNull Throwable e) {
+
+            }
+        });
     }
 }
