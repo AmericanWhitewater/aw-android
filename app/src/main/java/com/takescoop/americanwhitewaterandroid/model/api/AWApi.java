@@ -5,7 +5,9 @@ import android.text.TextUtils;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Article;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
@@ -39,7 +41,7 @@ public enum AWApi {
         @GET("River/search/.json")
         Single<List<ReachSearchResponse>> getReaches(
                 @Query("river") String searchText,
-                @Query("state") String state,
+                @Query("state") List<String> states,
                 @Query("level") String level,
                 @Query("atleast") String difficultyLowerBound,
                 @Query("atmost") String difficultyUpperBound);
@@ -47,14 +49,12 @@ public enum AWApi {
         @GET("River/geo-summary/.json")
         Single<List<ReachSearchResponse>> getReachesByGeo(@Query("BBOX") String bounds);
 
-        // ":" separated
         @GET("River/list/list/{reachIdList}/.json")
         Single<List<ReachSearchResponse>> getReachesList(@Path("reachIdList") String reachIdList);
 
         @GET("River/detail/id/{reachId}/.json")
         Single<ReachResponse> getReachDetail(@Path("reachId") Integer reachId);
 
-        @Headers("accept-encoding: identity")
         @GET("News/all/type/frontpagenews/subtype//page/0/.json?limit=10")
         Single<ArticlesResponse> getArticlesList();
 
@@ -70,11 +70,11 @@ public enum AWApi {
         webService = ApiUtils.getRestAdapter().create(AWApiService.class);
     }
 
-    public Single<List<ReachSearchResult>> getReaches(@Nullable String searchText) {
+    public Single<List<ReachSearchResult>> getReaches(String searchText) {
         return getReaches(searchText, null);
     }
 
-    public Single<List<ReachSearchResult>> getReaches(@Nullable Filter filter) {
+    public Single<List<ReachSearchResult>> getReaches(Filter filter) {
         return getReaches(null, filter);
     }
 
@@ -148,14 +148,14 @@ public enum AWApi {
         return String.format(Locale.US, FLOW_GRAPH_URL, gage.getId(), gage.getAwGageMetricId());
     }
 
-    private String getRegions(@Nullable Filter filter) {
-        //TODO add multiple region support
-        String regionCode = null;
+    private List<String> getRegions(@Nullable Filter filter) {
+        List<String> regionCodes = Lists.newArrayList();
+
         if (filter != null && filter.getRegions() != null && filter.getRegions().size() > 0) {
-            regionCode = filter.getRegions().get(0).getCode();
+            regionCodes = Lists.newArrayList(Iterables.transform(filter.getRegions(), AWRegion::getCode));
         }
 
-        return regionCode;
+        return regionCodes;
     }
 
     private String getFlowLevelApiCode(@Nullable Filter filter) {
