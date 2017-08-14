@@ -112,7 +112,7 @@ public class ReachSearchResponse {
                 .setRiver(river)
                 .setDifficulty(_class)
                 .setLastGaugeReading(readingFormatted)
-                .setFlowLevel(FlowLevel.fromAWApi(cond))
+                .setFlowLevel(FlowLevel.fromAWApiCondField(cond))
                 .setPutInLatLng(putInLatLng);
 
         return builder.build();

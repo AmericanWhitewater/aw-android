@@ -18,6 +18,7 @@ public class Gage {
     private String source = "";
     private String sourceId = "";
     private Integer awGageMetricId;
+    private FlowLevel flowLevel;
 
     public Integer getId() {
         return id;
@@ -76,6 +77,10 @@ public class Gage {
         return awGageMetricId;
     }
 
+    public FlowLevel getFlowLevel() {
+        return flowLevel;
+    }
+
     public static class Builder {
         private Integer id;
         private String name = "";
@@ -90,6 +95,7 @@ public class Gage {
         private String source = "";
         private String sourceId = "";
         private Integer awGageMetricId;
+        private FlowLevel flowLevel;
 
         public Gage build() {
             Gage gage = new Gage();
@@ -107,6 +113,7 @@ public class Gage {
             gage.source = this.source;
             gage.sourceId = this.sourceId;
             gage.awGageMetricId = awGageMetricId;
+            gage.flowLevel = flowLevel;
 
             return gage;
         }
@@ -173,6 +180,11 @@ public class Gage {
 
         public Builder setGageMetricId(Integer metricId) {
             this.awGageMetricId = metricId;
+            return this;
+        }
+
+        public Builder setFlowLevel(FlowLevel flowLevel) {
+            this.flowLevel = flowLevel;
             return this;
         }
     }

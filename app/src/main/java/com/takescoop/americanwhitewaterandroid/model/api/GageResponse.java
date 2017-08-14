@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.model.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 
 import org.threeten.bp.Instant;
@@ -39,40 +40,56 @@ public class GageResponse {
     private String source;
     @Expose @SerializedName("source_id")
     private String sourceId;
-    //    @Expose @SerializedName("dhid")
-//    public Integer dhid;
+    //        @Expose @SerializedName("dhid")
+//    private Integer dhid;
 //    @Expose @SerializedName("id")
-//    public Integer id;
+//    private Integer id;
 //    @Expose @SerializedName("did")
-//    public Integer did;
+//    private Integer did;
 //    @Expose @SerializedName("updated")
-//    public String updated;
+//    private String updated;
 //    @Expose @SerializedName("epoch")
-//    public String epoch;
+//    private String epoch;
 //    @Expose @SerializedName("reading")
-//    public String reading;
+//    private String reading;
     @Expose @SerializedName("gauge_metric")
-    public Integer gaugeMetric;
-//    @Expose @SerializedName("gauge_min")
-//    public String gaugeMin;
+    private Integer gaugeMetric;
+    //    @Expose @SerializedName("gauge_min")
+//    private String gaugeMin;
 //    @Expose @SerializedName("gauge_max")
-//    public String gaugeMax;
+//    private String gaugeMax;
 //    @Expose @SerializedName("obs_id")
-//    public Integer obsId;
+//    private Integer obsId;
 //    @Expose @SerializedName("gauge_perfect")
-//    public Boolean gaugePerfect;
+//    private Boolean gaugePerfect;
 //    @Expose @SerializedName("range_min")
-//    public String rangeMin;
+//    private String rangeMin;
 //    @Expose @SerializedName("range_max")
-//    public String rangeMax;
+//    private String rangeMax;
 //    @Expose @SerializedName("adjusted_reach_class")
-//    public Object adjustedReachClass;
+//    private Object adjustedReachClass;
 //    @Expose @SerializedName("targetid")
-//    public Integer targetid;
-//    @Expose @SerializedName("sourceid")
-//    public Integer sourceid;
+//    private Integer targetid;
 //    @Expose @SerializedName("time_adjustment")
-//    public Object timeAdjustment;
+//    private Object timeAdjustment;
+    @SerializedName("url")
+    @Expose
+    private String url;
+    //    @SerializedName("class")
+//    @Expose
+//    private String _class;
+    @SerializedName("rc")
+    @Expose
+    private Double rc;
+//    @SerializedName("excluded")
+//    @Expose
+//    private Boolean excluded;
+//    @SerializedName("rmin")
+//    @Expose
+//    private String rmin;
+//    @SerializedName("rmax")
+//    @Expose
+//    private String rmax;
 
     public Gage toModel() {
         Gage.Builder builder = new Gage.Builder();
@@ -94,6 +111,8 @@ public class GageResponse {
 
         }
 
+        FlowLevel flowLevel = FlowLevel.fromAWApiRCField(rc);
+
         builder.setId(gaugeId)
                 .setName(gaugeName)
                 .setCurrentLevel(gaugeReading)
@@ -106,7 +125,8 @@ public class GageResponse {
                 .setMax(max)
                 .setSource(source)
                 .setSourceId(sourceId)
-                .setGageMetricId(gaugeMetric);
+                .setGageMetricId(gaugeMetric)
+                .setFlowLevel(flowLevel);
 
         return builder.build();
     }

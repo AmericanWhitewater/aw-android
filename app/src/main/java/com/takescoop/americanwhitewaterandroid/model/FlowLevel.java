@@ -1,5 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
+import android.support.annotation.NonNull;
+
 import com.takescoop.americanwhitewaterandroid.R;
 
 public enum FlowLevel {
@@ -19,8 +21,8 @@ public enum FlowLevel {
     }
 
     // Map values from AW api
-    public static FlowLevel fromAWApi(String flowLevel) {
-        switch (flowLevel) {
+    public static FlowLevel fromAWApiCondField(String cond) {
+        switch (cond) {
             case "low":
                 return Low;
             case "med":
@@ -29,6 +31,21 @@ public enum FlowLevel {
                 return High;
             default:
                 return NoInfo;
+        }
+    }
+
+    @NonNull
+    public static FlowLevel fromAWApiRCField(Double rc) {
+        if (rc == null) {
+            return NoInfo;
+        }
+
+        if (rc < 0) {
+            return Low;
+        } else if (rc > 1) {
+            return High;
+        } else {
+            return Runnable;
         }
     }
 

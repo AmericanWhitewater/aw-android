@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.takescoop.americanwhitewaterandroid.R;
+import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.utility.DisplayStringUtils;
@@ -60,6 +62,8 @@ public class GageCell extends LinearLayout {
         unit.setText(gage.getUnit());
 //        TODO levelDescription.setText(gage.getGageComment());
 
+        showFlowLevel(gage.getFlowLevel());
+
         this.setVisibility(VISIBLE);
     }
 
@@ -79,5 +83,12 @@ public class GageCell extends LinearLayout {
         levelNumber.setText(gage.getCurrentLevel());
         unit.setText(gage.getUnit());
 //        levelDescription.setText(gage.getGageComment());
+
+        showFlowLevel(gage.getFlowLevel());
+    }
+
+    private void showFlowLevel(FlowLevel flowLevel) {
+        int colorId = flowLevel.getColorCode();
+        levelNumber.setTextColor(ContextCompat.getColor(getContext(), colorId));
     }
 }
