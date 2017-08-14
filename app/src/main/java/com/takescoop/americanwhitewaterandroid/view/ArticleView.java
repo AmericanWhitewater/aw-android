@@ -58,9 +58,13 @@ public class ArticleView extends LinearLayout {
     private void init(Article article) {
         toolbarTitle.setText(article.getTitle());
         title.setText(article.getTitle());
+
         detail.setText(Html.fromHtml(article.getContents()));
         author.setText(article.getAuthor() + ", " + article.getPostedDisplay());
 
+        // Scrolling movement method is required (as opposed to using a ScrollView, because articles
+        // longer than 2500 characters only show with the scrolling movement method.  
+        detail.setMovementMethod(new ScrollingMovementMethod());
         detail.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
