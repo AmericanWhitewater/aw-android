@@ -37,7 +37,6 @@ public class ReachView extends LinearLayout {
 
 
     @BindView(R.id.progressWheel) ProgressBar progressWheel;
-    @BindView(R.id.back) ImageView back;
     @BindView(R.id.title) TextView title;
     @BindView(R.id.favorite) ImageView favorite;
     @BindView(R.id.toolbar) LinearLayout toolbar;
@@ -114,12 +113,12 @@ public class ReachView extends LinearLayout {
         listener.onMapClicked();
     }
 
-    @OnClick(R.id.back)
+    @OnClick(R.id.back_tap_target)
     protected void onBackClick() {
         listener.onClose();
     }
 
-    @OnClick(R.id.favorite)
+    @OnClick(R.id.favorite_tap_target)
     protected void onFavoriteClick() {
         boolean isFavorite = favoriteManager.toggleFavorite(reachId);
         showFavorite(isFavorite);

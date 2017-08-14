@@ -102,7 +102,7 @@ public class FilterContainer extends LinearLayout {
         filterListener.onDifficultySelected();
     }
 
-    @OnClick(R.id.close)
+    @OnClick(R.id.close_tap_target)
     protected void onClose() {
         if (filterListener != null) {
             filterListener.onClose(getFilter());

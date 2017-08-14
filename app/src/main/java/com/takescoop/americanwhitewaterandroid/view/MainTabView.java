@@ -68,6 +68,8 @@ public class MainTabView extends LinearLayout {
     }
 
     public void setViewState(TabViewState tabViewState) {
+        currentViewState = tabViewState;
+
         if (tabViewState == News) {
             newsTab.setAlpha(ENABLED_ALPHA);
         } else {
@@ -100,7 +102,6 @@ public class MainTabView extends LinearLayout {
             return;
         }
 
-        currentViewState = News;
         tabListener.onNewsClicked();
         setViewState(News);
     }
@@ -111,7 +112,6 @@ public class MainTabView extends LinearLayout {
             return;
         }
 
-        currentViewState = Runs;
         tabListener.onRunsClicked();
         setViewState(Runs);
     }
@@ -122,7 +122,6 @@ public class MainTabView extends LinearLayout {
             return;
         }
 
-        currentViewState = Favorites;
         tabListener.onFavoritesClicked();
         setViewState(Favorites);
     }
@@ -133,7 +132,6 @@ public class MainTabView extends LinearLayout {
             return;
         }
 
-        currentViewState = Map;
         tabListener.onMapClicked();
         setViewState(Map);
     }

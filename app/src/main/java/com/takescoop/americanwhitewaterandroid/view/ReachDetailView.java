@@ -88,9 +88,12 @@ public class ReachDetailView extends LinearLayout {
             readMore.setVisibility(GONE);
         }
 
-
         difficulty.setText(String.format(getContext().getString(R.string.reach_detail_difficulty), reach.getDifficulty()));
-        length.setText(String.format(getContext().getString(R.string.reach_detail_length), reach.getLength()));
+        if (reach.getLength() != null) {
+            length.setText(String.format(getContext().getString(R.string.reach_detail_length), reach.getLength()));
+        } else {
+            length.setText("-");
+        }
 
         if (reach.getAvgGradient() != null) {
             gradient.setText(String.format(getContext().getString(R.string.reach_detail_gradient), reach.getAvgGradient().toString()));

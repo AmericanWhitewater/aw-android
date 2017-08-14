@@ -54,7 +54,7 @@ public class TeamView extends ScrollView {
         }
     }
 
-    @OnClick(R.id.close)
+    @OnClick(R.id.close_tap_target)
     protected void onClose() {
         listener.onClose();
     }

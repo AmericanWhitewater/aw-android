@@ -33,7 +33,6 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
     private final AWApi awApi = AWProvider.Instance.awApi();
     private final Gage gage;
 
-    @BindView(R.id.back) ImageView back;
     @BindView(R.id.title) TextView title;
     @BindView(R.id.gage_cell) GageCell gageCell;
     @BindView(R.id.flow_graph) ImageView flowGraph;
@@ -93,7 +92,7 @@ public class GageView extends LinearLayout implements RunsAdapter.ItemClickListe
         listener.onReachSelected(reachId);
     }
 
-    @OnClick(R.id.back)
+    @OnClick(R.id.back_tap_target)
     protected void onBackClick() {
         listener.onClose();
     }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -44,13 +43,15 @@
                 android:layout_alignParentRight="true"
                 android:background="@android:color/white"
                 android:text="@string/read_more"
-                android:textSize="13sp"
-                android:textColor="@color/font_blue"/>
+                android:textColor="@color/font_blue"
+                android:textSize="13sp"/>
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:background="@color/grey_divider"/>
 
         <android.support.constraint.ConstraintLayout
@@ -119,6 +120,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:background="@color/grey_divider"/>
 
         <TextView
@@ -126,9 +129,9 @@
             style="@style/Label1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="32dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:paddingBottom="32dp"
             android:paddingTop="16dp"
             android:text="@string/view_webpage"
             android:textColor="@color/font_blue"/>

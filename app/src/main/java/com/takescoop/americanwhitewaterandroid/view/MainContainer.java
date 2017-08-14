@@ -84,6 +84,7 @@ public class MainContainer extends RelativeLayout {
 
                 hideModal();
                 actionBar.show();
+                mainTabView.setViewState(MainTabView.TabViewState.Map);
                 break;
 
             case Filter:
@@ -107,6 +108,7 @@ public class MainContainer extends RelativeLayout {
 
         hideModal();
         actionBar.show();
+        mainTabView.setViewState(MainTabView.TabViewState.News);
     }
 
     public void showSearchView(SearchView.SearchListener listener) {
@@ -146,6 +148,7 @@ public class MainContainer extends RelativeLayout {
 
         hideModal();
         actionBar.show();
+        mainTabView.setViewState(MainTabView.TabViewState.Runs);
     }
 
     public void showFavoritesList(RunsView.RunsListener runsListener) {
@@ -157,6 +160,7 @@ public class MainContainer extends RelativeLayout {
 
         hideModal();
         actionBar.show();
+        mainTabView.setViewState(MainTabView.TabViewState.Favorites);
     }
 
     public RunDetailsNavigator showRunDetails(int reachId, RunDetailsNavigator.RunDetailsParentListener listener) {
@@ -164,6 +168,7 @@ public class MainContainer extends RelativeLayout {
 
         hideModal();
         actionBar.hide();
+        mainTabView.setViewState(MainTabView.TabViewState.Runs);
 
         return runDetailsNavigator;
     }
@@ -174,6 +179,7 @@ public class MainContainer extends RelativeLayout {
 
         hideModal();
         actionBar.hide();
+        mainTabView.setViewState(MainTabView.TabViewState.Runs);
     }
 
     public void showTeam(TeamView.TeamViewListener listener) {
@@ -190,6 +196,7 @@ public class MainContainer extends RelativeLayout {
 
         showModal();
         actionBar.hide();
+        mainTabView.setViewState(MainTabView.TabViewState.News);
     }
 
     ///////////////////////////////////////////////////////////////////////////

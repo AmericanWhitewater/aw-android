@@ -20,7 +20,6 @@ public class ArticleView extends LinearLayout {
     private final Article article;
     private final ArticleViewListener listener;
 
-    @BindView(R.id.back) ImageView back;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.toolbar) LinearLayout toolbar;
     @BindView(R.id.title) TextView title;
@@ -50,7 +49,7 @@ public class ArticleView extends LinearLayout {
         init(article);
     }
 
-    @OnClick(R.id.back)
+    @OnClick(R.id.back_tap_target)
     protected void onBack() {
         listener.onClose();
     }

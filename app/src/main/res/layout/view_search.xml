@@ -13,14 +13,20 @@
         android:background="@color/primary"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="16dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_back"/>
+
+        <LinearLayout
+            android:id="@+id/back_tap_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="16dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_back"/>
+        </LinearLayout>
 
         <EditText
             android:id="@+id/search_edit"
@@ -35,14 +41,20 @@
             android:textColor="@color/white"
             android:theme="@style/EditText"/>
 
-        <ImageView
-            android:id="@+id/clear"
-            android:layout_width="16dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_close"/>
+
+        <LinearLayout
+            android:id="@+id/clear_tap_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/clear"
+                android:layout_width="16dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_close"/>
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

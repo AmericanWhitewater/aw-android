@@ -20,7 +20,6 @@ import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED
 public class AboutContainer extends LinearLayout {
     private final AboutListener aboutListener;
 
-    @BindView(R.id.close) ImageView close;
     @BindView(R.id.toolbar) LinearLayout toolbar;
     @BindView(R.id.mission_tab) TextView missionTab;
     @BindView(R.id.stewardship_tab) TextView stewardshipTab;
@@ -70,7 +69,7 @@ public class AboutContainer extends LinearLayout {
         aboutListener.onFundingSelected();
     }
 
-    @OnClick(R.id.close)
+    @OnClick(R.id.close_tap_target)
     protected void onCloseClicked() {
         aboutListener.onCloseClicked();
     }

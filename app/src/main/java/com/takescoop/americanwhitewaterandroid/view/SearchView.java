@@ -33,8 +33,6 @@ public class SearchView extends LinearLayout implements RunsAdapter.ItemClickLis
     AWApi awApi = AWProvider.Instance.awApi();
     private SearchListener listener;
 
-    @BindView(R.id.back) ImageView back;
-    @BindView(R.id.clear) ImageView clear;
     @BindView(R.id.toolbar) LinearLayout toolbar;
     @BindView(R.id.search_list) RecyclerView searchList;
     @BindView(R.id.search_edit) EditText searchEdit;
@@ -118,7 +116,7 @@ public class SearchView extends LinearLayout implements RunsAdapter.ItemClickLis
         }
     }
 
-    @OnClick(R.id.back)
+    @OnClick(R.id.back_tap_target)
     protected void onBackClick() {
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(searchEdit.getWindowToken(), 0);
@@ -128,7 +126,7 @@ public class SearchView extends LinearLayout implements RunsAdapter.ItemClickLis
         }
     }
 
-    @OnClick(R.id.clear)
+    @OnClick(R.id.clear_tap_target)
     protected void onClearClick() {
         searchEdit.setText("");
         updateResults(Lists.newArrayList());
