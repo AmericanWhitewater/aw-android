@@ -12,6 +12,7 @@ import com.takescoop.americanwhitewaterandroid.view.GageView;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
 import com.takescoop.americanwhitewaterandroid.view.NewsFeedView;
+import com.takescoop.americanwhitewaterandroid.view.ReachDetailView;
 import com.takescoop.americanwhitewaterandroid.view.RunsView;
 import com.takescoop.americanwhitewaterandroid.view.SearchView;
 import com.takescoop.americanwhitewaterandroid.view.TeamView;
@@ -23,6 +24,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         RunDetailsNavigator.RunDetailsParentListener, GageView.GageViewListener, NewsFeedView.NewsFeedListener,
         AboutNavigator.AboutNavigatorParentListener, TeamView.TeamViewListener, ArticleView.ArticleViewListener {
 
+    private Integer currentReachId;
     private Stack<Integer> reachIds = new Stack<>(); // A bit of a hack to save for the backstack
     private final MainContainer mainContainer;
 
@@ -53,6 +55,16 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     ///////////////////////////////////////////////////////////////////////////
     // Navigator
     ///////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public ViewState pushViewState(ViewState viewState) {
+        if (getCurrentViewState() == ViewState.RunDetails) {
+            reachIds.push(currentReachId);
+        }
+
+        return super.pushViewState(viewState);
+    }
+
     @Override
     public void showViewState(ViewState viewState) {
         if (viewState == ViewState.RunsList) {
@@ -79,7 +91,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     @Override
     public void goBackToViewState(ViewState viewState) {
         if (viewState == ViewState.RunDetails) {
-            Integer reachId = reachIds.pop(); // TODO was crashing
+            Integer reachId = reachIds.pop();
             mainContainer.showRunDetails(reachId, this);
         } else {
             showViewState(viewState);
@@ -122,7 +134,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     }
 
     @Override public void onReachSelected(int reachId) {
-        reachIds.push(reachId);
+        currentReachId = reachId;
 
         pushViewState(ViewState.RunDetails);
         RunDetailsNavigator runDetailsNavigator = mainContainer.showRunDetails(reachId, this);
