@@ -21,6 +21,9 @@ import butterknife.ButterKnife;
 public class MainContainer extends RelativeLayout {
     private ActionBar actionBar;
 
+    // Cache the browse map view
+    private BrowseMapView browseMapView;
+
     @BindView(R.id.tab_container) FrameLayout tabContainer;
     @BindView(R.id.main_tab_view) MainTabView mainTabView;
     @BindView(R.id.modal_container) FrameLayout modalContainer;
@@ -71,8 +74,13 @@ public class MainContainer extends RelativeLayout {
                 throw new IllegalArgumentException("Use the method with dependencies");
 
             case Map:
+                if (browseMapView == null) {
+                    browseMapView = new BrowseMapView(getContext());
+                }
+
+                browseMapView.updateReaches();
                 getTabContainer().removeAllViews();
-                getTabContainer().addView(new BrowseMapView(getContext()));
+                getTabContainer().addView(browseMapView);
 
                 hideModal();
                 actionBar.show();

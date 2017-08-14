@@ -51,6 +51,7 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
 
     private List<ReachSearchResult> reachSearchResults;
     private GoogleMap map;
+    private boolean hasMapBeenZoomed;
 
     @BindView(R.id.progressWheel) ProgressBar progressWheel;
     @BindView(R.id.map_container) FrameLayout mapContainer;
@@ -123,7 +124,10 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
         this.map.setInfoWindowAdapter(new BrowseInfoWindowAdapter());
         this.map.setOnInfoWindowClickListener(this);
 
-        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(MAP_DEFAULT_CENTER, 3.0f));
+        if (!hasMapBeenZoomed) {
+            hasMapBeenZoomed = true;
+            this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(MAP_DEFAULT_CENTER, 3.0f));
+        }
 
         display(reachSearchResults, map);
     }
@@ -136,6 +140,10 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
         this.reachSearchResults = reachSearchResults;
 
         display(reachSearchResults, map);
+    }
+
+    public void updateReaches() {
+        updateReaches(filterManager.getFilter());
     }
 
     private void updateReaches(Filter filter) {
