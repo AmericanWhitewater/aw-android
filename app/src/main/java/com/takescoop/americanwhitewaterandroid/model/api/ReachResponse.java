@@ -12,6 +12,7 @@ import com.takescoop.americanwhitewaterandroid.model.Rapid;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 
 import java.util.List;
+import java.util.Map;
 
 public class ReachResponse {
     @Expose @SerializedName("CContainerViewJSON_view")
@@ -34,8 +35,12 @@ public class ReachResponse {
         }
 
         List<Gage> gages = Lists.newArrayList();
-        for (GageResponse response : reachContainerResponse.reachMainResponse.gages) {
-            gages.add(response.toModel());
+        try {
+            for (GageResponse response : reachContainerResponse.reachMainResponse.gaugeSummary.gauges.values()) {
+                gages.add(response.toModel());
+            }
+        } catch (NullPointerException ignored) {
+
         }
 
         Reach.Builder builder = new Reach.Builder();
@@ -69,13 +74,18 @@ public class ReachResponse {
     private static class ReachMainResponse {
         @Expose @SerializedName("info")
         private ReachDetailResponse info;
-        @Expose @SerializedName("gauges")
-        private List<GageResponse> gages = Lists.newArrayList();
+        @Expose @SerializedName("guagesummary")
+        private GageSummaryResponse gaugeSummary;
     }
 
     private static class RapidsResponse {
         @Expose @SerializedName("rapids")
         private List<Rapid> rapids = Lists.newArrayList();
+    }
+
+    private static class GageSummaryResponse {
+        @Expose @SerializedName("gauges")
+        private Map<String, GageResponse> gauges;
     }
 }
 
