@@ -4,32 +4,33 @@
         <!--android:id="@+id/empty"-->
         <!--android:title=""/>-->
 
-    <item android:title="About">
+    <item android:title="@string/about">
         <menu>
             <item
                 android:id="@+id/about"
-                android:icon="@drawable/ic_menu_share"
-                android:title="About AW"/>
+                android:icon="@drawable/ic_about"
+                android:title="@string/about_aw"/>
             <item
                 android:id="@+id/team"
-                android:icon="@drawable/ic_menu_send"
-                android:title="App Team"/>
+                android:icon="@drawable/ic_team"
+                android:title="@string/app_team"/>
         </menu>
     </item>
 
-    <item android:title="Communicate">
+    <item android:title="@string/communicate">
         <menu>
             <item
                 android:id="@+id/rate"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="Rate this app"/>
+                android:icon="@drawable/ic_rate"
+                android:title="@string/rate_this_app"/>
             <item
                 android:id="@+id/feedback"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Feedback"/>
+                android:icon="@drawable/ic_feedback"
+                android:title="@string/feedback"/>
             <item
                 android:id="@+id/donate"
-                android:title="Donate!"/>
+                android:icon="@drawable/ic_heart"
+                android:title="@string/donate"/>
         </menu>
     </item>
 

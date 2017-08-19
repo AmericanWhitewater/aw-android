@@ -6,23 +6,35 @@
               android:background="@color/background"
               android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:scaleType="center"
-        android:src="@drawable/aw_logo"/>
-
-    <TextView
-        android:id="@+id/detail"
-        style="@style/Headline1"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:scaleType="center"
+                android:src="@drawable/aw_logo"/>
+
+            <TextView
+                android:id="@+id/detail"
+                style="@style/Headline1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"/>
+        </LinearLayout>
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"
@@ -84,7 +96,7 @@
 
         <TextView
             android:id="@+id/website_button"
-            style="@style/Label1"
+            fontPath="fonts/OpenSans-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="16dp"
@@ -92,20 +104,20 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/dark_blue_oval"
             android:gravity="center"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/read_more"
             style="@style/Label1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
             android:text="@string/about_read_more"
             android:textColor="@color/font_blue"/>
-
     </LinearLayout>
 </LinearLayout>

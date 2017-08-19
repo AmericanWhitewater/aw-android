@@ -3,7 +3,6 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.LocationProviderActivity;
@@ -100,13 +100,11 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
     private void init() {
         runList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        swipeContainer.setOnRefreshListener(() -> {
-            updateReaches(filterManager.getFilter());
-        });
+        swipeContainer.setOnRefreshListener(() -> updateReaches(filterManager.getFilter()));
         swipeContainer.setColorSchemeResources(R.color.primary);
 
         showRunnableSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            RunsAdapter adapter = (RunsAdapter) runList.getAdapter();
+            RunsAdapter adapter = getRunsAdapter();
             adapter.setShowRunnableOnly(isChecked);
             adapter.notifyDataSetChanged();
         });
@@ -130,7 +128,9 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         awApi.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override
             public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
-                runList.setAdapter(new RunsAdapter(getContext(), reachSearchResults, RunsView.this));
+                getRunsAdapter().setSearchResults(reachSearchResults);
+                getRunsAdapter().notifyDataSetChanged();
+
                 lastUpdatedText.setText(DisplayStringUtils.displayUpdateTime(Instant.now()));
 
                 swipeContainer.setRefreshing(false);
@@ -140,6 +140,15 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
                 swipeContainer.setRefreshing(false);
             }
         });
+    }
+
+    private RunsAdapter getRunsAdapter() {
+        RunsAdapter adapter = (RunsAdapter) runList.getAdapter();
+        if (adapter == null) {
+            adapter = new RunsAdapter(getContext(), Lists.newArrayList(), RunsView.this);
+        }
+
+        return adapter;
     }
 
     private void updateCurrentRegion(Listener<AWRegion> listener) {

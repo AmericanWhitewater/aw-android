@@ -43,7 +43,6 @@ public class AboutView extends LinearLayout {
 
         ButterKnife.bind(this);
 
-        detail.setMovementMethod(new ScrollingMovementMethod());
         readMore.setOnClickListener(v -> AWIntent.goToUrl(getContext(), Urls.ABOUT_URL));
     }
 

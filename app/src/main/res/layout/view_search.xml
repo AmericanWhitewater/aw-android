@@ -34,10 +34,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="14dp"
             android:layout_weight="1"
             android:hint="@string/search_hint"
             android:inputType="textNoSuggestions"
+            android:textColorHint="@color/white_alpha70"
             android:textColor="@color/white"
             android:theme="@style/EditText"/>
 

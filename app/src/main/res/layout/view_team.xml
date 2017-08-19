@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="32dp"
             android:gravity="center_vertical"
-            android:text="@string/app_team"
+            android:text="@string/app_team_title"
             android:textColor="@color/white"/>
     </LinearLayout>
 
@@ -42,19 +42,21 @@
         android:id="@+id/greg_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="32dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/img_greg"
             app:riv_oval="true"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
+            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -95,19 +97,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="32dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/img_rachel"
             app:riv_oval="true"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
+            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -146,12 +150,24 @@
         android:background="@color/font_grey"/>
 
     <TextView
-        android:id="@+id/about_greg"
+        fontPath="fonts/OpenSans-SemiBold.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="32dp"
+        android:text="@string/about_greg_title"
+        android:textColor="@color/font_blue"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/about_greg"
+        style="@style/Label1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="12dp"
         android:ellipsize="end"
         android:maxLines="4"
         android:text="@string/about_greg"/>
@@ -164,12 +180,23 @@
         android:background="@color/font_grey"/>
 
     <TextView
+        fontPath="fonts/OpenSans-SemiBold.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/about_app"
+        android:textColor="@color/font_blue"
+        android:textSize="16sp"/>
+
+    <TextView
         style="@style/Headline1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:text="@string/thanks"/>
 
     <TextView

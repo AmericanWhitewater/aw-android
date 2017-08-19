@@ -1,15 +1,16 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Article;
@@ -28,6 +29,7 @@ public class NewsFeedView extends RelativeLayout {
     private NewsFeedListener listener;
 
     @BindView(R.id.progressWheel) ProgressBar progressWheel;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.articles_list) RecyclerView articlesList;
 
     public interface ArticleItemClickListener {
@@ -60,51 +62,67 @@ public class NewsFeedView extends RelativeLayout {
 
         articlesList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        progressWheel.setVisibility(VISIBLE);
-        awApi.getArticlesList().subscribe(new DisposableSingleObserver<List<Article>>() {
-            @Override public void onSuccess(@NonNull List<Article> articles) {
-                progressWheel.setVisibility(GONE);
-                displayArticles(articles);
-            }
+        swipeContainer.setOnRefreshListener(this::updateArticles);
+        swipeContainer.setColorSchemeResources(R.color.primary);
 
-            @Override public void onError(@NonNull Throwable e) {
-                progressWheel.setVisibility(GONE);
-            }
-        });
+        updateArticles();
     }
 
     public void setListener(NewsFeedListener listener) {
         this.listener = listener;
     }
 
-    @OnClick(R.id.donate_view)
-    protected void onDonateViewClicked() {
+    private void onDonateViewClicked() {
         if (listener != null) {
             listener.onReadMoreClicked();
         }
     }
 
+    private void updateArticles() {
+        swipeContainer.setRefreshing(true);
+        awApi.getArticlesList().subscribe(new DisposableSingleObserver<List<Article>>() {
+            @Override public void onSuccess(@NonNull List<Article> articles) {
+                swipeContainer.setRefreshing(false);
+                displayArticles(articles);
+            }
+
+            @Override public void onError(@NonNull Throwable e) {
+                swipeContainer.setRefreshing(false);
+            }
+        });
+    }
+
     private void displayArticles(List<Article> articles) {
-        articlesList.setAdapter(new ArticleAdapter(getContext(), articles, article -> {
+        articlesList.setAdapter(new ArticleAdapter(getContext(), articles, v -> onDonateViewClicked(), article -> {
             if (listener != null) {
                 listener.onArticleSelected(article);
             }
         }));
     }
 
-    private class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleCellViewHolder> {
+    private static class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        private enum ViewType {
+            Header, Cell;
+        }
+
         private Context context;
         private List<Article> articles;
         private ArticleItemClickListener itemClickListener;
+        private OnClickListener donateClickListener;
 
-        public ArticleAdapter(Context context, List<Article> articles, ArticleItemClickListener itemClickListener) {
+        public ArticleAdapter(Context context, List<Article> articles, OnClickListener donateClickListener, ArticleItemClickListener itemClickListener) {
             this.context = context;
             this.articles = articles;
+            this.donateClickListener = donateClickListener;
             this.itemClickListener = itemClickListener;
         }
 
         @Override
-        public ArticleAdapter.ArticleCellViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (viewType == ViewType.Header.ordinal()) {
+                return new DonateViewHolder(new DonateView(context));
+            }
+
             ArticleCell cell = new ArticleCell(context);
             RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             cell.setLayoutParams(lp);
@@ -112,11 +130,17 @@ public class NewsFeedView extends RelativeLayout {
             return new ArticleCellViewHolder(cell);
         }
 
-        @Override public void onBindViewHolder(ArticleCellViewHolder holder, int position) {
-            Article article = articles.get(position);
-            holder.getArticleCell().display(article);
+        @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if (position == 0) {
+                ((DonateViewHolder) holder).getDonateView().setOnClickListener(donateClickListener);
+                return;
+            }
 
-            holder.getArticleCell().setOnClickListener(v -> {
+            Article article = articles.get(position - 1); // Account for header
+            ArticleCell cell = ((ArticleCellViewHolder) holder).getArticleCell();
+            cell.display(article);
+
+            cell.setOnClickListener(v -> {
                 if (itemClickListener != null) {
                     itemClickListener.onArticleClick(article);
                 }
@@ -124,7 +148,30 @@ public class NewsFeedView extends RelativeLayout {
         }
 
         @Override public int getItemCount() {
-            return articles.size();
+            return articles.size() + 1;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position == 0) {
+                return ViewType.Header.ordinal();
+            }
+
+            return ViewType.Cell.ordinal();
+        }
+
+        class DonateViewHolder extends RecyclerView.ViewHolder  {
+            private DonateView donateView;
+
+            public DonateViewHolder(DonateView itemView) {
+                super(itemView);
+
+                this.donateView = itemView;
+            }
+
+            public DonateView getDonateView() {
+                return donateView;
+            }
         }
 
         class ArticleCellViewHolder extends RecyclerView.ViewHolder {
