@@ -172,29 +172,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void getCurrentLocation(SingleSubject<LatLng> observable) {
         if (getLocationObservable != null) {
             getLocationObservable.onError(new IllegalStateException("New request taking precedence"));
-            getLocationObservable = null;
         }
         getLocationObservable = observable;
 
         if (!areLocationPermissionsGranted(this)) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_CODE);
         } else {
-            getAndReturnLocation();
+            getAndReturnLocation(observable);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         boolean isPermissionGranted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-        if (requestCode == REQUEST_LOCATION_CODE && isPermissionGranted) {
-            getAndReturnLocation();
+        if (requestCode == REQUEST_LOCATION_CODE && isPermissionGranted && getLocationObservable != null) {
+            getAndReturnLocation(getLocationObservable);
         } else {
             Dialogs.toast("Please enable location to continue.");
         }
     }
 
     @SuppressWarnings({"MissingPermission"})
-    private void getAndReturnLocation() {
+    private void getAndReturnLocation(final SingleSubject<LatLng> observable) {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         String provider = locationManager.getBestProvider(new Criteria(), false);
         Location location = locationManager.getLastKnownLocation(provider);
@@ -205,8 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     locationManager.removeUpdates(this);
 
                     LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    getLocationObservable.onSuccess(latLng);
-                    getLocationObservable = null;
+                    observable.onSuccess(latLng);
                 }
 
                 @Override public void onStatusChanged(String provider, int status, Bundle extras) {

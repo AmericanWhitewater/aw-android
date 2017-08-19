@@ -23,6 +23,7 @@ import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.FilterManager;
+import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 import com.takescoop.americanwhitewaterandroid.utility.Listener;
 
 import java.util.List;
@@ -71,6 +72,11 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
 
     @Override
     public void onResponse(AWRegion region) {
+        // Distance and region filters can't be mixed.
+        Dialogs.toast("This will clear your distance filter.");
+        filterManager.getFilter().clearRadius();
+        filterManager.save();
+
         displaySelectedRegions(getSelectedRegions());
     }
 

@@ -122,7 +122,8 @@ public class FilterContainer extends LinearLayout {
         Filter filter = new Filter();
         filter.setRegions(filterRegion.getSelectedRegions());
 
-        filter.setBounds(filterDistance.getBounds());
+        filter.setCurrentLocation(filterDistance.getCurrentLocation());
+        filter.setRadius(filterDistance.getRadius());
 
         filter.setDifficultyLowerBound(filterDifficulty.getLowerBound());
         filter.setDifficultyUpperBound(filterDifficulty.getUpperBound());
@@ -145,6 +146,8 @@ public class FilterContainer extends LinearLayout {
                 filterRegion.setVisibility(INVISIBLE);
                 filterDistance.setVisibility(VISIBLE);
                 filterDifficulty.setVisibility(INVISIBLE);
+
+                filterDistance.refresh();
                 break;
             case Difficulty:
                 filterRegion.setVisibility(INVISIBLE);

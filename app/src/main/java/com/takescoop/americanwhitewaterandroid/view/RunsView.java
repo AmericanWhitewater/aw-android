@@ -14,6 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
@@ -27,6 +28,7 @@ import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 import com.takescoop.americanwhitewaterandroid.utility.DisplayStringUtils;
 import com.takescoop.americanwhitewaterandroid.utility.Listener;
+import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
 import org.threeten.bp.Instant;
 
@@ -43,6 +45,7 @@ import io.reactivex.subjects.SingleSubject;
 
 public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickListener {
     private static final String TAG = RunsView.class.getSimpleName();
+    private static final int DEFAULT_DISTANCE_RADIUS = 70; // Should be even
 
     private final AWApi awApi = AWProvider.Instance.awApi();
     private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
@@ -111,10 +114,15 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
         favoriteManager.retrieveFavorites();
 
-        // Retrieve current location if there is no region
-        if (getContext() instanceof LocationProviderActivity && !filterManager.getFilter().hasRegion()) {
-            updateCurrentRegion(region -> {
-                filterManager.getFilter().addRegion(region);
+        // If no region or distance filter is set, show the default.
+        if (!filterManager.getFilter().hasRegion() && !filterManager.getFilter().hasRadius()) {
+            filterManager.getFilter().setRadius(DEFAULT_DISTANCE_RADIUS);
+            filterManager.save();
+        }
+
+        if (getContext() instanceof LocationProviderActivity && filterManager.getFilter().getCurrentLocation() == null) {
+            getCurrentLocation(latLng -> {
+                filterManager.getFilter().setCurrentLocation(latLng);
                 filterManager.save();
                 updateReaches(filterManager.getFilter());
             });
@@ -129,6 +137,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
             @Override
             public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
                 getRunsAdapter().setSearchResults(reachSearchResults);
+                getRunsAdapter().setShowRunnableOnly(showRunnableSwitch.isChecked());
                 getRunsAdapter().notifyDataSetChanged();
 
                 lastUpdatedText.setText(DisplayStringUtils.displayUpdateTime(Instant.now()));
@@ -152,25 +161,12 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         return adapter;
     }
 
-    private void updateCurrentRegion(Listener<AWRegion> listener) {
+    private void getCurrentLocation(Listener<LatLng> listener) {
         LocationProviderActivity locationActivity = (LocationProviderActivity) getContext();
         SingleSubject<LatLng> locationObservable = SingleSubject.create();
         locationObservable.subscribe(new DisposableSingleObserver<LatLng>() {
             @Override public void onSuccess(@NonNull LatLng latLng) {
-
-                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // 1 is the max addresses returned
-
-                    if (addresses != null && addresses.size() > 0) {
-                        Address address = addresses.get(0);
-                        listener.onResponse(AWRegion.fromStateName(address.getAdminArea()));
-                    }
-
-                } catch (IOException e) {
-                    listener.onResponse(null);
-                }
+                listener.onResponse(latLng);
             }
 
             @Override public void onError(@NonNull Throwable e) {
@@ -179,5 +175,21 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         });
 
         locationActivity.getCurrentLocation(locationObservable);
+    }
+
+    private void updateCurrentRegion(LatLng latLng, Listener<AWRegion> listener) {
+        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // 1 is the max addresses returned
+
+            if (addresses != null && addresses.size() > 0) {
+                Address address = addresses.get(0);
+                listener.onResponse(AWRegion.fromStateName(address.getAdminArea()));
+            }
+
+        } catch (IOException e) {
+            listener.onResponse(null);
+        }
     }
 }

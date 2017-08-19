@@ -10,7 +10,8 @@ import java.util.List;
 
 public class Filter {
     private List<AWRegion> regions = Lists.newArrayList();
-    private LatLngBounds bounds;
+    private LatLng currentLocation;
+    private int radius;
     private FlowLevel flowLevel;
     private Difficulty difficultyLowerBound;
     private Difficulty difficultyUpperBound;
@@ -38,12 +39,28 @@ public class Filter {
     }
 
     @Nullable
-    public LatLngBounds getBounds() {
-        return bounds;
+    public LatLng getCurrentLocation() {
+        return currentLocation;
     }
 
-    public void setBounds(LatLngBounds bounds) {
-        this.bounds = bounds;
+    public void setCurrentLocation(LatLng currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    public boolean hasRadius() {
+        return radius > 0;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public void clearRadius() {
+        this.radius = 0;
     }
 
     @Nullable

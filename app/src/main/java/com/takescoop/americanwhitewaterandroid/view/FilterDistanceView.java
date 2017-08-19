@@ -11,13 +11,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.LocationProviderActivity;
 import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
-import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +39,7 @@ public class FilterDistanceView extends LinearLayout {
     @BindView(R.id.slider_value) TextView sliderValue;
     @BindView(R.id.filter_distance_address1) TextView address1;
     @BindView(R.id.filter_distance_address2) TextView address2;
-//    @BindView(R.id.filter_distance_new_address) TextView newAddressButton;
+    //    @BindView(R.id.filter_distance_new_address) TextView newAddressButton;
     @BindView(R.id.filter_distance_update_location) TextView updateLocationButton;
 
     public FilterDistanceView(Context context) {
@@ -68,11 +66,12 @@ public class FilterDistanceView extends LinearLayout {
 
     private void init() {
         slider.setMax(SLIDER_MAX);
-        updateSliderValue(0);
         slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                updateSliderValue(progress);
+                updateSliderValue(getSliderValue_miles(progress));
+                filterManager.getFilter().setRadius(getRadius());
+                filterManager.save();
             }
 
             @Override public void onStartTrackingTouch(SeekBar seekBar) {
@@ -84,16 +83,22 @@ public class FilterDistanceView extends LinearLayout {
             }
         });
 
+        setSliderValue(filterManager.getFilter().getRadius());
         updateLocation();
     }
 
-    @Nullable
-    public LatLngBounds getBounds() {
-        if (currentLocation == null || getSliderValue() <= 0) {
-            return null;
-        }
+    public void refresh() {
+        setSliderValue(filterManager.getFilter().getRadius());
+        updateLocation();
+    }
 
-        return MapUtils.getBoundsFromRadius(currentLocation, getSliderValue());
+    public int getRadius() {
+        return getSliderValue_miles();
+    }
+
+    @Nullable
+    public LatLng getCurrentLocation() {
+        return currentLocation;
     }
 
     @OnClick(R.id.filter_distance_update_location)
@@ -117,8 +122,8 @@ public class FilterDistanceView extends LinearLayout {
         }
     }
 
-    private void updateSliderValue(int progress) {
-        sliderValue.setText(getSliderValue(progress) + " mi");
+    private void updateSliderValue(int miles) {
+        sliderValue.setText(miles + " mi");
     }
 
     private void updateAddress(LatLng latLng) {
@@ -140,12 +145,17 @@ public class FilterDistanceView extends LinearLayout {
         }
     }
 
-    // In miles
-    private int getSliderValue() {
-        return getSliderValue(slider.getProgress());
+    private void setSliderValue(int miles) {
+        slider.setProgress(miles / 2);
+        updateSliderValue(miles);
     }
 
-    private int getSliderValue(int progress) {
+    // In miles
+    private int getSliderValue_miles() {
+        return getSliderValue_miles(slider.getProgress());
+    }
+
+    private int getSliderValue_miles(int progress) {
         return 2 * progress;
     }
 }

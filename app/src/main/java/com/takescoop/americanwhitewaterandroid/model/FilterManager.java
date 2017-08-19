@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.utility.SharedPreferencesManager;
 
@@ -14,7 +13,8 @@ public enum FilterManager {
     Instance;
 
     private static final String REGIONS_KEY = "regions";
-    private static final String BOUNDS_KEY = "bounds";
+    private static final String LOCATION_KEY = "location";
+    private static final String RADIUS_KEY = "radius";
     private static final String FLOW_LEVEL_KEY = "flow_level";
     private static final String DIFFICULTY_LOWER_KEY = "difficulty_lower";
     private static final String DIFFICULTY_UPPER_KEY = "difficulty_upper";
@@ -49,9 +49,11 @@ public enum FilterManager {
 
         sharedPrefsManager.saveListToPrefs(REGIONS_KEY, stringList);
 
-        if (filter.getBounds() != null) {
-            saveStringToPrefs(BOUNDS_KEY, getStringFromBounds(filter.getBounds()));
+        if (filter.getCurrentLocation() != null) {
+            saveStringToPrefs(LOCATION_KEY, getStringFromLatLng(filter.getCurrentLocation()));
         }
+
+        sharedPrefsManager.getSharedPrefs().edit().putInt(RADIUS_KEY, filter.getRadius()).apply();
 
         if (filter.getFlowLevel() != null) {
             saveStringToPrefs(FLOW_LEVEL_KEY, filter.getFlowLevel().toString());
@@ -79,13 +81,10 @@ public enum FilterManager {
             filter.setRegions(regions);
         }
 
+        filter.setCurrentLocation(getLatlngFromSavedString(LOCATION_KEY));
+        filter.setRadius(sharedPrefsManager.getSharedPrefs().getInt(RADIUS_KEY, 0));
+
         // Not the most elegant
-        try {
-            filter.setBounds(getBoundsFromSavedString(getStringFromPrefs(BOUNDS_KEY)));
-        } catch (IllegalArgumentException e) {
-
-        }
-
         try {
             filter.setFlowLevel(FlowLevel.valueOf(getStringFromPrefs(FLOW_LEVEL_KEY)));
         } catch (IllegalArgumentException e) {
@@ -115,24 +114,21 @@ public enum FilterManager {
         return sharedPrefsManager.getSharedPrefs().getString(key, "");
     }
 
-    private String getStringFromBounds(LatLngBounds bounds) {
-        return bounds.northeast.latitude + "," + bounds.northeast.longitude + "," + bounds.southwest.latitude + "," + bounds.southwest.longitude;
+    private String getStringFromLatLng(LatLng latLng) {
+        return latLng.latitude + "," + latLng.longitude;
     }
 
     @Nullable
-    private LatLngBounds getBoundsFromSavedString(String string) {
+    private LatLng getLatlngFromSavedString(String string) {
         if (TextUtils.isEmpty(string)) {
             return null;
         }
 
         List<String> stringList = Lists.newArrayList(string.split(","));
-        if (stringList.size() != 4) {
+        if (stringList.size() != 2) {
             return null;
         }
 
-        LatLng ne = new LatLng(Double.parseDouble(stringList.get(0)), Double.parseDouble(stringList.get(1)));
-        LatLng sw = new LatLng(Double.parseDouble(stringList.get(2)), Double.parseDouble(stringList.get(3)));
-
-        return new LatLngBounds(ne, sw);
+        return new LatLng(Double.parseDouble(stringList.get(0)), Double.parseDouble(stringList.get(1)));
     }
 }

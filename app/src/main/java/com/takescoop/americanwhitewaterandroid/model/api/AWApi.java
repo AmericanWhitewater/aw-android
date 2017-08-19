@@ -14,6 +14,7 @@ import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.model.GageDetailResponse;
 import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
+import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
 import org.w3c.dom.Text;
 
@@ -79,6 +80,11 @@ public enum AWApi {
     }
 
     public Single<List<ReachSearchResult>> getReaches(Filter filter) {
+        if (filter.hasRadius() && filter.getCurrentLocation() != null) {
+            LatLngBounds bounds = MapUtils.getBoundsFromRadius(filter.getCurrentLocation(), filter.getRadius());
+            return getReaches(bounds);
+        }
+
         return getReaches(null, filter);
     }
 
