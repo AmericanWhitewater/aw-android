@@ -146,6 +146,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         RunsAdapter adapter = (RunsAdapter) runList.getAdapter();
         if (adapter == null) {
             adapter = new RunsAdapter(getContext(), Lists.newArrayList(), RunsView.this);
+            runList.setAdapter(adapter);
         }
 
         return adapter;
