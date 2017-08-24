@@ -109,14 +109,6 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     ///////////////////////////////////////////////////////////////////////////
     // Events
     ///////////////////////////////////////////////////////////////////////////
-
-    @Override public void onClose(Filter filter) {
-        FilterManager.Instance.setFilter(filter);
-        setChildNavigator(null);
-
-        onBack();
-    }
-
     @Override public void onNewsClicked() {
         pushAndShowViewState(ViewState.News);
     }

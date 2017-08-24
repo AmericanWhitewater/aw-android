@@ -8,9 +8,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.FilterNavigator.FilterViewState;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
+import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.utility.ViewUtils;
 
 import butterknife.BindView;
@@ -21,6 +23,8 @@ import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.DISABLE
 import static com.takescoop.americanwhitewaterandroid.view.ViewConstants.ENABLED_ALPHA;
 
 public class FilterContainer extends LinearLayout {
+    private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
+
     private FilterListener filterListener;
     private FilterViewState currentViewState;
 
@@ -47,7 +51,7 @@ public class FilterContainer extends LinearLayout {
 
         void onDifficultySelected();
 
-        void onClose(Filter filter);
+        void onClose();
     }
 
     public FilterContainer(Context context, FilterListener listener) {
@@ -105,7 +109,10 @@ public class FilterContainer extends LinearLayout {
     @OnClick(R.id.close_tap_target)
     protected void onClose() {
         if (filterListener != null) {
-            filterListener.onClose(getFilter());
+            filterManager.setFilter(getFilter());
+            filterManager.save();
+
+            filterListener.onClose();
         }
     }
 

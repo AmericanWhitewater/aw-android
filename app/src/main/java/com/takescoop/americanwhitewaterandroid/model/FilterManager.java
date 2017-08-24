@@ -61,9 +61,14 @@ public enum FilterManager {
 
         if (filter.getDifficultyLowerBound() != null) {
             saveStringToPrefs(DIFFICULTY_LOWER_KEY, filter.getDifficultyLowerBound().toString());
+        } else {
+            saveStringToPrefs(DIFFICULTY_LOWER_KEY, "");
         }
+
         if (filter.getDifficultyUpperBound() != null) {
             saveStringToPrefs(DIFFICULTY_UPPER_KEY, filter.getDifficultyUpperBound().toString());
+        } else {
+            saveStringToPrefs(DIFFICULTY_UPPER_KEY, "");
         }
     }
 

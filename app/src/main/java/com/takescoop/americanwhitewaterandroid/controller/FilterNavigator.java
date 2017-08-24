@@ -10,7 +10,7 @@ public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> 
     private final FilterContainer filterContainer;
 
     public interface FilterNavigatorParentListener {
-        void onClose(Filter filter);
+        void onClose();
     }
 
     public enum FilterViewState {
@@ -41,8 +41,8 @@ public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> 
         pushAndShowViewState(FilterViewState.Difficulty);
     }
 
-    @Override public void onClose(Filter filter) {
-        parentListener.onClose(filter);
+    @Override public void onClose() {
+        parentListener.onClose();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class FilterNavigator extends Navigator<FilterNavigator.FilterViewState> 
     public BackEventResult onBack() {
         BackEventResult result = super.onBack();
         if (result == BackEventResult.NotHandled) {
-            parentListener.onClose(filterContainer.getFilter());
+            parentListener.onClose();
         }
 
         return BackEventResult.Handled;
