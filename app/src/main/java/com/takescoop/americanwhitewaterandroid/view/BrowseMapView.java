@@ -109,12 +109,7 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
 
         ButterKnife.bind(this);
 
-        if (getContext() instanceof MapViewActivity) {
-            SupportMapFragment mapFragment = ((MapViewActivity) getContext()).putMapFragmentInContainer(mapContainer);
-            mapFragment.getMapAsync(this);
-        }
-
-        updateReaches(filterManager.getFilter());
+        updateReachesAndMap();
     }
 
     @Override
@@ -136,14 +131,22 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
         AWIntent.goToDirections(getContext(), marker.getPosition());
     }
 
-    public void setReachSearchResults(List<ReachSearchResult> reachSearchResults) {
+    public void updateReachesAndMap() {
+        getMap();
+        updateReaches(filterManager.getFilter());
+    }
+
+    private void setReachSearchResults(List<ReachSearchResult> reachSearchResults) {
         this.reachSearchResults = reachSearchResults;
 
         display(reachSearchResults, map);
     }
 
-    public void updateReaches() {
-        updateReaches(filterManager.getFilter());
+    private void getMap() {
+        if (getContext() instanceof MapViewActivity) {
+            SupportMapFragment mapFragment = ((MapViewActivity) getContext()).putMapFragmentInContainer(mapContainer);
+            mapFragment.getMapAsync(this);
+        }
     }
 
     private void updateReaches(Filter filter) {

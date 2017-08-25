@@ -34,8 +34,8 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="14dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
             android:src="@drawable/map_marker_green"/>
@@ -54,8 +54,8 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="14dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
             android:src="@drawable/map_marker_yellow"/>
@@ -74,8 +74,8 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="14dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
             android:src="@drawable/map_marker_red"/>
@@ -94,8 +94,8 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="14dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
             android:src="@drawable/map_marker_blue"/>
@@ -114,8 +114,8 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="14dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
             android:src="@drawable/map_marker_grey"/>

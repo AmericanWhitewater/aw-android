@@ -46,6 +46,7 @@
         android:layout_alignParentTop="true"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="12dp"
+        android:layout_marginLeft="8dp"
         android:foregroundGravity="center_vertical"
         android:scaleType="centerCrop"
         android:src="@drawable/map_my_location"/>

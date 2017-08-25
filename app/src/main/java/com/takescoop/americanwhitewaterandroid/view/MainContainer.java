@@ -78,7 +78,7 @@ public class MainContainer extends RelativeLayout {
                     browseMapView = new BrowseMapView(getContext());
                 }
 
-                browseMapView.updateReaches();
+                browseMapView.updateReachesAndMap();
                 getTabContainer().removeAllViews();
                 getTabContainer().addView(browseMapView);
 

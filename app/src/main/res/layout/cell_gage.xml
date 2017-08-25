@@ -41,7 +41,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="20dp">
 
@@ -50,6 +50,7 @@
             style="@style/Number2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
             app:layout_constraintRight_toLeftOf="@+id/cell_gage_unit"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -58,7 +59,6 @@
             style="@style/Headline1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
             app:layout_constraintBaseline_toBaselineOf="@id/cell_gage_level_number"
             app:layout_constraintRight_toRightOf="parent"/>
 
