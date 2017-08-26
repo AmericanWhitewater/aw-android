@@ -58,7 +58,7 @@ public class ArticleView extends LinearLayout {
         toolbarTitle.setText(article.getTitle());
         title.setText(article.getTitle());
 
-        detail.setText(Html.fromHtml(article.getContents()));
+        detail.setText(Html.fromHtml("\n" + article.getContents()));
         author.setText(article.getAuthor() + ", " + article.getPostedDisplay());
 
         // Scrolling movement method is required (as opposed to using a ScrollView, because articles

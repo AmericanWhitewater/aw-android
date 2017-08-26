@@ -29,7 +29,7 @@
                 android:title="@string/feedback"/>
             <item
                 android:id="@+id/donate"
-                android:icon="@drawable/ic_heart"
+                android:icon="@drawable/ic_donate_menu"
                 android:title="@string/donate"/>
         </menu>
     </item>
