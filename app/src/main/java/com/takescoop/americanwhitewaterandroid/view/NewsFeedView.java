@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Article;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
+import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 
 import java.util.List;
 
@@ -61,6 +63,7 @@ public class NewsFeedView extends RelativeLayout {
         ButterKnife.bind(this);
 
         articlesList.setLayoutManager(new LinearLayoutManager(getContext()));
+        displayArticles(Lists.newArrayList());  // Necessary so that the swipe container shows up.
 
         swipeContainer.setOnRefreshListener(this::updateArticles);
         swipeContainer.setColorSchemeResources(R.color.primary);
@@ -88,6 +91,8 @@ public class NewsFeedView extends RelativeLayout {
 
             @Override public void onError(@NonNull Throwable e) {
                 swipeContainer.setRefreshing(false);
+
+                Dialogs.toast("Could not retrieve articles");
             }
         });
     }

@@ -4,15 +4,12 @@ import android.support.v7.app.ActionBar;
 import android.view.ViewGroup;
 
 import com.takescoop.americanwhitewaterandroid.model.Article;
-import com.takescoop.americanwhitewaterandroid.model.Filter;
-import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.view.ArticleView;
 import com.takescoop.americanwhitewaterandroid.view.GageView;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
 import com.takescoop.americanwhitewaterandroid.view.NewsFeedView;
-import com.takescoop.americanwhitewaterandroid.view.ReachDetailView;
 import com.takescoop.americanwhitewaterandroid.view.RunsView;
 import com.takescoop.americanwhitewaterandroid.view.SearchView;
 import com.takescoop.americanwhitewaterandroid.view.TeamView;
@@ -26,6 +23,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
 
     private Integer currentReachId;
     private Stack<Integer> reachIds = new Stack<>(); // A bit of a hack to save for the backstack
+    private Stack<Gage> gages = new Stack<>();
     private final MainContainer mainContainer;
 
     public MainNavigator(ViewGroup container, ActionBar actionBar) {
@@ -93,6 +91,9 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         if (viewState == ViewState.RunDetails) {
             Integer reachId = reachIds.pop();
             mainContainer.showRunDetails(reachId, this);
+        } else if (viewState == ViewState.GageDetails) {
+            Gage gage = gages.pop();
+            mainContainer.showGageDetails(gage, this);
         } else {
             showViewState(viewState);
         }
@@ -134,6 +135,8 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     }
 
     @Override public void onGageSelected(Gage gage) {
+        gages.push(gage);
+
         pushViewState(ViewState.GageDetails);
         mainContainer.showGageDetails(gage, this);
     }

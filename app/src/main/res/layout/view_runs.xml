@@ -16,7 +16,6 @@
         android:gravity="center_horizontal"
         android:padding="12dp"/>
 
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,6 +30,19 @@
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <TextView
+        android:id="@+id/view_run_no_results_text"
+        style="@style/Text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/view_run_last_updated_text"
+        android:alpha=".7"
+        android:padding="16dp"
+        android:textColor="@color/font_grey"
+        android:text="@string/no_results_try_changing_your_filter"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/view_run_runnable_layout"
         android:layout_width="match_parent"
@@ -38,6 +50,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_margin="16dp"
+        android:alpha=".9"
         android:background="@drawable/blue_oval">
 
         <TextView

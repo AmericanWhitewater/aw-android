@@ -29,7 +29,7 @@ public class FilterContainer extends LinearLayout {
     private FilterViewState currentViewState;
 
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.search) ImageView search;
+    @BindView(R.id.search_tap_target) LinearLayout searchTapTarget;
     @BindView(R.id.search_edit) EditText searchEdit;
 
     @BindView(R.id.region_tab) TextView regionTab;
@@ -81,7 +81,7 @@ public class FilterContainer extends LinearLayout {
             return;
         }
 
-        search.setVisibility(VISIBLE);
+        searchTapTarget.setVisibility(VISIBLE);
         filterListener.onRegionSelected();
     }
 
@@ -91,7 +91,7 @@ public class FilterContainer extends LinearLayout {
             return;
         }
 
-        search.setVisibility(GONE);
+        searchTapTarget.setVisibility(GONE);
         searchEdit.setVisibility(GONE);
         toolbarTitle.setVisibility(VISIBLE);
         filterListener.onDistanceSelected();
@@ -103,7 +103,7 @@ public class FilterContainer extends LinearLayout {
             return;
         }
 
-        search.setVisibility(GONE);
+        searchTapTarget.setVisibility(GONE);
         searchEdit.setVisibility(GONE);
         toolbarTitle.setVisibility(VISIBLE);
         filterListener.onDifficultySelected();
@@ -111,6 +111,8 @@ public class FilterContainer extends LinearLayout {
 
     @OnClick(R.id.close_tap_target)
     protected void onClose() {
+        filterRegion.closeKeyboard();
+
         if (filterListener != null) {
             filterManager.setFilter(getFilter());
             filterManager.save();
@@ -119,9 +121,9 @@ public class FilterContainer extends LinearLayout {
         }
     }
 
-    @OnClick(R.id.search)
+    @OnClick(R.id.search_tap_target)
     protected void onSearchClick() {
-        search.setVisibility(GONE);
+        searchTapTarget.setVisibility(GONE);
         toolbarTitle.setVisibility(GONE);
         searchEdit.setVisibility(VISIBLE);
         searchEdit.requestFocus();
@@ -142,6 +144,10 @@ public class FilterContainer extends LinearLayout {
         if (currentViewState != null) {
             filterManager.setFilter(getCurrentFilter(currentViewState));
             filterManager.save();
+        }
+
+        if (currentViewState == FilterViewState.Region) {
+            filterRegion.closeKeyboard();
         }
 
         currentViewState = viewState;

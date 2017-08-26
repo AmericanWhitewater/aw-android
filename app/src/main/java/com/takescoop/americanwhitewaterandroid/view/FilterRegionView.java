@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import butterknife.ButterKnife;
 
 public class FilterRegionView extends LinearLayout implements Listener<AWRegion> {
     private Filter filter;
+    private EditText searchEdit;
 
     @BindView(R.id.selected_regions_text) TextView selectedRegionsText;
     @BindView(R.id.fr_list) RecyclerView list;
@@ -64,10 +66,14 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
     @Override
     public void onResponse(AWRegion region) {
         // Distance and region filters can't be mixed.
-        Dialogs.toast("This will clear your distance filter.");
-        filter.clearRadius();
-        filter.setRegions(getSelectedRegions());
+        if (filter.hasRadius()) {
+            Dialogs.toast("This will clear your distance filter.");
+            filter.clearRadius();
+        }
 
+        closeKeyboard();
+
+        filter.setRegions(getSelectedRegions());
         displaySelectedRegions(getSelectedRegions());
     }
 
@@ -84,6 +90,8 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
     }
 
     public void setSearchEdit(EditText searchEdit) {
+        this.searchEdit = searchEdit;
+
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -102,6 +110,11 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
 
             }
         });
+    }
+
+    public void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchEdit.getWindowToken(), 0);
     }
 
     private List<AWRegion> getSelectedRegions() {

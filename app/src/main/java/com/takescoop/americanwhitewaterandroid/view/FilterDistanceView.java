@@ -119,7 +119,7 @@ public class FilterDistanceView extends LinearLayout {
                 }
 
                 @Override public void onError(@NonNull Throwable e) {
-                    Dialogs.toast(e.getMessage());
+
                 }
             });
 

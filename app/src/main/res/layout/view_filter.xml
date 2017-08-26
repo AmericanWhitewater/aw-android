@@ -14,7 +14,6 @@
         android:elevation="4dp"
         android:orientation="horizontal">
 
-
         <LinearLayout
             android:id="@+id/close_tap_target"
             android:layout_width="wrap_content"
@@ -39,14 +38,6 @@
             android:text="@string/filters_title"
             android:textColor="@color/white"/>
 
-        <ImageView
-            android:id="@+id/search"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            app:srcCompat="@drawable/ic_search"/>
-
         <EditText
             android:id="@+id/search_edit"
             style="@style/Headline1"
@@ -61,6 +52,20 @@
             android:textColor="@color/white"
             android:theme="@style/EditText"
             android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/search_tap_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/search"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_search"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

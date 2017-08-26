@@ -30,6 +30,7 @@ import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
+import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
 import java.util.List;
@@ -154,12 +155,15 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
         AWApi.Instance.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override
             public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
-                setReachSearchResults(reachSearchResults);
                 progressWheel.setVisibility(GONE);
+
+                setReachSearchResults(reachSearchResults);
             }
 
             @Override public void onError(@NonNull Throwable e) {
                 progressWheel.setVisibility(GONE);
+
+                Dialogs.toast("Could not retrieve reaches");
             }
         });
     }

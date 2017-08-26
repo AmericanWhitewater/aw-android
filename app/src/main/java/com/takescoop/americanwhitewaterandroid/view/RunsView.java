@@ -14,7 +14,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.common.collect.Lists;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
@@ -28,7 +27,6 @@ import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 import com.takescoop.americanwhitewaterandroid.utility.DisplayStringUtils;
 import com.takescoop.americanwhitewaterandroid.utility.Listener;
-import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
 import org.threeten.bp.Instant;
 
@@ -54,6 +52,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
     private RunsListener runsListener;
 
     @BindView(R.id.view_run_last_updated_text) TextView lastUpdatedText;
+    @BindView(R.id.view_run_no_results_text) TextView noResultsText;
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.view_run_list) RecyclerView runList;
     @BindView(R.id.view_run_show_runnable) Switch showRunnableSwitch;
@@ -106,6 +105,9 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         swipeContainer.setOnRefreshListener(() -> updateReaches(filterManager.getFilter()));
         swipeContainer.setColorSchemeResources(R.color.primary);
 
+        // Necessary because otherwise the swipe container won't show up
+        getRunsAdapter().setSearchResults(Lists.newArrayList());
+
         showRunnableSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             RunsAdapter adapter = getRunsAdapter();
             adapter.setShowRunnableOnly(isChecked);
@@ -136,6 +138,12 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         awApi.getReaches(filter).subscribe(new DisposableSingleObserver<List<ReachSearchResult>>() {
             @Override
             public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
+                if (reachSearchResults.isEmpty()) {
+                    noResultsText.setVisibility(VISIBLE);
+                } else {
+                    noResultsText.setVisibility(GONE);
+                }
+
                 getRunsAdapter().setSearchResults(reachSearchResults);
                 getRunsAdapter().setShowRunnableOnly(showRunnableSwitch.isChecked());
                 getRunsAdapter().notifyDataSetChanged();
@@ -147,6 +155,8 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
             @Override public void onError(@NonNull Throwable e) {
                 swipeContainer.setRefreshing(false);
+
+                Dialogs.toast("Could not retrieve reaches");
             }
         });
     }
@@ -170,7 +180,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
             }
 
             @Override public void onError(@NonNull Throwable e) {
-                Dialogs.toast(e.getMessage());
+
             }
         });
 
