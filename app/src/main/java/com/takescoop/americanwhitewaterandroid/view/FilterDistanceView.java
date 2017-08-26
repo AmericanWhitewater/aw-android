@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.controller.LocationProviderActivity;
+import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 
@@ -32,7 +33,7 @@ import io.reactivex.subjects.SingleSubject;
 public class FilterDistanceView extends LinearLayout {
     private static final int SLIDER_MAX = 100;
 
-    private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
+    private Filter filter;
     private LatLng currentLocation;
 
     @BindView(R.id.filter_distance_slider) SeekBar slider;
@@ -60,18 +61,17 @@ public class FilterDistanceView extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
-
-        init();
     }
 
-    private void init() {
+    public void initWithFilter(Filter filter) {
+        this.filter = filter;
+
         slider.setMax(SLIDER_MAX);
         slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateSliderValue(getSliderValue_miles(progress));
-                filterManager.getFilter().setRadius(getRadius());
-                filterManager.save();
+                filter.setRadius(getRadius());
             }
 
             @Override public void onStartTrackingTouch(SeekBar seekBar) {
@@ -83,16 +83,21 @@ public class FilterDistanceView extends LinearLayout {
             }
         });
 
-        setSliderValue(filterManager.getFilter().getRadius());
+        setFilterAndRefresh(filter);
+    }
+
+    public void setFilterAndRefresh(Filter filter) {
+        this.filter = filter;
+
+        setSliderValue(filter.getRadius());
         updateLocation();
     }
 
-    public void refresh() {
-        setSliderValue(filterManager.getFilter().getRadius());
-        updateLocation();
+    public Filter getFilter() {
+        return filter;
     }
 
-    public int getRadius() {
+    private int getRadius() {
         return getSliderValue_miles();
     }
 

@@ -70,6 +70,9 @@ public class FilterContainer extends LinearLayout {
         ButterKnife.bind(this);
 
         filterRegion.setSearchEdit(searchEdit);
+        filterRegion.setFilter(filterManager.getFilter());
+        filterDistance.initWithFilter(filterManager.getFilter());
+        filterDifficulty.setFilter(filterManager.getFilter());
     }
 
     @OnClick(R.id.region_tab)
@@ -126,19 +129,21 @@ public class FilterContainer extends LinearLayout {
     }
 
     public Filter getFilter() {
-        Filter filter = new Filter();
-        filter.setRegions(filterRegion.getSelectedRegions());
+        if (currentViewState != null) {
+            filterManager.setFilter(getCurrentFilter(currentViewState));
+            filterManager.save();
+        }
 
-        filter.setCurrentLocation(filterDistance.getCurrentLocation());
-        filter.setRadius(filterDistance.getRadius());
-
-        filter.setDifficultyLowerBound(filterDifficulty.getLowerBound());
-        filter.setDifficultyUpperBound(filterDifficulty.getUpperBound());
-
-        return filter;
+        return filterManager.getFilter();
     }
 
     public void showViewState(FilterViewState viewState) {
+        // Update the filter
+        if (currentViewState != null) {
+            filterManager.setFilter(getCurrentFilter(currentViewState));
+            filterManager.save();
+        }
+
         currentViewState = viewState;
 
         updateTabUI(viewState);
@@ -154,7 +159,7 @@ public class FilterContainer extends LinearLayout {
                 filterDistance.setVisibility(VISIBLE);
                 filterDifficulty.setVisibility(INVISIBLE);
 
-                filterDistance.refresh();
+                filterDistance.setFilterAndRefresh(filterManager.getFilter());
                 break;
             case Difficulty:
                 filterRegion.setVisibility(INVISIBLE);
@@ -179,5 +184,18 @@ public class FilterContainer extends LinearLayout {
             tabText.setAlpha(DISABLED_ALPHA);
             tabHighlight.setVisibility(INVISIBLE);
         }
+    }
+
+    private Filter getCurrentFilter(FilterViewState viewState) {
+        switch (viewState) {
+            case Region:
+                return filterRegion.getFilter();
+            case Distance:
+                return filterDistance.getFilter();
+            case Difficulty:
+                return filterDifficulty.getFilter();
+        }
+
+        return null;
     }
 }

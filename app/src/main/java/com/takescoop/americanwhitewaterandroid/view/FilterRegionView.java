@@ -22,6 +22,7 @@ import com.google.common.collect.Sets;
 import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
+import com.takescoop.americanwhitewaterandroid.model.Filter;
 import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 import com.takescoop.americanwhitewaterandroid.utility.Listener;
@@ -33,9 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FilterRegionView extends LinearLayout implements Listener<AWRegion> {
-    private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
-
-    private EditText searchEdit;
+    private Filter filter;
 
     @BindView(R.id.selected_regions_text) TextView selectedRegionsText;
     @BindView(R.id.fr_list) RecyclerView list;
@@ -60,29 +59,31 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
         ButterKnife.bind(this);
 
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        Set<AWRegion> selectedRegions = Sets.newHashSet(filterManager.getFilter().getRegions());
-        displaySelectedRegions(filterManager.getFilter().getRegions());
-        list.setAdapter(new FilterRegionAdapter(getContext(), selectedRegions, this));
-    }
-
-    public List<AWRegion> getSelectedRegions() {
-        FilterRegionAdapter adapter = (FilterRegionAdapter) list.getAdapter();
-        return Lists.newArrayList(adapter.getSelections());
     }
 
     @Override
     public void onResponse(AWRegion region) {
         // Distance and region filters can't be mixed.
         Dialogs.toast("This will clear your distance filter.");
-        filterManager.getFilter().clearRadius();
-        filterManager.save();
+        filter.clearRadius();
+        filter.setRegions(getSelectedRegions());
 
         displaySelectedRegions(getSelectedRegions());
     }
 
-    public void setSearchEdit(EditText searchEdit) {
-        this.searchEdit = searchEdit;
+    public void setFilter(Filter filter) {
+        this.filter = filter;
 
+        Set<AWRegion> selectedRegions = Sets.newHashSet(filter.getRegions());
+        displaySelectedRegions(filter.getRegions());
+        list.setAdapter(new FilterRegionAdapter(getContext(), selectedRegions, this));
+    }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public void setSearchEdit(EditText searchEdit) {
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -101,6 +102,11 @@ public class FilterRegionView extends LinearLayout implements Listener<AWRegion>
 
             }
         });
+    }
+
+    private List<AWRegion> getSelectedRegions() {
+        FilterRegionAdapter adapter = (FilterRegionAdapter) list.getAdapter();
+        return Lists.newArrayList(adapter.getSelections());
     }
 
     private void displaySelectedRegions(List<AWRegion> selectedRegions) {

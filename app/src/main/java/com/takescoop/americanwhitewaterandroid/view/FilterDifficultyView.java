@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FilterDifficultyView extends LinearLayout {
-    private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
+    private Filter filter;
 
     @BindView(R.id.class_1) AppCompatCheckBox class1;
     @BindView(R.id.class_2) AppCompatCheckBox class2;
@@ -48,8 +48,19 @@ public class FilterDifficultyView extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
+    }
 
-        populate(filterManager.getFilter());
+    public Filter getFilter() {
+        filter.setDifficultyLowerBound(getLowerBound());
+        filter.setDifficultyUpperBound(getUpperBound());
+
+        return filter;
+    }
+
+    public void setFilter(Filter filter) {
+        this.filter = filter;
+
+        populate(filter);
     }
 
     @Nullable
