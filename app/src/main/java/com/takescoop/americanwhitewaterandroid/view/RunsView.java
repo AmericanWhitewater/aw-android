@@ -42,7 +42,6 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.subjects.SingleSubject;
 
 public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickListener {
-    private static final String TAG = RunsView.class.getSimpleName();
     private static final int DEFAULT_DISTANCE_RADIUS = 70; // Should be even
 
     private final AWApi awApi = AWProvider.Instance.awApi();
