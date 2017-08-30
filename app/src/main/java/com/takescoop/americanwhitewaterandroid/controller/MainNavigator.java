@@ -134,6 +134,10 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         setChildNavigator(runDetailsNavigator);
     }
 
+    @Override public void goToFilter() {
+        pushAndShowViewState(ViewState.Filter);
+    }
+
     @Override public void onGageSelected(Gage gage) {
         gages.push(gage);
 

@@ -52,6 +52,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
     @BindView(R.id.view_run_last_updated_text) TextView lastUpdatedText;
     @BindView(R.id.view_run_no_results_text) TextView noResultsText;
+    @BindView(R.id.view_run_go_to_filter) TextView viewRunGoToFilter;
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.view_run_list) RecyclerView runList;
     @BindView(R.id.view_run_show_runnable) Switch showRunnableSwitch;
@@ -59,6 +60,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
     public interface RunsListener {
         void onReachSelected(int reachId);
+        void goToFilter();
     }
 
     public RunsView(Context context) {
@@ -96,6 +98,13 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
     @OnClick(R.id.view_run_runnable_layout)
     protected void onRunnableLayoutClick() {
         // Swallow
+    }
+
+    @OnClick(R.id.view_run_go_to_filter)
+    protected void onGoToFilterClick() {
+        if (runsListener != null) {
+            runsListener.goToFilter();
+        }
     }
 
     private void init() {
@@ -139,8 +148,10 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
             public void onSuccess(@NonNull List<ReachSearchResult> reachSearchResults) {
                 if (reachSearchResults.isEmpty()) {
                     noResultsText.setVisibility(VISIBLE);
+                    viewRunGoToFilter.setVisibility(VISIBLE);
                 } else {
                     noResultsText.setVisibility(GONE);
+                    viewRunGoToFilter.setVisibility(GONE);
                 }
 
                 getRunsAdapter().setSearchResults(reachSearchResults);

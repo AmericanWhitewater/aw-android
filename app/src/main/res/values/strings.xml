@@ -100,7 +100,8 @@ American Whitewater is working full-time to assure protection of whitewater rive
     <string name="feedback">Feedback/Bug Reports</string>
     <string name="about_greg_title">About Greg</string>
     <string name="about_app">About the App</string>
-    <string name="no_results_try_changing_your_filter">No results, try changing your filter.</string>
+    <string name="no_results_try_changing_your_filter">We couldn’t find any runs. Try changing your filters.</string>
+    <string name="change_filters">Change filters</string>
 
 
 </resources>
