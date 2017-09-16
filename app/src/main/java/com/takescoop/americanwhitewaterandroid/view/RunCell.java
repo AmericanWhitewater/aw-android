@@ -2,6 +2,7 @@ package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -73,11 +74,11 @@ public class RunCell extends LinearLayout {
 
     private void showFavorite(boolean isFavorite) {
         if (isFavorite) {
-            favorite.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_fav_yes));
+            favorite.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_fav_yes));
             favorite.setColorFilter(ContextCompat.getColor(getContext(), R.color.primary));
 
         } else {
-            favorite.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_fav_no));
+            favorite.setImageDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_fav_no));
             favorite.setColorFilter(ContextCompat.getColor(getContext(), R.color.font_grey));
         }
     }

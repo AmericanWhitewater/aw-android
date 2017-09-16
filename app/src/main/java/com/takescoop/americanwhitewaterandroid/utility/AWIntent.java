@@ -2,13 +2,11 @@ package com.takescoop.americanwhitewaterandroid.utility;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.takescoop.americanwhitewaterandroid.AWApplication;
-import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
 
 public class AWIntent {
 
@@ -21,13 +19,22 @@ public class AWIntent {
     public static void goToDirections(Context context, LatLng latLng) {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?daddr=" + latLng.latitude + "," + latLng.longitude));
-        context.startActivity(intent);
+
+        try {
+            context.startActivity(intent);
+        } catch (android.content.ActivityNotFoundException e) {
+            Toast.makeText(context, "No map app found", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void goToUrl(final Context context, String urlString) {
         Intent urlIntent = new Intent(Intent.ACTION_VIEW);
         urlIntent.setData(Uri.parse(urlString));
-        context.startActivity(urlIntent);
+        try {
+            context.startActivity(urlIntent);
+        } catch (android.content.ActivityNotFoundException e) {
+            Toast.makeText(context, "No browser found", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -46,8 +53,7 @@ public class AWIntent {
         final Uri uri = Uri.parse("market://details?id=" + AWApplication.getContext().getPackageName());
         final Intent rateAppIntent = new Intent(Intent.ACTION_VIEW, uri);
 
-        if (context.getPackageManager().queryIntentActivities(rateAppIntent, 0).size() > 0)
-        {
+        if (context.getPackageManager().queryIntentActivities(rateAppIntent, 0).size() > 0) {
             context.startActivity(rateAppIntent);
         }
     }
