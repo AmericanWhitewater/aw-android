@@ -1,8 +1,10 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -29,7 +31,6 @@ import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 import com.takescoop.americanwhitewaterandroid.model.api.AWApi;
-import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 import com.takescoop.americanwhitewaterandroid.utility.MapUtils;
 
@@ -49,6 +50,7 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
     private static final int MAP_PADDING_dp = 60;
 
     private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
+    private BrowseMapListener listener;
 
     private List<ReachSearchResult> reachSearchResults;
     private GoogleMap map;
@@ -56,6 +58,11 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
 
     @BindView(R.id.progressWheel) ProgressBar progressWheel;
     @BindView(R.id.map_container) FrameLayout mapContainer;
+
+
+    public interface BrowseMapListener {
+        void onReachSelected(int reachId);
+    }
 
     private enum MarkerType {
         Runnable(R.drawable.map_marker_green),
@@ -129,12 +136,27 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
     }
 
     @Override public void onInfoWindowClick(Marker marker) {
-        AWIntent.goToDirections(getContext(), marker.getPosition());
+        // https://stackoverflow.com/questions/32841381/android-freezes-on-viewgroup-removeallviews-with-mapview
+        new Handler().postDelayed(
+                () -> ((Activity) getContext()).runOnUiThread(
+                        () -> {
+
+                            // Go to reach details
+                            if (listener != null) {
+                                ReachSearchResult result = (ReachSearchResult) marker.getTag();
+                                listener.onReachSelected(result.getId());
+                            }
+
+                        }), 1);
     }
 
     public void updateReachesAndMap() {
         getMap();
         updateReaches(filterManager.getFilter());
+    }
+
+    public void setListener(BrowseMapListener listener) {
+        this.listener = listener;
     }
 
     private void setReachSearchResults(List<ReachSearchResult> reachSearchResults) {

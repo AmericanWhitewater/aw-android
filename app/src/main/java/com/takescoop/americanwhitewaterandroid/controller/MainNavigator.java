@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import com.takescoop.americanwhitewaterandroid.model.Article;
 import com.takescoop.americanwhitewaterandroid.model.Gage;
 import com.takescoop.americanwhitewaterandroid.view.ArticleView;
+import com.takescoop.americanwhitewaterandroid.view.BrowseMapView;
 import com.takescoop.americanwhitewaterandroid.view.GageView;
 import com.takescoop.americanwhitewaterandroid.view.MainContainer;
 import com.takescoop.americanwhitewaterandroid.view.MainTabView;
@@ -17,7 +18,7 @@ import com.takescoop.americanwhitewaterandroid.view.TeamView;
 import java.util.Stack;
 
 public class MainNavigator extends Navigator<MainNavigator.ViewState> implements MainTabView.TabListener,
-        FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener,
+        FilterNavigator.FilterNavigatorParentListener, SearchView.SearchListener, RunsView.RunsListener, BrowseMapView.BrowseMapListener,
         RunDetailsNavigator.RunDetailsParentListener, GageView.GageViewListener, NewsFeedView.NewsFeedListener,
         AboutNavigator.AboutNavigatorParentListener, TeamView.TeamViewListener, ArticleView.ArticleViewListener {
 
@@ -67,6 +68,8 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
     public void showViewState(ViewState viewState) {
         if (viewState == ViewState.RunsList) {
             mainContainer.showRunsList(this);
+        } else if (viewState == ViewState.Map) {
+            mainContainer.showBrowseMapView(this);
         } else if (viewState == ViewState.Favorites) {
             mainContainer.showFavoritesList(this);
         } else if (viewState == ViewState.Filter) {

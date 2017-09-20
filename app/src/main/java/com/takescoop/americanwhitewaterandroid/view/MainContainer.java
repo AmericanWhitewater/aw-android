@@ -74,18 +74,7 @@ public class MainContainer extends RelativeLayout {
                 throw new IllegalArgumentException("Use the method with dependencies");
 
             case Map:
-                if (browseMapView == null) {
-                    browseMapView = new BrowseMapView(getContext());
-                }
-
-                browseMapView.updateReachesAndMap();
-                getTabContainer().removeAllViews();
-                getTabContainer().addView(browseMapView);
-
-                hideModal();
-                actionBar.show();
-                mainTabView.setViewState(MainTabView.TabViewState.Map);
-                break;
+                throw new IllegalArgumentException("Use the method with dependencies");
 
             case Filter:
                 throw new IllegalArgumentException("Use the method with dependencies");
@@ -119,6 +108,21 @@ public class MainContainer extends RelativeLayout {
 
         showModal();
         actionBar.hide();
+    }
+
+    public void showBrowseMapView(BrowseMapView.BrowseMapListener listener) {
+        if (browseMapView == null) {
+            browseMapView = new BrowseMapView(getContext());
+        }
+
+        browseMapView.setListener(listener);
+        browseMapView.updateReachesAndMap();
+        getTabContainer().removeAllViews();
+        getTabContainer().addView(browseMapView);
+
+        hideModal();
+        actionBar.show();
+        mainTabView.setViewState(MainTabView.TabViewState.Map);
     }
 
     public FilterNavigator showFilterView(FilterNavigator.FilterNavigatorParentListener parentListener) {
@@ -164,8 +168,9 @@ public class MainContainer extends RelativeLayout {
     }
 
     public RunDetailsNavigator showRunDetails(int reachId, RunDetailsNavigator.RunDetailsParentListener listener) {
+        getTabContainer().removeAllViews();
         RunDetailsNavigator runDetailsNavigator = new RunDetailsNavigator(tabContainer, reachId, listener);
-
+        
         hideModal();
         actionBar.hide();
         mainTabView.setViewState(MainTabView.TabViewState.Runs);
