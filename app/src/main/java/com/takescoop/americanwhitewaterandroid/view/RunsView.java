@@ -131,10 +131,17 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         }
 
         if (getContext() instanceof LocationProviderActivity && filterManager.getFilter().getCurrentLocation() == null) {
-            getCurrentLocation(latLng -> {
-                filterManager.getFilter().setCurrentLocation(latLng);
-                filterManager.save();
-                updateReaches(filterManager.getFilter());
+            swipeContainer.setRefreshing(true);
+            getCurrentLocation(new DisposableSingleObserver<LatLng>() {
+                @Override public void onSuccess(@NonNull LatLng latLng) {
+                    filterManager.getFilter().setCurrentLocation(latLng);
+                    filterManager.save();
+                    updateReaches(filterManager.getFilter());
+                }
+
+                @Override public void onError(@NonNull Throwable e) {
+                    updateReaches(filterManager.getFilter());
+                }
             });
         } else {
             updateReaches(filterManager.getFilter());
@@ -181,20 +188,12 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
         return adapter;
     }
 
-    private void getCurrentLocation(Listener<LatLng> listener) {
+    private void getCurrentLocation(DisposableSingleObserver<LatLng> locationObservable) {
         LocationProviderActivity locationActivity = (LocationProviderActivity) getContext();
-        SingleSubject<LatLng> locationObservable = SingleSubject.create();
-        locationObservable.subscribe(new DisposableSingleObserver<LatLng>() {
-            @Override public void onSuccess(@NonNull LatLng latLng) {
-                listener.onResponse(latLng);
-            }
+        SingleSubject<LatLng> locationSubject = SingleSubject.create();
+        locationSubject.subscribe(locationObservable);
 
-            @Override public void onError(@NonNull Throwable e) {
-
-            }
-        });
-
-        locationActivity.getCurrentLocation(locationObservable);
+        locationActivity.getCurrentLocation(locationSubject);
     }
 
     private void updateCurrentRegion(LatLng latLng, Listener<AWRegion> listener) {

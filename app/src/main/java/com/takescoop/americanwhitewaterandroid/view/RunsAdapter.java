@@ -3,13 +3,11 @@ package com.takescoop.americanwhitewaterandroid.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.takescoop.americanwhitewaterandroid.AWProvider;
-import com.takescoop.americanwhitewaterandroid.model.FavoriteManager;
 import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
@@ -54,6 +52,13 @@ public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHol
 
     @Override
     public void onBindViewHolder(RunsAdapter.RunCellViewHolder holder, int position) {
+        // Use the last cell as a spacer
+        if (isFooter(position)) {
+            holder.getRunCell().setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        holder.getRunCell().setVisibility(View.VISIBLE);
         ReachSearchResult result = showRunnableOnly ? runnableSearchResults.get(position) : searchResults.get(position);
         holder.getRunCell().showResult(result);
 
@@ -66,7 +71,12 @@ public class RunsAdapter extends RecyclerView.Adapter<RunsAdapter.RunCellViewHol
 
     @Override
     public int getItemCount() {
-        return showRunnableOnly ? runnableSearchResults.size() : searchResults.size();
+        return (showRunnableOnly ? runnableSearchResults.size() : searchResults.size()) + 1; // Add a footer cell
+    }
+
+    private boolean isFooter(int position) {
+        int size = showRunnableOnly ? runnableSearchResults.size() : searchResults.size();
+        return position >= size;
     }
 
     class RunCellViewHolder extends RecyclerView.ViewHolder {

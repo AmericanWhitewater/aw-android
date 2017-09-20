@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void getCurrentLocation(SingleSubject<LatLng> observable) {
-        if (getLocationObservable != null) {
+        if (getLocationObservable != null && getLocationObservable.hasObservers()) {
             getLocationObservable.onError(new IllegalStateException("New request taking precedence"));
         }
         getLocationObservable = observable;
