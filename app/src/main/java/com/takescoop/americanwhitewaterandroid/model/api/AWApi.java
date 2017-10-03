@@ -43,7 +43,7 @@ public enum AWApi {
         @GET("River/search/.json")
         Single<List<ReachSearchResponse>> getReaches(
                 @Query("river") String searchText,
-                @Query("state") List<String> states,
+                @Query("state") String states,
                 @Query("level") String level,
                 @Query("atleast") String difficultyLowerBound,
                 @Query("atmost") String difficultyUpperBound);
@@ -176,14 +176,14 @@ public enum AWApi {
         return String.format(Locale.US, FLOW_GRAPH_URL, gage.getId(), gage.getAwGageMetricId());
     }
 
-    private List<String> getRegions(@Nullable Filter filter) {
+    private String getRegions(@Nullable Filter filter) {
         List<String> regionCodes = Lists.newArrayList();
 
         if (filter != null && filter.getRegions() != null && filter.getRegions().size() > 0) {
             regionCodes = Lists.newArrayList(Iterables.transform(filter.getRegions(), AWRegion::getCode));
         }
 
-        return regionCodes;
+        return TextUtils.join(":", regionCodes);
     }
 
     private String getFlowLevelApiCode(@Nullable Filter filter) {
