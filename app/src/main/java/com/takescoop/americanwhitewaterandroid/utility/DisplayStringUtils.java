@@ -34,7 +34,7 @@ public class DisplayStringUtils {
             return "";
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.of("America/Los_Angeles"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
         return formatter.format(instant).toLowerCase(Locale.US);
     }
 }

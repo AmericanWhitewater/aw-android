@@ -33,6 +33,7 @@ import org.threeten.bp.Instant;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +44,7 @@ import io.reactivex.subjects.SingleSubject;
 
 public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickListener {
     private static final int DEFAULT_DISTANCE_RADIUS = 70; // Should be even
+    private static final int LOCATION_TIMEOUT_s = 4;
 
     private final AWApi awApi = AWProvider.Instance.awApi();
     private final FilterManager filterManager = AWProvider.Instance.getFilterManager();
@@ -60,6 +62,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
 
     public interface RunsListener {
         void onReachSelected(int reachId);
+
         void goToFilter();
     }
 
@@ -191,7 +194,7 @@ public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickLis
     private void getCurrentLocation(DisposableSingleObserver<LatLng> locationObservable) {
         LocationProviderActivity locationActivity = (LocationProviderActivity) getContext();
         SingleSubject<LatLng> locationSubject = SingleSubject.create();
-        locationSubject.subscribe(locationObservable);
+        locationSubject.timeout(LOCATION_TIMEOUT_s, TimeUnit.SECONDS).subscribe(locationObservable);
 
         locationActivity.getCurrentLocation(locationSubject);
     }

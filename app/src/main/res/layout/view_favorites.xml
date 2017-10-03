@@ -9,6 +9,8 @@
         android:id="@+id/no_favorites_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:layout_marginLeft="24dp"
         android:orientation="vertical"
         android:visibility="gone">
 
