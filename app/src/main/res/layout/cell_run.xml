@@ -27,10 +27,10 @@
         <TextView
             android:id="@+id/cell_run_detail"
             style="@style/Text1"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/cell_run_level"
@@ -72,11 +72,12 @@
 
         <ImageView
             android:id="@+id/cell_run_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
             android:alpha=".5"
+            android:scaleType="centerInside"
             app:srcCompat="@drawable/ic_fav_no"/>
 
         <View
