@@ -11,7 +11,7 @@ public class ReachSearchResult {
     private String lastGaugeReading ="";
 //    private Boolean isRising;
     private FlowLevel flowLevel;
-    private LatLng putInLatLngh;
+    private LatLng putInLatLng;
 
     private ReachSearchResult() {
 
@@ -42,7 +42,7 @@ public class ReachSearchResult {
     }
 
     public LatLng getPutInLatLng() {
-        return putInLatLngh;
+        return putInLatLng;
     }
 
     public static class Builder {
@@ -63,7 +63,7 @@ public class ReachSearchResult {
             reachSearch.difficulty = this.difficulty;
             reachSearch.lastGaugeReading = this.lastGaugeReading;
             reachSearch.flowLevel = this.flowLevel;
-            reachSearch.putInLatLngh = this.putInLatLng;
+            reachSearch.putInLatLng = this.putInLatLng;
 
             return reachSearch;
         }
