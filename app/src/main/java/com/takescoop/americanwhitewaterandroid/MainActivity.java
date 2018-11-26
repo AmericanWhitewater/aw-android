@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-        version.setText(DisplayStringUtils.getVersionString(this));
+        version.setText("v " + DisplayStringUtils.getVersionString(this));
     }
 
     @Override public void setNavDrawerEnabled(boolean isEnabled) {
