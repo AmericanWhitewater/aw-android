@@ -233,7 +233,11 @@ public class BrowseMapView extends LinearLayout implements OnMapReadyCallback, G
             MapInfoWindowView view = new MapInfoWindowView(getContext());
 
             ReachSearchResult result = (ReachSearchResult) marker.getTag();
-            view.display(result);
+            if (result == null) {
+                updateReachesAndMap();
+            } else {
+                view.display(result);
+            }
 
             return view;
         }

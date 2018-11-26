@@ -2,7 +2,6 @@ package com.takescoop.americanwhitewaterandroid;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;

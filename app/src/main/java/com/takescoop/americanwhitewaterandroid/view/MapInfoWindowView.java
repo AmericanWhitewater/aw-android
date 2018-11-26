@@ -12,6 +12,7 @@ import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.NonNull;
 
 public class MapInfoWindowView extends LinearLayout {
     @BindView(R.id.title) TextView title;
@@ -32,7 +33,7 @@ public class MapInfoWindowView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void display(ReachSearchResult result) {
+    public void display(@NonNull ReachSearchResult result) {
         title.setText(result.getName());
         detail.setText(result.getRiver());
 

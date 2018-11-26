@@ -94,7 +94,7 @@ public class MainNavigator extends Navigator<MainNavigator.ViewState> implements
         if (viewState == ViewState.RunDetails) {
             Integer reachId = reachIds.pop();
             mainContainer.showRunDetails(reachId, this);
-        } else if (viewState == ViewState.GageDetails) {
+        } else if (viewState == ViewState.GageDetails && !gages.empty()) {
             Gage gage = gages.pop();
             mainContainer.showGageDetails(gage, this);
         } else {
