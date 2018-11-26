@@ -32,6 +32,7 @@ import com.takescoop.americanwhitewaterandroid.controller.MapViewActivity;
 import com.takescoop.americanwhitewaterandroid.controller.NavigationDrawerActivity;
 import com.takescoop.americanwhitewaterandroid.utility.AWIntent;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
+import com.takescoop.americanwhitewaterandroid.utility.DisplayStringUtils;
 import com.takescoop.americanwhitewaterandroid.view.DonateView;
 
 import butterknife.BindView;
@@ -139,9 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-        String versionName = getVersionName(this);
-        String versionCode = getVersionCode(this);
-        version.setText("v " + versionName + "." + versionCode);
+        version.setText(DisplayStringUtils.getVersionString(this));
     }
 
     @Override public void setNavDrawerEnabled(boolean isEnabled) {
@@ -232,27 +231,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         boolean areFinePermissionsGranted = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         return isLocationManagerEnabled && areFinePermissionsGranted;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Helpers
-    ///////////////////////////////////////////////////////////////////////////
-
-    private String getVersionName(Context context) {
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return info.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            return "";
-        }
-    }
-
-    private String getVersionCode(Context context) {
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return String.valueOf(info.versionCode);
-        } catch (PackageManager.NameNotFoundException e) {
-            return "";
-        }
     }
 }

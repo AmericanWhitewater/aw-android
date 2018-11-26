@@ -1,5 +1,9 @@
 package com.takescoop.americanwhitewaterandroid.utility;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
@@ -36,5 +40,29 @@ public class DisplayStringUtils {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
         return formatter.format(instant).toLowerCase(Locale.US);
+    }
+
+    public static String getVersionString(Context context) {
+        String versionName = DisplayStringUtils.getVersionName(context);
+        String versionCode = DisplayStringUtils.getVersionCode(context);
+        return versionName + "." + versionCode;
+    }
+
+    private static String getVersionName(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
+    }
+
+    private static String getVersionCode(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return String.valueOf(info.versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
     }
 }

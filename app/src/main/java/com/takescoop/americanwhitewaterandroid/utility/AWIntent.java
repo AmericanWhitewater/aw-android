@@ -40,6 +40,7 @@ public class AWIntent {
 
     public static void goToEmail(Context context, String email) {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Android " + DisplayStringUtils.getVersionString(context));
 
         try {
             context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
