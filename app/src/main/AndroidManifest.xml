@@ -31,6 +31,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyApgQvIbIQzqFp8a7185lz-MMUpKR9wKgo"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <!--Crashlytics-->
         <meta-data
