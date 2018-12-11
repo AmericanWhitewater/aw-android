@@ -34,5 +34,5 @@ ext {
 
     // App dependencies
     supportLibraryVersion = '24.1.1'
-    guavaVersion = '19.0'
+    guavaVersion = '27.0.1-android'
 }
