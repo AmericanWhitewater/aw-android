@@ -6,24 +6,8 @@
 #
 # provided 'javax.annotation:jsr250-api:1.0'
 
--keep class com.google.common.io.Resources {
-    public static <methods>;
-}
--keep class com.google.common.collect.Lists {
-    public static ** reverse(**);
-}
--keep class com.google.common.base.Charsets {
-    public static <fields>;
-}
-
--keep class com.google.common.base.Joiner {
-    public static Joiner on(String);
-    public ** join(...);
-}
-
--keep class com.google.common.collect.MapMakerInternalMap$ReferenceEntry
--keep class com.google.common.cache.LocalCache$ReferenceEntry
-
--dontwarn javax.annotation.**
--dontwarn javax.inject.**
+-dontwarn afu.org.checkerframework.**
+-dontwarn org.checkerframework.**
+-dontwarn com.google.errorprone.**
 -dontwarn sun.misc.Unsafe
+-dontwarn java.lang.ClassValue
