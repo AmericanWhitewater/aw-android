@@ -1,31 +1,32 @@
 buildscript {
     repositories {
-        maven { url 'https://maven.fabric.io/public' }
         mavenCentral()
         jcenter()
+        google()
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
         classpath 'me.tatarka:gradle-retrolambda:3.6.1'
+        classpath 'com.google.gms:google-services:4.3.4'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
     }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics'
 
 repositories {
-    maven { url 'https://maven.fabric.io/public' }
+    google()
 }
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 11
-        versionName "1.3.2"
+        targetSdkVersion 30
+        versionCode 12
+        versionName '1.4.0'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -71,7 +72,6 @@ android {
             proguardFile 'proguard-gson.pro'
             proguardFile 'proguard-square-okhttp.pro'
             proguardFile 'proguard-square-retrofit.pro'
-            proguardFile 'proguard-crashlytics.pro'
             proguardFile 'proguard-retrolambda.pro'
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -85,7 +85,6 @@ android {
             proguardFile 'proguard-gson.pro'
             proguardFile 'proguard-square-okhttp.pro'
             proguardFile 'proguard-square-retrofit.pro'
-            proguardFile 'proguard-crashlytics.pro'
             proguardFile 'proguard-retrolambda.pro'
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -101,14 +100,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:support-media-compat:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:appcompat-v7:30.0.0'
+    implementation 'com.android.support:support-media-compat:30.0.0'
+    implementation 'com.android.support:support-v4:30.0.0'
+    implementation 'com.android.support:support-v4:30.0.0'
+    implementation 'com.android.support:design:30.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.2'
 
     // Backend
     implementation 'com.jakewharton:butterknife:9.0.0-rc2'
@@ -129,9 +128,9 @@ dependencies {
     implementation 'com.cocosw:bottomsheet:1.3.1'
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
-    implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
-        transitive = true;
-    }
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
