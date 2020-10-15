@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.rate) {
             AWIntent.goToRateApp(this);
         } else if (id == R.id.feedback) {
-            AWIntent.goToEmail(this, "greg@americanwhitewater.org");
+            AWIntent.goToEmail(this, "evan@americanwhitewater.org");
         } else if (id == R.id.donate) {
             DonateView.getDonateMenu(this).show();
         }
