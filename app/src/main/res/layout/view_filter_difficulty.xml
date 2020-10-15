@@ -12,7 +12,7 @@
         android:text="@string/filter_difficulty_title"
         android:textColor="@color/font_black"/>
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/class_1"
         style="@style/Headline1"
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         android:text="@string/class1"/>
 
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/class_2"
         style="@style/Headline1"
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
         android:text="@string/class2"/>
 
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/class_3"
         style="@style/Headline1"
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
         android:text="@string/class3"/>
 
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/class_4"
         style="@style/Headline1"
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
         android:text="@string/class4"/>
 
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/class_5"
         style="@style/Headline1"
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
         android:text="@string/class5"/>
 
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/class_5_plus"
         style="@style/Headline1"
         android:layout_width="match_parent"

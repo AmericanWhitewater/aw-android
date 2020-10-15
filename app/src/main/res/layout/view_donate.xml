@@ -47,7 +47,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/red_oval">
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
@@ -78,7 +78,7 @@
             android:scaleType="centerInside"
             app:srcCompat="@drawable/ic_chevron_right"/>
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>

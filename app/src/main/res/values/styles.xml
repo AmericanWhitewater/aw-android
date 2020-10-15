@@ -31,54 +31,54 @@
         <item name="android:lineSpacingExtra">1.5dp</item>
         <item name="android:textColor">@color/font_black</item>
         <item name="android:textSize">16sp</item>
-        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+        <item name="android:fontFamily">@font/opensans</item>
     </style>
 
     <style name="Text1">
         <item name="android:textColor">@color/font_grey</item>
         <item name="android:textSize">13sp</item>
         <item name="android:alpha">.78</item>
-        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+        <item name="android:fontFamily">@font/opensans</item>
     </style>
 
     <style name="Text2">
         <item name="android:textColor">@color/font_grey</item>
         <item name="android:textSize">12sp</item>
         <item name="android:alpha">.8</item>
-        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+        <item name="android:fontFamily">@font/opensans</item>
     </style>
 
     <style name="Text3">
         <item name="android:textColor">@color/font_black</item>
         <item name="android:textSize">13sp</item>
         <item name="android:alpha">.78</item>
-        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+        <item name="android:fontFamily">@font/opensans</item>
     </style>
 
     <style name="Label1">
         <item name="android:textSize">14sp</item>
-        <item name="fontPath">fonts/OpenSans-SemiBold.ttf</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
     <style name="Label2">
         <item name="android:textColor">@color/font_black</item>
         <item name="android:textSize">12sp</item>
-        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+        <item name="android:fontFamily">@font/opensans</item>
     </style>
 
     <style name="Label3">
         <item name="android:textSize">14sp</item>
-        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+        <item name="android:fontFamily">@font/opensans</item>
     </style>
 
     <style name="Number1">
         <item name="android:textColor">@color/font_black</item>
         <item name="android:textSize">18sp</item>
-        <item name="fontPath">fonts/OpenSans-SemiBold.ttf</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
     <style name="Number2">
         <item name="android:textSize">34sp</item>
-        <item name="fontPath">fonts/OpenSans-Regular.ttf</item>
+        <item name="android:fontFamily">@font/opensans</item>
     </style>
 </resources>

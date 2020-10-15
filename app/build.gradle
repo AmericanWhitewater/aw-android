@@ -123,7 +123,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
 
     // UI
-    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+//    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.4'
     implementation 'com.cocosw:bottomsheet:1.5.0'

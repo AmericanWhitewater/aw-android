@@ -98,7 +98,7 @@
 
         <TextView
             android:id="@+id/filter_distance_update_location"
-            fontPath="fonts/OpenSans-Regular.ttf"
+            android:fontFamily="@font/opensans"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -109,7 +109,7 @@
 
         <TextView
             android:id="@+id/filter_distance_new_address"
-            fontPath="fonts/OpenSans-Regular.ttf"
+            android:fontFamily="@font/opensans"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

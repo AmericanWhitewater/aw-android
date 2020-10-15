@@ -54,7 +54,7 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reach_list"
         android:layout_marginTop="28dp"
         android:layout_width="match_parent"

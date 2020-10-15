@@ -37,7 +37,6 @@ import com.takescoop.americanwhitewaterandroid.view.DonateView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.subjects.SingleSubject;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         MapViewActivity, LocationProviderActivity, NavigationDrawerActivity {
@@ -60,11 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initNavDrawer(toolbar);
         mainNavigator = new MainNavigator(container, getSupportActionBar());
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

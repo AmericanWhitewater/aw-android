@@ -16,7 +16,7 @@
         android:gravity="center_horizontal"
         android:padding="12dp"/>
 
-    <androidx.core.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -24,11 +24,11 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/view_run_last_updated_text">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/view_run_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </androidx.core.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/view_run_no_results_text"
@@ -74,7 +74,7 @@
             android:textColor="@color/white"
             android:textSize="14sp"/>
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>

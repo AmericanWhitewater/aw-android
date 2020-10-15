@@ -28,7 +28,7 @@
         android:background="@drawable/white_oval"
         android:elevation="2dp">
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
@@ -48,7 +48,7 @@
             android:layout_marginLeft="4dp"
             android:text="@string/runnable"/>
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
@@ -68,7 +68,7 @@
             android:layout_marginLeft="4dp"
             android:text="@string/low"/>
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
@@ -88,7 +88,7 @@
             android:layout_marginLeft="4dp"
             android:text="@string/high"/>
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
@@ -108,7 +108,7 @@
             android:layout_marginLeft="4dp"
             android:text="@string/frozen"/>
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
@@ -129,7 +129,7 @@
             android:layout_marginRight="8dp"
             android:text="@string/no_info"/>\
 
-        <androidx.core.widget.Space
+        <android.widget.Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
