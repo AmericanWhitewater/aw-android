@@ -2,17 +2,15 @@ buildscript {
     repositories {
         mavenCentral()
         jcenter()
-        google()
     }
 
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:3.6.1'
-        classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
     }
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 repositories {

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "710423933985",
+    "firebase_url": "https://american-whitewater-1234.firebaseio.com",
+    "project_id": "american-whitewater-1234",
+    "storage_bucket": "american-whitewater-1234.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710423933985:android:faeb8ebb0e02a7fc8a9f60",
+        "android_client_info": {
+          "package_name": "org.americanwhitewater.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710423933985-rji3f1hf5n6oamp5qjngjhfqbnd70r5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOZ2yeXRItRvLiWBEt96N5Pd8_7tg3v9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710423933985-rji3f1hf5n6oamp5qjngjhfqbnd70r5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
