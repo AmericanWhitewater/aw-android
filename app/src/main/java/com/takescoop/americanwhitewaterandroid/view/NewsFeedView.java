@@ -1,12 +1,9 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -20,9 +17,10 @@ import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableSingleObserver;
 

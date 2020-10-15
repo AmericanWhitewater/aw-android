@@ -1,6 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.controller;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.ViewGroup;
 
 import java.util.Stack;

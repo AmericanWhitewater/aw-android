@@ -1,17 +1,14 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.google.common.collect.Lists;

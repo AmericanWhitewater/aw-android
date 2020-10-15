@@ -1,6 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.controller;
 
-import android.support.v7.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
 import android.view.ViewGroup;
 
 import com.takescoop.americanwhitewaterandroid.model.Article;

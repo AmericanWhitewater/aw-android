@@ -1,8 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.content.res.AppCompatResources;
+import androidx.appcompat.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;

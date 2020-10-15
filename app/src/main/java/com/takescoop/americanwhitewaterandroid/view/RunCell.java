@@ -1,8 +1,8 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +13,6 @@ import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.FavoriteManager;
 import com.takescoop.americanwhitewaterandroid.model.FlowLevel;
-import com.takescoop.americanwhitewaterandroid.model.Reach;
 import com.takescoop.americanwhitewaterandroid.model.ReachSearchResult;
 
 import butterknife.BindView;

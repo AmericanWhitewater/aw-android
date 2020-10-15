@@ -1,6 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.takescoop.americanwhitewaterandroid.R;
 

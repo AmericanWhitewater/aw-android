@@ -1,9 +1,8 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,16 +14,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.common.base.Function;
-import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.AWRegion;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
-import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 import com.takescoop.americanwhitewaterandroid.utility.Dialogs;
 import com.takescoop.americanwhitewaterandroid.utility.Listener;
 

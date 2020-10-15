@@ -1,8 +1,5 @@
 package com.takescoop.americanwhitewaterandroid.model.api;
 
-import android.support.annotation.Nullable;
-
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;

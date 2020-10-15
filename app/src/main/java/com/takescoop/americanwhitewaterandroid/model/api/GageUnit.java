@@ -1,7 +1,7 @@
 package com.takescoop.americanwhitewaterandroid.model.api;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 public enum GageUnit {
     RC(1, "r.c.", "Status (r.c.)"),

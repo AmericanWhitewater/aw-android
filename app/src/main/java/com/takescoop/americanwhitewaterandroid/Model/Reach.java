@@ -1,6 +1,6 @@
 package com.takescoop.americanwhitewaterandroid.model;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.common.collect.Lists;

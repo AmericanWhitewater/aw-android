@@ -1,19 +1,16 @@
 package com.takescoop.americanwhitewaterandroid.view;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatCheckBox;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatCheckBox ;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.common.collect.Lists;
-import com.takescoop.americanwhitewaterandroid.AWProvider;
 import com.takescoop.americanwhitewaterandroid.R;
 import com.takescoop.americanwhitewaterandroid.model.Difficulty;
 import com.takescoop.americanwhitewaterandroid.model.Filter;
-import com.takescoop.americanwhitewaterandroid.model.FilterManager;
 
 import java.util.List;
 
