@@ -15,7 +15,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <com.takescoop.americanwhitewaterandroid.view.MainTabView
+        <org.americanwhitewater.americanwhitewaterandroid.view.MainTabView
             android:id="@+id/main_tab_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

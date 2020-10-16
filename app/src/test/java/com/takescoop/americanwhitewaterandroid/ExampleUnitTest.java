@@ -1,4 +1,4 @@
-package com.takescoop.americanwhitewaterandroid;
+package org.americanwhitewater.americanwhitewaterandroid;
 
 import org.junit.Test;
 

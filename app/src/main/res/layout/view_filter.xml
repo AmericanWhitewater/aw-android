@@ -153,17 +153,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.takescoop.americanwhitewaterandroid.view.FilterRegionView
+        <org.americanwhitewater.americanwhitewaterandroid.view.FilterRegionView
             android:id="@+id/filter_region"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.takescoop.americanwhitewaterandroid.view.FilterDistanceView
+        <org.americanwhitewater.americanwhitewaterandroid.view.FilterDistanceView
             android:id="@+id/filter_distance"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.takescoop.americanwhitewaterandroid.view.FilterDifficultyView
+        <org.americanwhitewater.americanwhitewaterandroid.view.FilterDifficultyView
             android:id="@+id/filter_difficulty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

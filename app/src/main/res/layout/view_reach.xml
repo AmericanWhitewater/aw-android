@@ -132,12 +132,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.takescoop.americanwhitewaterandroid.view.ReachDetailView
+        <org.americanwhitewater.americanwhitewaterandroid.view.ReachDetailView
             android:id="@+id/detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.takescoop.americanwhitewaterandroid.view.ReachMapView
+        <org.americanwhitewater.americanwhitewaterandroid.view.ReachMapView
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

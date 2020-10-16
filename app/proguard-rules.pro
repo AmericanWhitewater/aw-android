@@ -15,7 +15,7 @@
 # work without any subsequent effort. If you choose this strategy, the proguard
 # configuration for the project is simply the line below.
 
--keep class com.takescoop.android.scoopandroid.** { *; }
+-keep class org.americanwhitewater.americanwhitewaterandroid.** { *; }
 
 # The more involved strategy is to specifically provide rules to keep portions of your
 # app's codebase unmodified while allowing proguard to optimize the rest.
@@ -35,9 +35,3 @@
 # For tests, necessary to use Dagger + Espresso + Proguard
 -keep class javax.inject.* { *; }
 -dontwarn com.google.common.**
-
-#http://stackoverflow.com/questions/21342700/proguard-causing-runtimeexception-unmarshalling-unknown-type-code-in-parcelabl
-# Fixes a rare exception in the Background Location Receiver https://fabric.io/takescoop/android/apps/com.takescoop.android.scoopandroid/issues/5887a4d60aeb16625b7b0791
--keepclassmembers class * implements android.os.Parcelable {
-    static ** CREATOR;
-}
