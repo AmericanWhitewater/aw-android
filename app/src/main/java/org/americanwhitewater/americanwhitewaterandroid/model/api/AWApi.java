@@ -163,7 +163,7 @@ public enum AWApi {
     }
 
     public String getArticlePhotoUrl(String articleId, String abstractPhotoNumber) {
-        return ARTICLE_PHOTO_BASE_URL + articleId + "-" + abstractPhotoNumber + ".jpg";
+        return ARTICLE_PHOTO_BASE_URL + articleId + abstractPhotoNumber;
     }
 
     public String getFlowGraphUrl(Gage gage) {
