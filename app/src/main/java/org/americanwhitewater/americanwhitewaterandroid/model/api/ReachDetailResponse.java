@@ -42,10 +42,10 @@ public class ReachDetailResponse {
     private String tlon;
     @Expose @SerializedName("class")
     private String _class = "";
-    @Expose @SerializedName("ploc")
-    private String ploc;
-    @Expose @SerializedName("tloc")
-    private String tloc;
+//    @Expose @SerializedName("ploc")
+//    private String ploc;
+//    @Expose @SerializedName("tloc")
+//    private String tloc;
     @Expose @SerializedName("shuttledetails")
     private String shuttledetails = ""; // Text directions
     @Expose @SerializedName("abstract")
