@@ -64,7 +64,6 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            useProguard true
 
             proguardFile 'proguard-guava.pro'
             proguardFile 'proguard-gson.pro'
@@ -77,7 +76,6 @@ android {
 
         debug {
             minifyEnabled true
-            useProguard true
 
             proguardFile 'proguard-guava.pro'
             proguardFile 'proguard-gson.pro'
