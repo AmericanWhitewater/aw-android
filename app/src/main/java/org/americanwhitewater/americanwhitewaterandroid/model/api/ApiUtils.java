@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.americanwhitewater.americanwhitewaterandroid.BuildConfig;
 
-import org.threeten.bp.Instant;
+import java.time.Instant;
 
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;

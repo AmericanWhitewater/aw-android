@@ -28,9 +28,8 @@ import org.americanwhitewater.americanwhitewaterandroid.utility.Dialogs;
 import org.americanwhitewater.americanwhitewaterandroid.utility.DisplayStringUtils;
 import org.americanwhitewater.americanwhitewaterandroid.utility.Listener;
 
-import org.threeten.bp.Instant;
-
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;

@@ -3,7 +3,7 @@ package org.americanwhitewater.americanwhitewaterandroid.model;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.common.collect.Lists;
 
-import org.threeten.bp.Instant;
+import java.time.Instant;
 
 import java.util.List;
 

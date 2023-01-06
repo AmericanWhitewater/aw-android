@@ -5,10 +5,10 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
-import org.threeten.bp.Instant;
-import org.threeten.bp.format.DateTimeParseException;
+import java.time.Instant;
 
 import java.lang.reflect.Type;
+import java.time.format.DateTimeParseException;
 
 // http://kylewbanks.com/blog/String-Date-Parsing-with-GSON-UTC-Time-Zone
 public class InstantDeserializer implements JsonDeserializer<Instant> {

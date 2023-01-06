@@ -3,7 +3,7 @@ package org.americanwhitewater.americanwhitewaterandroid.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.threeten.bp.Instant;
+import java.time.Instant;
 
 public class Article {
     @Expose @SerializedName("title")

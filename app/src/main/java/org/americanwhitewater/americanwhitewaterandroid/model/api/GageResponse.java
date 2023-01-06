@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import org.americanwhitewater.americanwhitewaterandroid.model.FlowLevel;
 import org.americanwhitewater.americanwhitewaterandroid.model.Gage;
 
-import org.threeten.bp.Instant;
-import org.threeten.bp.temporal.ChronoUnit;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 public class GageResponse {
 

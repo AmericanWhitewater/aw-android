@@ -15,7 +15,7 @@ import org.americanwhitewater.americanwhitewaterandroid.model.ReachSearchResult;
 import org.americanwhitewater.americanwhitewaterandroid.model.api.AWApi;
 import org.americanwhitewater.americanwhitewaterandroid.utility.DisplayStringUtils;
 
-import org.threeten.bp.Instant;
+import java.time.Instant;
 
 import java.util.List;
 
