@@ -1,17 +1,6 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
-
-repositories {
-    google()
-}
 
 android {
     compileSdkVersion 33
@@ -65,7 +54,6 @@ android {
             proguardFile 'proguard-gson.pro'
             proguardFile 'proguard-square-okhttp.pro'
             proguardFile 'proguard-square-retrofit.pro'
-            proguardFile 'proguard-retrolambda.pro'
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -77,7 +65,6 @@ android {
             proguardFile 'proguard-gson.pro'
             proguardFile 'proguard-square-okhttp.pro'
             proguardFile 'proguard-square-retrofit.pro'
-            proguardFile 'proguard-retrolambda.pro'
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -92,10 +79,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'androidx.media:media:1.6.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.6.0'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
@@ -104,14 +90,11 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.drawerlayout:drawerlayout:1.1.1"
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
-
-    // Remove: Butterknife, threeten,
     // Backend
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     implementation 'com.google.code.gson:gson:2.10'
-    implementation "com.google.guava:guava:$rootProject.guavaVersion"
+    implementation "com.google.guava:guava:31.1-android"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
