@@ -50,7 +50,7 @@ public class ArticleCell extends RelativeLayout {
         detail.setText(Html.fromHtml(article.get_abstract()));
 
         String photoUrl = awApi.getArticlePhotoUrl(article.getArticleId(), article.getAbstractPhoto());
-        Picasso.with(getContext()).load(photoUrl).into(image);
+        Picasso.get().load(photoUrl).into(image);
 
         author.setText(article.getAuthor() + ", " + article.getPostedDisplay());
     }

@@ -71,7 +71,7 @@ public class GageView extends ScrollView implements RunsAdapter.ItemClickListene
         String flowGraphUrl = awApi.getFlowGraphUrl(gage);
         if (!TextUtils.isEmpty(flowGraphUrl)) {
             Log.e(TAG, "displayGage " + flowGraphUrl);
-            Picasso.with(getContext()).load(flowGraphUrl).into(flowGraph);
+            Picasso.get().load(flowGraphUrl).into(flowGraph);
             flowGraph.setVisibility(VISIBLE);
         } else {
             flowGraph.setVisibility(GONE);

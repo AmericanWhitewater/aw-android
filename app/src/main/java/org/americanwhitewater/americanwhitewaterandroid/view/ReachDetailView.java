@@ -75,7 +75,7 @@ public class ReachDetailView extends LinearLayout {
 
         if (reach.getPhotoId() != null && reach.getPhotoId() != 0) {
             String photoUrl = awApi.getPhotoUrl(reach.getPhotoId());
-            Picasso.with(getContext()).load(photoUrl).into(image);
+            Picasso.get().load(photoUrl).into(image);
             image.setVisibility(VISIBLE);
         }
 
