@@ -18,7 +18,6 @@ public class TeamView extends ScrollView {
     private final TeamViewListener listener;
 
     @BindView(R.id.greg_layout) LinearLayout gregLayout;
-    @BindView(R.id.drop_line) TextView dropLine;
     @BindView(R.id.about_greg) TextView aboutGreg;
 
     public interface TeamViewListener {
@@ -38,11 +37,6 @@ public class TeamView extends ScrollView {
         super.onFinishInflate();
 
         ButterKnife.bind(this);
-    }
-
-    @OnClick({R.id.greg_layout, R.id.drop_line})
-    protected void onEmailGregClicked() {
-        AWIntent.goToEmail(getContext(), "greg@americanwhitewater.org");
     }
 
     @OnClick(R.id.about_greg)
