@@ -19,9 +19,10 @@
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:scaleType="center"
+                android:layout_marginHorizontal="20dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/aw_logo"/>
 
             <TextView
