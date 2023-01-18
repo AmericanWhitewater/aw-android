@@ -38,7 +38,7 @@ import org.americanwhitewater.americanwhitewaterandroid.view.DonateView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.subjects.SingleSubject;
+import io.reactivex.rxjava3.subjects.SingleSubject;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         MapViewActivity, LocationProviderActivity, NavigationDrawerActivity {

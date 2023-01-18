@@ -20,8 +20,8 @@ import org.americanwhitewater.americanwhitewaterandroid.model.api.AWApi;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 
 public class ReachView extends LinearLayout {
     private AWApi awApi = AWProvider.Instance.awApi();

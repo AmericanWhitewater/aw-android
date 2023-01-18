@@ -37,9 +37,9 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.subjects.SingleSubject;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.subjects.SingleSubject;
 
 public class RunsView extends RelativeLayout implements RunsAdapter.ItemClickListener {
     private static final int DEFAULT_DISTANCE_RADIUS = 70; // Should be even

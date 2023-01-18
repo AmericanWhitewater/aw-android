@@ -12,7 +12,7 @@ import org.americanwhitewater.americanwhitewaterandroid.model.ReachSearchResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.annotations.NonNull;
+import io.reactivex.rxjava3.annotations.NonNull;
 
 public class MapInfoWindowView extends LinearLayout {
     @BindView(R.id.title) TextView title;

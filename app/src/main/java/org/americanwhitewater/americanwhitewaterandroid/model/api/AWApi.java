@@ -19,10 +19,10 @@ import org.americanwhitewater.americanwhitewaterandroid.utility.MapUtils;
 import java.util.List;
 import java.util.Locale;
 
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.functions.Function;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

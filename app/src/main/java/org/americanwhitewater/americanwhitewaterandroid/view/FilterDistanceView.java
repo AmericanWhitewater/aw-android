@@ -22,10 +22,10 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.annotations.Nullable;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.subjects.SingleSubject;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.annotations.Nullable;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.subjects.SingleSubject;
 
 public class FilterDistanceView extends LinearLayout {
     private static final int SLIDER_MAX = 100;

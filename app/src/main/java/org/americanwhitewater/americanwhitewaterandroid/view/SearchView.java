@@ -23,8 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 
 public class SearchView extends LinearLayout implements RunsAdapter.ItemClickListener {
     AWApi awApi = AWProvider.Instance.awApi();

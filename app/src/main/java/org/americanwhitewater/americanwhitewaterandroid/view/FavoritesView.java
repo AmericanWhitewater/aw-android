@@ -21,8 +21,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 
 public class FavoritesView extends LinearLayout implements RunsAdapter.ItemClickListener {
     private final AWApi awApi = AWProvider.Instance.awApi();
